@@ -21,7 +21,7 @@ import frc.lib.manipulator.Waypoint;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final boolean dataLogging = true;
+    public static final boolean dataLogging = false;
 
   public static class LEDColors {
     public static final Color purple = new Color(210, 75, 230);
@@ -40,7 +40,7 @@ public final class Constants {
     public static double joystickRotationSmoothFactor = 0.5;
     public static double joystickRotationInverseDeadband = 0.14;
 
-    // Length and Width of the Robot in Meters (Inches: 22.0 x 24.5)
+    // Length and Width of the Robot in Meters (Inches: 28 x 31.5)
     public static final double swerveWidth = 0.578;
     public static final double swerveLength = 0.667;
 
@@ -56,7 +56,7 @@ public final class Constants {
     public static final double frontLeftOffset = -174.3;
     public static final double frontRightOffset = 90.8;
     public static final double rearLeftOffset = 170.6;
-    public static final double rearRightOffset = 28.7;
+    public static final double rearRightOffset = 31.0;
 
     public static class PIDConstants {
       // Swerve Drive PID (Velocity Control)
@@ -72,8 +72,8 @@ public final class Constants {
     }
 
     public static class AutoScorePIDConstants {
-        public static final double scoreP = 2.0;
-        public static final double scoreI = 0.0;
+        public static final double scoreP = 3.25;
+        public static final double scoreI = 0.001;
         public static final double scoreD = 0.1;
 
         public static final double scoreCruise = 4.0; // m / sec
@@ -83,9 +83,15 @@ public final class Constants {
     // Gyro P
     public static final double driveGyroP = 0.005;
 
+    // Gyro balancing constants
+    public static final double gyroRollOffset = -1.9; // degrees -- its robot pitch but navx roll
+    public static final double pitchTolerance = 2.0; // degrees -- level if Abs() less than this
+    public static final double pitchDeltaTolerance = 0.08; // degrees/20ms robot cycle
+    public static final double balanceMoveSpeed = 0.3; // m/sec -- how fast to crawl for final balance
+
     // Drive Rotation P
     public static final double driveRotationP = .007;
-    public static final double autoAngleThreshold = 1.5;
+    public static final double autoAngleThreshold = 0.5;
 
     // Swerve Module Translations x=.591/2 y=.654/2
     public static final Translation2d frontLeftLocation = new Translation2d(0.289, 0.3335);
@@ -94,17 +100,17 @@ public final class Constants {
     public static final Translation2d rearRightLocation = new Translation2d(-0.289, -0.3335);
 
     // Swerve X Axis Correction PID (Path Following)
-    public static final double xCorrectionP = 5.0;
+    public static final double xCorrectionP = 10.0;
     public static final double xCorrectionI = 0.0;
     public static final double xCorrectionD = 0.0;
 
     // Swerve Y Axis Correction PID (Path Following)
-    public static final double yCorrectionP = 5.0;
+    public static final double yCorrectionP = 10.0;
     public static final double yCorrectionI = 0.0;
     public static final double yCorrectionD = 0.0;
 
     // Swerve Theta Axis Correction PID (Path Following)
-    public static final double thetaCorrectionP = 3.0;
+    public static final double thetaCorrectionP = 40.0;
     public static final double thetaCorrectionI = 0.0;
     public static final double thetaCorrectionD = 0.0;
 
@@ -183,8 +189,8 @@ public final class Constants {
   public static class ScoringGridConstants {
       public static final double fieldWidth = 8.0137;
 
-      public static final double autoAlignmentAreaMinXMeters = 1.95;
-    public static final double autoAlignmentAreaMaxXMeters = 2.4;
+      public static final double autoAlignmentAreaMinXMeters = 1.8;
+    public static final double autoAlignmentAreaMaxXMeters = 2.7;
     public static final double autoAlignmentMaxYErrorMeters = 1.0;
     public static final double conePoleOffsetYMeters = 0.559;
 
@@ -198,17 +204,19 @@ public final class Constants {
       public static final double grid7CenterYMeters = 2.748;
       public static final double grid8CenterYMeters = 1.072;
     }
+
+    public static final double autoStartXCoordMeters = 1.89;
   }
 
   public static class TowerConstants {
     public static Waypoint scoreFloor = new Waypoint(0.0, 117.0);
     public static Waypoint scoreConeMid = new Waypoint(0.0, 219.0);
-    public static Waypoint scoreConeHigh = new Waypoint(25, 199.0);
+    public static Waypoint scoreConeHigh = new Waypoint(26.5, 199.0);
     public static Waypoint scoreCubeMid = new Waypoint(0.0, 199.0);
     public static Waypoint scoreCubeHigh = new Waypoint(27.25, 166.0);
     public static Waypoint intakeBackstop = new Waypoint(11.75, 45);
-    public static Waypoint intakeGrabCube = new Waypoint(1.0, 11);
-    public static Waypoint intakeGrabCone = new Waypoint(0.0, -2.0);
+    public static Waypoint intakeGrabCube = new Waypoint(1.0, 0.0);
+    public static Waypoint intakeGrabCone = new Waypoint(0.0, 11.0);
     public static Waypoint intakeRegrab = new Waypoint(7.75, 5.0);
     public static Waypoint floorGrab = new Waypoint(0.0, 92.0);
   }
@@ -289,7 +297,7 @@ public final class Constants {
       public static double topZoneAdjustment = 9.6; // Slop adjustment to apply
 
       public static double bottomZoneHiEdge = 43.8; // Past this in the slop zone
-      public static double bottomZoneLowEdge = 34.2; // Past the slop zone -- use adjustment
+      public static double bottomZoneLowEdge = 43.6; // Past the slop zone -- use adjustment
       public static double bottomZoneAdjustment = 9.6;
     }
 
