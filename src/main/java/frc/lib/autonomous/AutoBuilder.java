@@ -131,7 +131,7 @@ public class AutoBuilder {
                 break;
             case Hi_Cone:
                 initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
-                                .alongWith(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
+                        .andThen(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
                                         GridTargetingPosition.HighRight.towerWaypoint)))
                                 .alongWith(new WaitCommand(1.7)
                                 .andThen(new FollowTrajectoryCommand(mDrivetrain, initialScorePath, true)));
