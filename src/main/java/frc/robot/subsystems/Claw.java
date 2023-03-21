@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,7 +38,7 @@ public class Claw extends SubsystemBase {
   }
 
   public void setClawSpeed(double speed) {
-    clawMotor.set(ControlMode.PercentOutput, speed);
+    clawMotor.set(TalonFXControlMode.PercentOutput, speed);
   }
 
   public double getClawMotorPosition() {
@@ -45,7 +46,7 @@ public class Claw extends SubsystemBase {
   }
 
   public void setClawMotorPosition(double position) {
-    clawMotor.set(ControlMode.Position, position);
+    clawMotor.set(TalonFXControlMode.Position, position);
   }
 
   public double getClawCurrent() {

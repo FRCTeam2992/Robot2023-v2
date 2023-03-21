@@ -15,11 +15,13 @@ import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
+import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
+import frc.robot.commands.StopClaw;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.SetLEDsColor;
 import frc.robot.commands.SetScoringTarget;
@@ -93,6 +95,7 @@ public class RobotContainer {
                 mArm.setDefaultCommand(new HoldArm(mArm));
 
                 mClaw = new Claw();
+                mClaw.setDefaultCommand(new StopClaw(mClaw));
 
                 mButterflyWheels = new ButterflyWheels();
 
