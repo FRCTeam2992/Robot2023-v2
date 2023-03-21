@@ -7,8 +7,6 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.SetClawState;
-import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 public class TestControllers {
@@ -41,10 +39,6 @@ public class TestControllers {
             mRobotContainer.mDrivetrain.setInSlowMode(false);
         }));
 
-        testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onTrue(new SetClawState(mRobotContainer.mClaw, ClawState.Closed));
-        testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onFalse(new SetClawState(mRobotContainer.mClaw, ClawState.Opened));
     }
     
 }

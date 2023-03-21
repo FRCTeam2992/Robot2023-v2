@@ -21,10 +21,8 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.SetClawState;
 import frc.robot.commands.SetLEDsColor;
 import frc.robot.commands.SetScoringTarget;
-import frc.robot.commands.ToggleClawState;
 import frc.robot.commands.ToggleDeployElevator;
 import frc.robot.commands.ToggleEndgameState;
 import frc.robot.commands.ZeroElevatorEncoders;
@@ -36,7 +34,6 @@ import frc.robot.subsystems.ButterflyWheels;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -199,9 +196,6 @@ public class RobotContainer {
                                         mDrivetrain.setInSlowMode(false);
                                 })); // Slow Mode
 
-
-                controller0.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                                .onTrue(new ToggleClawState(mClaw));
                 controller0.leftTrigger(0.6)
                                 .whileTrue((new WaitCommand(0.5).unless(
                                                 () -> (mRobotState.currentTargetPosition == GridTargetingPosition.MidLeft
@@ -253,9 +247,6 @@ public class RobotContainer {
         private void configureShuffleboardBindings() {
                 SmartDashboard.putData("Scoring", new DeployElevator(mElevator, ElevatorState.Undeployed));
                 SmartDashboard.putData("Loading", new DeployElevator(mElevator, ElevatorState.Deployed));
-
-                SmartDashboard.putData("Open Claw", new SetClawState(mClaw, ClawState.Opened));
-                SmartDashboard.putData("Close Claw", new SetClawState(mClaw, ClawState.Closed));
 
                 SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
                 SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
