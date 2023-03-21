@@ -21,14 +21,12 @@ import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.DeployElevator;
-import frc.robot.commands.SetClawState;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.subsystems.Elevator;
 
@@ -138,7 +136,6 @@ public class AutoBuilder {
                 // Add Sequential Commands after initial move
                 initialScoreCommand = initialScoreCommand
                         .andThen(new WaitCommand(0.2))
-                        .andThen(new SetClawState(mClaw, ClawState.Opened))
                         .andThen(new WaitCommand(0.4));
                 break;
             default:
@@ -188,7 +185,7 @@ public class AutoBuilder {
                             path.getMarkers(),
                             eventMap);
                     followCommand = followCommand
-                            .andThen(new WaitCommand(0.8).andThen(new SetClawState(mClaw, ClawState.Opened)));
+                            .andThen(new WaitCommand(0.8));
                 }
                 break;
             case SideMobilityBalance:
