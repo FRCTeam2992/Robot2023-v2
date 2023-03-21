@@ -22,7 +22,7 @@ public class Claw extends SubsystemBase {
 
   private int dashboardCounter;
   public Claw() {
-    clawMotor = new TalonFX(Constants.ClawConstants.DeviceIDs.clawMotor);
+    clawMotor = new TalonFX(Constants.ClawConstants.DeviceIDs.clawMotor, "CanBus2");
     clawMotor.setInverted(false);
     clawMotor.setNeutralMode(NeutralMode.Brake);
 
