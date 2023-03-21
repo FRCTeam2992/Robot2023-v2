@@ -22,22 +22,15 @@ import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.SetClawState;
-import frc.robot.commands.SetIntakeDeployState;
-import frc.robot.commands.SetIntakeSpeed;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
-import frc.robot.commands.groups.SpindexerGrabPiece;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
-import frc.robot.subsystems.IntakeDeploy.IntakeDeployState;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeDeploy;
-import frc.robot.subsystems.Spindexer;
 
 /** Add your docs here. */
 public class AutoBuilder {
@@ -46,9 +39,6 @@ public class AutoBuilder {
     private Elevator mElevator;
     private Arm mArm;
     private Claw mClaw;
-    private Intake mIntake;
-    private IntakeDeploy mIntakeDeploy;
-    private Spindexer mSpindexer;
 
     private SendableChooser<AutoStartPosition> autoStartChooser;
     private SendableChooser<AutoSequence> autoSequenceChooser;
@@ -57,33 +47,21 @@ public class AutoBuilder {
     private HashMap<String, Command> eventMap = new HashMap<>();
 
     public AutoBuilder(RobotState robotState, Drivetrain drivetrain, Elevator elevator,
-            Arm arm, Claw claw, Intake intake, IntakeDeploy intakeDeploy, Spindexer spindexer) {
+            Arm arm, Claw claw) {
         mRobotState = robotState;
         mDrivetrain = drivetrain;
         mElevator = elevator;
         mArm = arm;
         mClaw = claw;
-        mIntake = intake;
-        mIntakeDeploy = intakeDeploy;
-        mSpindexer = spindexer;
 
-        eventMap.put("AutoGroundIntakeCube", new AutoGroundIntakeCube(mElevator, mArm, mClaw, mIntake,
-                mIntakeDeploy, mSpindexer));
-        eventMap.put("IntakeDeployGround", new SetIntakeDeployState(intakeDeploy, IntakeDeployState.GroundIntake));
-        eventMap.put("IntakeSpeedCone", new SetIntakeSpeed(mIntake, 1.0, 0.85));
-        eventMap.put("IntakeSpeedCube", new SetIntakeSpeed(mIntake, 0.75, 0.0));
-        eventMap.put("IntakeStop", new SetIntakeSpeed(mIntake, 0.0, 0.0));
+        eventMap.put("AutoGroundIntakeCube", new AutoGroundIntakeCube(mElevator, mArm, mClaw));
         eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
-        eventMap.put("SpindexerGrabPiece",
-                new SpindexerGrabPiece(elevator, arm, claw, intake, intakeDeploy, spindexer, robotState));
         eventMap.put("TowerMoveBackstop", new SafeDumbTowerToPosition(elevator, arm,
                 Constants.TowerConstants.intakeBackstop));
-        eventMap.put("IntakeDeployNormal", new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Normal));
         eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator, mArm,
                 GridTargetingPosition.HighRight.towerWaypoint));
         eventMap.put("DeployElevator", new DeployElevator(mElevator, ElevatorState.Deployed));
         eventMap.put("UndeployElevator", new DeployElevator(mElevator, ElevatorState.Undeployed));
-        eventMap.put("IntakeDeployHome", new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Homed));
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator, mArm,
                 GridTargetingPosition.HighCenter.towerWaypoint));
     }
@@ -153,11 +131,10 @@ public class AutoBuilder {
                 break;
             case Hi_Cone:
                 initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
-                        .andThen(new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Normal).withTimeout(0.01)
                                 .alongWith(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
                                         GridTargetingPosition.HighRight.towerWaypoint)))
                                 .alongWith(new WaitCommand(1.7)
-                                        .andThen(new FollowTrajectoryCommand(mDrivetrain, initialScorePath, true))));
+                                .andThen(new FollowTrajectoryCommand(mDrivetrain, initialScorePath, true)));
                 // Add Sequential Commands after initial move
                 initialScoreCommand = initialScoreCommand
                         .andThen(new WaitCommand(0.2))

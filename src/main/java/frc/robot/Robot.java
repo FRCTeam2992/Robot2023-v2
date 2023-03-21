@@ -96,13 +96,10 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         mRobotContainer.setLEDsColor(Constants.LEDColors.blue);
-        mRobotContainer.mIntake.onDisable();
         mRobotContainer.mElevator.onDisable();
         mRobotContainer.mArm.onDisable();
         mRobotContainer.mClaw.onDisable();
         mRobotContainer.mButterflyWheels.onDisable();
-        mRobotContainer.mSpindexer.onDisable();
-        mRobotContainer.mIntake.onDisable();
         mRobotContainer.mDrivetrain.onDisable();
     }
 
