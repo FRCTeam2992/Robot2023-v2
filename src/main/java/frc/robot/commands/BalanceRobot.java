@@ -57,8 +57,10 @@ public class BalanceRobot extends CommandBase {
                 break;
             case Complete:
                 correctionsCompleted++;
+                mDrivetrain.stopDrive();
                 break;
             default:
+                mDrivetrain.stopDrive();
                 break;
         }
     }
