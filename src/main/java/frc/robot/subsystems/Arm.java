@@ -54,11 +54,11 @@ public class Arm extends SubsystemBase {
   }
 
   public Arm() {
-    armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor);
+    armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor, "CanBus2");
     armMotor.setInverted(false);
     armMotor.setNeutralMode(NeutralMode.Brake);
 
-    armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder);
+    armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder, "CanBus2");
     armEncoder.configSensorDirection(true);
     armEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
