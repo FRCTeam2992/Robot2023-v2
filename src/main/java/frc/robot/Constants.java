@@ -315,6 +315,9 @@ public final class Constants {
       public static double D = 0;
       public static double FF = 0;
     }
+
+    public static double coneCurrent = 0.0;
+    public static double cubeCurrent = 0.0;
   }
 
   public static class ButterflyWheelsConstants {
