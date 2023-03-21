@@ -6,11 +6,9 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.SetClawState;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Claw.ClawState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,7 +20,6 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new SafeDumbTowerToPosition(elevator, arm, Constants.TowerConstants.intakeBackstop).asProxy(),
-        new SetClawState(claw, ClawState.Closed));
+        new SafeDumbTowerToPosition(elevator, arm, Constants.TowerConstants.intakeBackstop).asProxy());
   }
 }
