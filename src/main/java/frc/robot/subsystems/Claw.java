@@ -53,6 +53,10 @@ public class Claw extends SubsystemBase {
     clawMotor.set(ControlMode.Position, position);
   }
 
+  public double getClawCurrent() {
+    return clawMotor.getSupplyCurrent();
+  }
+
   public void onDisable() {
     clawMotor.set(ControlMode.PercentOutput, 0.0);
   }
