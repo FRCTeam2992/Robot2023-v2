@@ -318,6 +318,9 @@ public final class Constants {
 
     public static double coneCurrent = 0.0;
     public static double cubeCurrent = 0.0;
+
+    public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive
+
   }
 
   public static class ButterflyWheelsConstants {

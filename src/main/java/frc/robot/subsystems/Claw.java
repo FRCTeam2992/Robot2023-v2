@@ -17,6 +17,10 @@ public class Claw extends SubsystemBase {
   private TalonFX clawMotor;
 
   private int dashboardCounter;
+
+  private boolean holdPositionRecorded = false; // Have we logged the hold position yet
+  private double holdPosition; // motor encoder clicks
+
   public Claw() {
     clawMotor = new TalonFX(Constants.ClawConstants.DeviceIDs.clawMotor, "CanBus2");
     clawMotor.setInverted(false);
@@ -51,6 +55,18 @@ public class Claw extends SubsystemBase {
 
   public double getClawCurrent() {
     return clawMotor.getSupplyCurrent();
+  }
+
+  public void holdClaw() {
+    if (!holdPositionRecorded) {
+      // We haven't recorded where we are yet, so get it
+      holdPosition = getClawMotorPosition();
+      holdPositionRecorded = true;
+      clawMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+    } else {
+      clawMotor.set(TalonFXControlMode.Position, holdPosition);
+    }
+
   }
 
   public void onDisable() {
