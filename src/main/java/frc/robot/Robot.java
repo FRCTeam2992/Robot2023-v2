@@ -28,6 +28,8 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int slowLoopCounter = 0;
+    private int ledsLoopCounter = 0;
+    private int ledsFrameCounter = 1;
     private int slowAutoBuildCounter = 0;
 
     public static Timer balanceTimer = new Timer();
@@ -54,7 +56,7 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mElevator.zeroElevatorEncoders();
 
-        mRobotContainer.setLEDsColor(Constants.LEDColors.blue);
+        mRobotContainer.mLEDs.setLEDStripColor(Constants.LEDColors.blue);
 
         DataLogManager.start();
         DriverStation.startDataLog(DataLogManager.getLog());
@@ -95,7 +97,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
-        mRobotContainer.setLEDsColor(Constants.LEDColors.blue);
+        mRobotContainer.mLEDs.setLEDStripColor(Constants.LEDColors.blue);
         mRobotContainer.mElevator.onDisable();
         mRobotContainer.mArm.onDisable();
         mRobotContainer.mClaw.onDisable();
@@ -105,6 +107,19 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        if (ledsLoopCounter == 5) {
+            mRobotContainer.mLEDs.showNextCycleColor(
+                    Constants.LEDColors.blue,
+                    Constants.LEDColors.white,
+                    ledsFrameCounter);
+            if (ledsFrameCounter == 6) {
+                ledsFrameCounter = 0;
+            }
+            ledsLoopCounter = 0;
+            ledsFrameCounter++;
+        }
+        ledsLoopCounter++;
+
         // Update prematch auto selector and robot setup checks
         mRobotContainer.updateMatchStartChecksToDashboard();
 
@@ -113,10 +128,9 @@ public class Robot extends TimedRobot {
             m_autonomousCommand = mRobotContainer.mAutoBuilder.buildAutoCommand();
             slowAutoBuildCounter = 0;
         }
-
     }
 
-    /**
+     /**
      * This autonomous runs the autonomous command selected by your
      * {@link RobotContainer} class.
      */
@@ -182,14 +196,6 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        // if (ledsLoopCounter++ < 5) {
-        // ledsLoopCounter = 0;
-        // if (mRobotContainer.mRobotState.currentColor) {
-        // setLEDsColor(yellow);
-        // } else {
-        // setLEDsColor(purple);
-        // }
-        // }
     }
 
     @Override
