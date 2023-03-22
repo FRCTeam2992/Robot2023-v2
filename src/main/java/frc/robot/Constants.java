@@ -21,7 +21,7 @@ import frc.lib.manipulator.Waypoint;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final boolean dataLogging = false;
+    public static final boolean dataLogging = false;
 
   public static class LEDColors {
     public static final Color purple = new Color(210, 75, 230);
@@ -72,12 +72,12 @@ public final class Constants {
     }
 
     public static class AutoScorePIDConstants {
-      public static final double scoreP = 3.25;
-      public static final double scoreI = 0.001;
-      public static final double scoreD = 0.1;
+        public static final double scoreP = 3.25;
+        public static final double scoreI = 0.001;
+        public static final double scoreD = 0.1;
 
-      public static final double scoreCruise = 4.0; // m / sec
-      public static final double scoreAccel = 4.0; // m / sec^2
+        public static final double scoreCruise = 4.0; // m / sec
+        public static final double scoreAccel = 4.0; // m / sec^2
     }
 
     // Gyro P
@@ -187,19 +187,18 @@ public final class Constants {
   }
 
   public static class ScoringGridConstants {
-    public static final double fieldWidth = 8.0137;
+      public static final double fieldWidth = 8.0137;
 
-    public static final double autoAlignmentAreaMinXMeters = 1.8;
+      public static final double autoAlignmentAreaMinXMeters = 1.8;
     public static final double autoAlignmentAreaMaxXMeters = 2.7;
     public static final double autoAlignmentMaxYErrorMeters = 1.0;
     public static final double conePoleOffsetYMeters = 0.559;
 
     public static class Red {
-      public static final double grid1CenterYMeters = 6.9417;
-      public static final double grid2CenterYMeters = 5.2657;
-      public static final double grid3CenterYMeters = 3.5897;
+        public static final double grid1CenterYMeters = 6.9417;
+        public static final double grid2CenterYMeters = 5.2657;
+        public static final double grid3CenterYMeters = 3.5897;
     }
-
     public static class Blue {
       public static final double grid6CenterYMeters = 4.424;
       public static final double grid7CenterYMeters = 2.748;
@@ -210,16 +209,17 @@ public final class Constants {
   }
 
   public static class TowerConstants {
-    public static Waypoint scoreFloor = new Waypoint(0.0, 117.0);
-    public static Waypoint scoreConeMid = new Waypoint(0.0, 219.0);
-    public static Waypoint scoreConeHigh = new Waypoint(26.5, 199.0);
-    public static Waypoint scoreCubeMid = new Waypoint(0.0, 199.0);
-    public static Waypoint scoreCubeHigh = new Waypoint(27.25, 166.0);
-    public static Waypoint intakeBackstop = new Waypoint(11.75, 45);
-    public static Waypoint intakeGrabCube = new Waypoint(1.0, 0.0);
-    public static Waypoint intakeGrabCone = new Waypoint(0.0, 11.0);
-    public static Waypoint intakeRegrab = new Waypoint(7.75, 5.0);
-    public static Waypoint floorGrab = new Waypoint(0.0, 92.0);
+    public static Waypoint scoreFloor = new Waypoint(0.0, 115.28);
+    public static Waypoint scoreConeMid = new Waypoint(10.015, 10.93);
+    public static Waypoint scoreConeHigh = new Waypoint(32, 21.3);
+    public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55);
+    public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54);
+    public static Waypoint intakeBackstop = new Waypoint(0, 0);
+    // public static Waypoint intakeGrabCube = new Waypoint(1.0, 0.0);
+    // public static Waypoint intakeGrabCone = new Waypoint(0.0, 11.0);
+    // public static Waypoint intakeRegrab = new Waypoint(7.75, 5.0);
+    public static Waypoint cubeGroundIntake = new Waypoint(0, 129.64);
+    public static Waypoint loadStation = new Waypoint(0, -75.36);
   }
 
   public static class ElevatorConstants {
