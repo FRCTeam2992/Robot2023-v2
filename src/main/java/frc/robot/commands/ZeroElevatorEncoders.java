@@ -4,19 +4,18 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
 public class ZeroElevatorEncoders extends CommandBase {
- // /** Creates a new ZeroElevatorEncoders. */
+  // /** Creates a new ZeroElevatorEncoders. */
 
   private Elevator mElevator;
   private Timer timer;
   private boolean done = false;
-  
-  public ZeroElevatorEncoders(Elevator subsystem){
+
+  public ZeroElevatorEncoders(Elevator subsystem) {
     mElevator = subsystem;
 
     timer = new Timer();
@@ -47,7 +46,8 @@ public class ZeroElevatorEncoders extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

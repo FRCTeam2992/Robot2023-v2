@@ -21,7 +21,7 @@ import frc.lib.manipulator.Waypoint;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean dataLogging = false;
+  public static final boolean dataLogging = false;
 
   public static class LEDColors {
     public static final Color purple = new Color(210, 75, 230);
@@ -78,12 +78,12 @@ public final class Constants {
     }
 
     public static class AutoScorePIDConstants {
-        public static final double scoreP = 3.25;
-        public static final double scoreI = 0.001;
-        public static final double scoreD = 0.1;
+      public static final double scoreP = 3.25;
+      public static final double scoreI = 0.001;
+      public static final double scoreD = 0.1;
 
-        public static final double scoreCruise = 4.0; // m / sec
-        public static final double scoreAccel = 4.0; // m / sec^2
+      public static final double scoreCruise = 4.0; // m / sec
+      public static final double scoreAccel = 4.0; // m / sec^2
     }
 
     // Gyro P
@@ -205,18 +205,19 @@ public final class Constants {
   }
 
   public static class ScoringGridConstants {
-      public static final double fieldWidth = 8.0137;
+    public static final double fieldWidth = 8.0137;
 
-      public static final double autoAlignmentAreaMinXMeters = 1.8;
+    public static final double autoAlignmentAreaMinXMeters = 1.8;
     public static final double autoAlignmentAreaMaxXMeters = 2.7;
     public static final double autoAlignmentMaxYErrorMeters = 1.0;
     public static final double conePoleOffsetYMeters = 0.559;
 
     public static class Red {
-        public static final double grid1CenterYMeters = 6.9417;
-        public static final double grid2CenterYMeters = 5.2657;
-        public static final double grid3CenterYMeters = 3.5897;
+      public static final double grid1CenterYMeters = 6.9417;
+      public static final double grid2CenterYMeters = 5.2657;
+      public static final double grid3CenterYMeters = 3.5897;
     }
+
     public static class Blue {
       public static final double grid6CenterYMeters = 4.424;
       public static final double grid7CenterYMeters = 2.748;

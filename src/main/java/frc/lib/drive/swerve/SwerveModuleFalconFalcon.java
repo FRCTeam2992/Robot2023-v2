@@ -153,5 +153,4 @@ public class SwerveModuleFalconFalcon {
         return new SwerveModulePosition(getWheelPositionMeters(), Rotation2d.fromDegrees(getEncoderAngle()));
     }
 
-
 }
