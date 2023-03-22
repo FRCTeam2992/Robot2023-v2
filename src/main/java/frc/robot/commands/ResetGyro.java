@@ -10,7 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 public class ResetGyro extends CommandBase {
   // Subsystem Instance
   private Drivetrain mDriveTrain;
-  private double  mGyroOffset;
+  private double mGyroOffset;
 
   public ResetGyro(Drivetrain subsystem) {
     // Subsystem Instance
@@ -24,24 +24,29 @@ public class ResetGyro extends CommandBase {
     mDriveTrain = subsystem;
     mGyroOffset = gyroOffset;
   }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // Reset the Gyro
     mDriveTrain.navx.zeroYaw();
     mDriveTrain.gyroOffset = mGyroOffset;
-    //  Pose2d pose = mDriveTrain.latestSwervePoseEstimate;
-    //  mDriveTrain.setPoseEstimatePosition(true, new Pose2d(pose.getX(), pose.getY(), new Rotation2d(0.0)));
-    //  mDriveTrain.setOdometryPosition(true, new Pose2d(pose.getX(), pose.getY(), new Rotation2d(0.0)));
+    // Pose2d pose = mDriveTrain.latestSwervePoseEstimate;
+    // mDriveTrain.setPoseEstimatePosition(true, new Pose2d(pose.getX(),
+    // pose.getY(), new Rotation2d(0.0)));
+    // mDriveTrain.setOdometryPosition(true, new Pose2d(pose.getX(), pose.getY(),
+    // new Rotation2d(0.0)));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

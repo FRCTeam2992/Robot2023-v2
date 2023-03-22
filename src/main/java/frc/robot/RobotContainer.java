@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-
 import frc.lib.autonomous.AutoBuilder;
-import frc.lib.leds.Color;
-
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobot;
@@ -23,6 +20,7 @@ import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.StopClaw;
 import frc.robot.commands.MoveElevator;
+
 import frc.robot.commands.SetLEDsColor;
 import frc.robot.commands.SetScoringTarget;
 import frc.robot.commands.ToggleDeployElevator;
@@ -36,10 +34,9 @@ import frc.robot.subsystems.ButterflyWheels;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Elevator.ElevatorState;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
@@ -73,9 +70,7 @@ public class RobotContainer {
 
         public final ButterflyWheels mButterflyWheels;
 
-        public AddressableLED m_led;
-        public AddressableLEDBuffer m_ledBuffer;
-
+        public final LEDs mLEDs;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -99,20 +94,10 @@ public class RobotContainer {
 
                 mButterflyWheels = new ButterflyWheels();
 
-                m_led = new AddressableLED(0);
+                mLEDs = new LEDs();
 
                 mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
                                 mClaw);
-
-                // Reuse buffer
-                // Default to a length of 60, start empty output
-                // Length is expensive to set, so only set it once, then just update data
-                m_ledBuffer = new AddressableLEDBuffer(17);
-                m_led.setLength(m_ledBuffer.getLength());
-
-                // Set the data
-                m_led.setData(m_ledBuffer);
-                m_led.start();
 
                 // Setup the Auto Selectors
                 mAutoBuilder.setupAutoSelector();
@@ -146,7 +131,7 @@ public class RobotContainer {
                 // -----------------------controller0-----------------------
 
                 // ABXY
-        
+
                 controller0.a().onTrue(new InstantCommand(() -> {
                         mDrivetrain.setScoringMode(true);
                 }));
@@ -163,25 +148,29 @@ public class RobotContainer {
                 }));
                 controller0.x().onTrue(
                                 new AutoGroundIntakeCube(mElevator, mArm, mClaw));// cubes
-                controller0.x().onTrue(new SetLEDsColor(Constants.LEDColors.purple));
+                controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
                 controller0.x().onTrue(new InstantCommand(
                                 () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
 
                 // D-Pad
                 controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels
 
-                controller0.povUp().onTrue(new SetLEDsColor(Constants.LEDColors.yellow));
+
+                controller0.povUp().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.yellow));
                 controller0.povUp()
-                        .onTrue(new InstantCommand(() -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
-                controller0.povDown().onTrue(new SetLEDsColor(Constants.LEDColors.purple));
+                                .onTrue(new InstantCommand(
+                                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
+                controller0.povDown().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
                 controller0.povDown()
-                        .onTrue(new InstantCommand(() -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
+                                .onTrue(new InstantCommand(
+                                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
 
                 // Bumpers/Triggers
                 controller0.leftBumper().onTrue(new InstantCommand(
-                        () -> {
-                            controller0.povUp().onTrue(
-                                    new InstantCommand(() -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
+                                () -> {
+                                        controller0.povUp().onTrue(
+                                                        new InstantCommand(
+                                                                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
 
                                         mDrivetrain.setDoFieldOreint(false);
                                 }));// Disable Field Orient
@@ -208,7 +197,7 @@ public class RobotContainer {
                 controller0.leftTrigger(0.6)
                                 .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
                 controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, ElevatorState.Deployed)
-                        .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
+                                .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
                 controller0.leftTrigger(0.6)
                                 .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, TowerConstants.intakeBackstop));
@@ -292,124 +281,115 @@ public class RobotContainer {
 
         public void addRobotStateToDashboard() {
                 SmartDashboard.putBoolean("Target: Left Grid High Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
                 SmartDashboard.putBoolean("Target: Left Grid High Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
                 SmartDashboard.putBoolean("Target: Left Grid High Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
                 SmartDashboard.putBoolean("Target: Left Grid Mid Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
                 SmartDashboard.putBoolean("Target: Left Grid Mid Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
                 SmartDashboard.putBoolean("Target: Left Grid Mid Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
                 SmartDashboard.putBoolean("Target: Left Grid Low Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
                 SmartDashboard.putBoolean("Target: Left Grid Low Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
                 SmartDashboard.putBoolean("Target: Left Grid Low Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
 
                 SmartDashboard.putBoolean("Target: Center Grid High Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
                 SmartDashboard.putBoolean("Target: Center Grid High Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
                 SmartDashboard.putBoolean("Target: Center Grid High Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
                 SmartDashboard.putBoolean("Target: Center Grid Mid Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
                 SmartDashboard.putBoolean("Target: Center Grid Mid Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
                 SmartDashboard.putBoolean("Target: Center Grid Mid Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
                 SmartDashboard.putBoolean("Target: Center Grid Low Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
                 SmartDashboard.putBoolean("Target: Center Grid Low Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
                 SmartDashboard.putBoolean("Target: Center Grid Low Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
 
                 SmartDashboard.putBoolean("Target: Right Grid High Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
                 SmartDashboard.putBoolean("Target: Right Grid High Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
                 SmartDashboard.putBoolean("Target: Right Grid High Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
                 SmartDashboard.putBoolean("Target: Right Grid Mid Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
                 SmartDashboard.putBoolean("Target: Right Grid Mid Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
                 SmartDashboard.putBoolean("Target: Right Grid Mid Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
                 SmartDashboard.putBoolean("Target: Right Grid Low Left",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
                 SmartDashboard.putBoolean("Target: Right Grid Low Center",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
                 SmartDashboard.putBoolean("Target: Right Grid Low Right",
-                        mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
 
                 SmartDashboard.putBoolean("Blue Alliance",
-                        DriverStation.getAlliance() == DriverStation.Alliance.Blue);
+                                DriverStation.getAlliance() == DriverStation.Alliance.Blue);
                 SmartDashboard.putBoolean("Red Alliance",
-                        DriverStation.getAlliance() == DriverStation.Alliance.Red);
+                                DriverStation.getAlliance() == DriverStation.Alliance.Red);
 
                 SmartDashboard.putBoolean("Endgame Mode",
-                        mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
+                                mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
         }
 
         public void updateMatchStartChecksToDashboard() {
-            SmartDashboard.putString("Confirmed Auto Start Position",
-                    mAutoBuilder.getAutoStartPosition().description);
-            if (mAutoBuilder.autoStartCompatible()) {
-                SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
-            } else {
-                SmartDashboard.putString("Confirmed Auto Sequence", "INVALID SEQUENCE FOR THIS START POSN");
-            }
-            SmartDashboard.putString("Confirmed Auto Preload Score", mAutoBuilder.getAutoPreloadScore().description);
-            SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
-            SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
-            SmartDashboard.putBoolean("Arm Encoders Match?", Math.abs(mArm.getArmCANCoderPositionCorrected() - mArm.getArmMotorPositionDeg()) <= 1.0);
+                SmartDashboard.putString("Confirmed Auto Start Position",
+                                mAutoBuilder.getAutoStartPosition().description);
+                if (mAutoBuilder.autoStartCompatible()) {
+                        SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
+                } else {
+                        SmartDashboard.putString("Confirmed Auto Sequence", "INVALID SEQUENCE FOR THIS START POSN");
+                }
+                SmartDashboard.putString("Confirmed Auto Preload Score",
+                                mAutoBuilder.getAutoPreloadScore().description);
+                SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
+                SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
+                SmartDashboard.putBoolean("Arm Encoders Match?", Math
+                                .abs(mArm.getArmCANCoderPositionCorrected() - mArm.getArmMotorPositionDeg()) <= 1.0);
         }
-
 
         public CommandXboxController getController0() {
                 return controller0;
         }
-
-        public void setLEDsColor(Color color) {
-                for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-                        // Sets the specified LED to the RGB values for red
-                        m_ledBuffer.setRGB(i, color.r(), color.g(), color.b());
-                }
-
-                m_led.setData(m_ledBuffer);
-        }
-
 }

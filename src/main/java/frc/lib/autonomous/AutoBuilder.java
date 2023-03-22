@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotState;
-import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
@@ -130,8 +129,8 @@ public class AutoBuilder {
             case Hi_Cone:
                 initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
                         .andThen(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
-                                        GridTargetingPosition.HighRight.towerWaypoint)))
-                                .alongWith(new WaitCommand(1.7)
+                                GridTargetingPosition.HighRight.towerWaypoint)))
+                        .alongWith(new WaitCommand(1.7)
                                 .andThen(new FollowTrajectoryCommand(mDrivetrain, initialScorePath, true)));
                 // Add Sequential Commands after initial move
                 initialScoreCommand = initialScoreCommand
