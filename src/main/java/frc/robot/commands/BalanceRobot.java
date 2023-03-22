@@ -5,10 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.filter.LinearFilter;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
 public class BalanceRobot extends CommandBase {
@@ -126,11 +124,11 @@ public class BalanceRobot extends CommandBase {
                     maybeCorrect(currentPitch, currentPitchDelta);
                     break;
                 case ForwardCorrection:
-                    this.balancedCycleCounter = 0;
+                    resetBalancedCycleCounter();
                     maybeCompleteCorrection(currentPitch, currentPitchDelta);
                     break;
                 case ReverseCorrection:
-                    this.balancedCycleCounter = 0;
+                    resetBalancedCycleCounter();
                     maybeCompleteCorrection(currentPitch, currentPitchDelta);
                     break;
                 case Waiting:
@@ -140,6 +138,10 @@ public class BalanceRobot extends CommandBase {
                     waitForNextCorrection();
                     break;                                        
             }
+        }
+
+        public void resetBalancedCycleCounter() {
+            this.balancedCycleCounter = 0;
         }
 
         public boolean canMakeCorrection() {
