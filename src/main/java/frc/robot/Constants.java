@@ -307,9 +307,21 @@ public final class Constants {
 
   public static class ClawConstants {
     public static class DeviceIDs {
-      public static int clawSolenoid = 0;
-
+      public static int clawMotor = 28;
     }
+
+    public static class PIDConstants {
+      public static double P = 0;
+      public static double I = 0;
+      public static double D = 0;
+      public static double FF = 0;
+    }
+
+    public static double coneCurrent = 0.0;
+    public static double cubeCurrent = 0.0;
+
+    public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive
+
   }
 
   public static class ButterflyWheelsConstants {

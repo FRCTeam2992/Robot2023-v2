@@ -6,31 +6,28 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Claw.ClawState;
 
-public class SetClawState extends CommandBase {
-  /** Creates a new SetClawState. */
+public class MoveClaw extends CommandBase {
+  /** Creates a new MoveClaw. */
   private Claw mClaw;
+  private double mSpeed;
 
-  private ClawState mState;
-
-  public SetClawState(Claw subsystem, ClawState state) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public MoveClaw(Claw subsystem, double speed) {
     mClaw = subsystem;
-    mState = state;
-
+    mSpeed = speed;
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mClaw);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mClaw.setClawState(mState);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mClaw.setClawSpeed(mSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +38,6 @@ public class SetClawState extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

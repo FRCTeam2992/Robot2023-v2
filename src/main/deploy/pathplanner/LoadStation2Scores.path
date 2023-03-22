@@ -24,18 +24,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.489535376407047,
-        "y": 4.769982947291089
+        "x": 4.03874903199307,
+        "y": 4.916846548454473
       },
       "prevControl": {
-        "x": 5.63230349744498,
-        "y": 4.959024686953468
+        "x": 3.182897139269589,
+        "y": 4.721652257131574
       },
       "nextControl": {
-        "x": 7.462506734114469,
-        "y": 4.55541766732812
+        "x": 5.085152190282184,
+        "y": 5.1554999003449735
       },
-      "holonomicAngle": -9.64,
+      "holonomicAngle": 27.0126653479386,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -49,18 +49,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.388566650607219,
-        "y": 4.2
+        "x": 5.947975847117067,
+        "y": 5.192215800635819
       },
       "prevControl": {
-        "x": 7.572654434987006,
-        "y": 4.191707517710263
+        "x": 4.826757430176155,
+        "y": 5.573006961106317
       },
       "nextControl": {
-        "x": 5.518649333105869,
-        "y": 4.206092262790039
+        "x": 6.434461525970778,
+        "y": 5.026994249327012
       },
-      "holonomicAngle": -11.43,
+      "holonomicAngle": 147.9946167919166,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -74,18 +74,18 @@
     },
     {
       "anchorPoint": {
-        "x": 4.736351137519145,
-        "y": 4.742446022072954
+        "x": 6.737367703370259,
+        "y": 4.83423577280007
       },
       "prevControl": {
-        "x": 5.2689648947306,
-        "y": 4.827664223226786
+        "x": 6.397745625679932,
+        "y": 5.118784000054127
       },
       "nextControl": {
-        "x": 4.277402383883569,
-        "y": 4.669014221491262
+        "x": 7.211336989585208,
+        "y": 4.437126370836193
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 145.40771131249005,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -99,16 +99,41 @@
     },
     {
       "anchorPoint": {
-        "x": 2.65272379601363,
+        "x": 5.158583990863876,
+        "y": 4.861772698018204
+      },
+      "prevControl": {
+        "x": 5.801112245953682,
+        "y": 4.705730121782109
+      },
+      "nextControl": {
+        "x": 4.389612921975754,
+        "y": 5.048522814748177
+      },
+      "holonomicAngle": 81.60707481260762,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.084135624431072,
         "y": 4.5405085704733015
       },
       "prevControl": {
-        "x": 3.3319679513942826,
-        "y": 4.687372171636685
+        "x": 3.2423031240791285,
+        "y": 4.5405085704733015
       },
       "nextControl": {
-        "x": 1.8792734736798635,
-        "y": 4.373276068347082
+        "x": 2.9259681247830156,
+        "y": 4.5405085704733015
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -125,11 +150,11 @@
     {
       "anchorPoint": {
         "x": 1.89,
-        "y": 4.424
+        "y": 4.42
       },
       "prevControl": {
-        "x": 2.0481674996480566,
-        "y": 4.424
+        "x": 2.353651709874323,
+        "y": 4.42
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -147,21 +172,37 @@
   ],
   "markers": [
     {
-      "position": 0.4000000000000186,
+      "position": 0.1,
       "names": [
-        "StartIntakeCube"
+        "EndIntake",
+        "UndeployElevator",
+        "SetIntakeModeCube",
+        "TowerMoveGroundIntake"
       ]
     },
     {
-      "position": 2.0727272727272896,
+      "position": 0.8,
       "names": [
-        "EndIntake"
+        "StartCubeIntake"
       ]
     },
     {
-      "position": 3.24,
+      "position": 3.6654545454544873,
       "names": [
-        "ReadyHighCubeScore"
+        "EndIntake",
+        "TowerMoveStowed"
+      ]
+    },
+    {
+      "position": 4.40727272727262,
+      "names": [
+        "DeployElevator"
+      ]
+    },
+    {
+      "position": 5.06181818181812,
+      "names": [
+        "TowerMoveHighCenter"
       ]
     }
   ]

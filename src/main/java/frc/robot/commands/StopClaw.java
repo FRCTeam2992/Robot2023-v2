@@ -5,29 +5,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.leds.Color;
-import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Claw;
 
-public class SetLEDsColor extends CommandBase {
-  private Color mColor;
-  private LEDs mLEDs;
+public class StopClaw extends CommandBase {
+  private Claw mClaw;
 
-  /** Creates a new SetLEDsColor. */
-  public SetLEDsColor(LEDs subsystem, Color color) {
-    mLEDs = subsystem;
-    mColor = color;
+  /** Creates a new StopClaw. */
+  public StopClaw(Claw subsystem) {
+    mClaw = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(mClaw);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mLEDs.setLEDStripColor(mColor);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mClaw.setClawSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +36,6 @@ public class SetLEDsColor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

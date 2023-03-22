@@ -4,16 +4,25 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
 
-public class ToggleClawState extends CommandBase {
-  /** Creates a new SetClawState. */
+public class MoveClawIntaking extends CommandBase {
   private Claw mClaw;
+  private double mSpeed;
+  private double mTargetCurrent;
 
-  public ToggleClawState(Claw subsystem) {
+  private LinearFilter lowPass;
+
+  /** Creates a new MoveClawIntaking. */
+  public MoveClawIntaking(Claw subsystem, double speed, double targetCurrent) {
     // Use addRequirements() here to declare subsystem dependencies.
     mClaw = subsystem;
+    mSpeed = speed;
+    mTargetCurrent = targetCurrent;
+
+    lowPass = LinearFilter.movingAverage(3);
 
     addRequirements(mClaw);
   }
@@ -21,12 +30,12 @@ public class ToggleClawState extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mClaw.toggleClawState();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mClaw.setClawSpeed(mSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +46,6 @@ public class ToggleClawState extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return mClaw.getClawCurrent() < mTargetCurrent;
   }
 }
