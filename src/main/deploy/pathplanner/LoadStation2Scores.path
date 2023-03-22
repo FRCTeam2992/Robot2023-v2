@@ -172,27 +172,35 @@
   ],
   "markers": [
     {
-      "position": 0.36363636363637375,
-      "names": [
-        "SetIntakeModeCube",
-        "AutoGroundIntakeCube"
-      ]
-    },
-    {
-      "position": 2.0727272727272896,
+      "position": 0.1,
       "names": [
         "EndIntake",
-        "StowClaw"
+        "UndeployElevator",
+        "SetIntakeModeCube",
+        "TowerMoveGroundIntake"
       ]
     },
     {
-      "position": 3.1636363636363702,
+      "position": 0.8,
+      "names": [
+        "StartCubeIntake"
+      ]
+    },
+    {
+      "position": 3.6654545454544873,
+      "names": [
+        "EndIntake",
+        "TowerMoveStowed"
+      ]
+    },
+    {
+      "position": 4.40727272727262,
       "names": [
         "DeployElevator"
       ]
     },
     {
-      "position": 3.527272727272713,
+      "position": 5.06181818181812,
       "names": [
         "TowerMoveHighCenter"
       ]
