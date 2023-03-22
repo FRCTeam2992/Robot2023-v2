@@ -23,6 +23,7 @@ public class BalanceRobot extends CommandBase {
     public BalanceRobot(Drivetrain driveTrain) {
         // Use addRequirements() here to declare subsystem dependencies.
         mDrivetrain = driveTrain;
+        addRequirements(mDrivetrain);
         lowPass = LinearFilter.movingAverage(3);
         stateMachine = new BalanceStateMachine();
     }
