@@ -20,9 +20,9 @@ import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.DeployElevator;
+import frc.robot.commands.HoldClaw;
 import frc.robot.commands.MoveClaw;
 import frc.robot.commands.StopClaw;
-import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
@@ -53,16 +53,19 @@ public class AutoBuilder {
         mArm = arm;
         mClaw = claw;
 
-        eventMap.put("AutoGroundIntakeCube", new AutoGroundIntakeCube(mElevator, mArm, mClaw));
         eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
-        eventMap.put("TowerMoveBackstop", new SafeDumbTowerToPosition(elevator, arm,
-                Constants.TowerConstants.intakeBackstop));
-        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator, mArm,
-                GridTargetingPosition.HighRight.towerWaypoint));
         eventMap.put("DeployElevator", new DeployElevator(mElevator, ElevatorState.Deployed));
         eventMap.put("UndeployElevator", new DeployElevator(mElevator, ElevatorState.Undeployed));
+        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator, mArm,
+                GridTargetingPosition.HighRight.towerWaypoint));
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator, mArm,
                 GridTargetingPosition.HighCenter.towerWaypoint));
+        eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(mElevator, mArm,
+                Constants.TowerConstants.intakeGrabCone));
+        eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
+                Constants.TowerConstants.intakeBackstop));
+        eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
+        eventMap.put("EndIntake", new HoldClaw(mClaw));
     }
 
     public void setupAutoSelector() {
