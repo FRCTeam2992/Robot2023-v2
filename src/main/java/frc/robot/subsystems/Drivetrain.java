@@ -375,6 +375,7 @@ public class Drivetrain extends SubsystemBase {
             SmartDashboard.putNumber("Gyro Yaw (raw deg)", navx.getYaw());
             SmartDashboard.putNumber("Gyro Yaw (adj deg)", getGyroYaw());
             SmartDashboard.putNumber("Robot Gyro Pitch (raw deg)", getRobotPitch()); // Navx Roll
+            SmartDashboard.putNumber("Robot Gyro Roll (raw deg)", getRobotRoll()); // Navx Roll
 
             SmartDashboard.putNumber("Odometry Rotation (deg)", latestSwervePose.getRotation().getDegrees());
             SmartDashboard.putNumber("Odometry X (in)", (latestSwervePose.getX() * (100 / 2.54)));
@@ -491,7 +492,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public double getRobotPitch() {
-        return -1 * (navx.getRoll() + Constants.DrivetrainConstants.gyroRollOffset);
+        return -1 * (navx.getPitch());
+    }
+
+    public double getRobotRoll() {
+        return -1 * (navx.getRoll());
     }
 
     public Pose2d getLatestSwervePose() {
