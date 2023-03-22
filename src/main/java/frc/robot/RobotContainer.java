@@ -16,44 +16,28 @@ import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldElevator;
-import frc.robot.commands.RehomeIntakeDeploy;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
-import frc.robot.commands.MoveSpindexer;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveIntake;
-import frc.robot.commands.MoveIntakeDeploy;
 import frc.robot.commands.SetClawState;
-import frc.robot.commands.SetIntakeDeployState;
-import frc.robot.commands.SetIntakeSpeed;
 import frc.robot.commands.SetLEDsColor;
 import frc.robot.commands.SetScoringTarget;
-import frc.robot.commands.StopIntake;
-import frc.robot.commands.StopSpindexer;
 import frc.robot.commands.ToggleClawState;
 import frc.robot.commands.ToggleDeployElevator;
 import frc.robot.commands.ToggleEndgameState;
 import frc.robot.commands.ZeroElevatorEncoders;
-import frc.robot.commands.groups.AutoGroundIntakeCone;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.AutoLoadStationIntake;
-import frc.robot.commands.groups.AutoSpinSpindexer;
-import frc.robot.commands.groups.SpindexerGrabPiece;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ButterflyWheels;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeDeploy;
-import frc.robot.subsystems.Spindexer;
 import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
-import frc.robot.subsystems.IntakeDeploy.IntakeDeployState;
-// import frc.robot.testing.TestControllers;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -84,10 +68,6 @@ public class RobotContainer {
 
         public final Drivetrain mDrivetrain;
 
-        public final Intake mIntake;
-        public final Spindexer mSpindexer;
-        public final IntakeDeploy mIntakeDeploy;
-
         public final Elevator mElevator;
         public final Arm mArm;
         public final Claw mClaw;
@@ -108,15 +88,6 @@ public class RobotContainer {
                 mDrivetrain = new Drivetrain(mRobotState);
                 mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain, mRobotState));
 
-                mIntake = new Intake();
-                mIntake.setDefaultCommand(new StopIntake(mIntake));
-
-                mSpindexer = new Spindexer();
-                mSpindexer.setDefaultCommand(new StopSpindexer(mSpindexer));
-
-                mIntakeDeploy = new IntakeDeploy();
-                // mIntakeDeploy.setDefaultCommand(new StopIntakeDeploy(mIntakeDeploy));
-
                 mElevator = new Elevator();
                 mElevator.setDefaultCommand(new HoldElevator(mElevator));
 
@@ -131,7 +102,7 @@ public class RobotContainer {
                 m_led = new AddressableLED(0);
 
                 mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
-                        mClaw, mIntake, mIntakeDeploy, mSpindexer);
+                                mClaw);
 
                 // Reuse buffer
                 // Default to a length of 60, start empty output
@@ -183,7 +154,7 @@ public class RobotContainer {
                         mDrivetrain.setScoringMode(false);
                 }));
                 controller0.b().onTrue(
-                        new AutoLoadStationIntake(mElevator, mArm, mClaw, mIntake, mIntakeDeploy, mSpindexer));
+                                new AutoLoadStationIntake(mElevator, mArm, mClaw));
                 controller0.b().onTrue(new InstantCommand(() -> {
                         mDrivetrain.setLoadingMode(true);
                 }));
@@ -191,19 +162,13 @@ public class RobotContainer {
                         mDrivetrain.setLoadingMode(false);
                 }));
                 controller0.x().onTrue(
-                                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mIntake, mIntakeDeploy, mSpindexer));// cubes
+                                new AutoGroundIntakeCube(mElevator, mArm, mClaw));// cubes
                 controller0.x().onTrue(new SetLEDsColor(Constants.LEDColors.purple));
                 controller0.x().onTrue(new InstantCommand(
                                 () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
-                controller0.y().onTrue(
-                                new AutoGroundIntakeCone(mElevator, mArm, mClaw, mIntake, mIntakeDeploy, mSpindexer));// cone
-                controller0.y().onTrue(new SetLEDsColor(Constants.LEDColors.yellow));
-                controller0.y().onTrue(new InstantCommand(
-                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
+
                 // D-Pad
                 controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels
-
-                controller0.povRight().onTrue(new RehomeIntakeDeploy(mIntakeDeploy));
 
                 controller0.povUp().onTrue(new SetLEDsColor(Constants.LEDColors.yellow));
                 controller0.povUp()
@@ -242,10 +207,9 @@ public class RobotContainer {
                                                 () -> (mRobotState.currentTargetPosition == GridTargetingPosition.MidLeft
                                                                 ||
                                                                 mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
-                                                                || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter)))
-                                .andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState)));
+                                                                || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
                 controller0.leftTrigger(0.6)
-                                .onTrue(new SetIntakeDeployState(mIntakeDeploy, IntakeDeploy.IntakeDeployState.Normal));
+                                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
                 controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, ElevatorState.Deployed)
                         .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
@@ -260,20 +224,11 @@ public class RobotContainer {
                 controller0.back().onTrue(new BalanceRobot(mDrivetrain));
 
                 // Joysticks Buttons
-                controller0.rightStick().onTrue(new MoveIntake(mIntake, .5, .5).withTimeout(2));
-                controller0.rightStick().onTrue(new AutoSpinSpindexer(mSpindexer).repeatedly());
-                controller0.rightStick().onTrue(new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Normal));
 
                 // -----------------------controller1-----------------------
                 // ABXY
-                controller1.y().whileTrue(new MoveIntake(mIntake, .5, -.5));
 
                 // Bumper/Trigger
-                controller1.leftBumper().whileTrue(new MoveSpindexer(mSpindexer, -0.9));
-                controller1.rightBumper().whileTrue(new MoveSpindexer(mSpindexer, 0.9));
-                controller1.leftTrigger(0.6).onTrue(
-                        new SpindexerGrabPiece(mElevator, mArm, mClaw, mIntake, mIntakeDeploy, mSpindexer,
-                                mRobotState));
                 controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
 
                 // Back and Start
@@ -307,8 +262,6 @@ public class RobotContainer {
                 SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
                 SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
-                SmartDashboard.putData("Spin Spindexer", new MoveSpindexer(mSpindexer, .5));
-
                 SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
 
                 SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
@@ -318,16 +271,6 @@ public class RobotContainer {
                 // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
                 // Rotation2d.fromDegrees(0.0)))));
                 SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
-
-                SmartDashboard.putData("Home Intake", new RehomeIntakeDeploy(mIntakeDeploy));
-                SmartDashboard.putData("Intake to Ground",
-                                new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.GroundIntake));
-                SmartDashboard.putData("Intake to Normal",
-                                new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Normal));
-                SmartDashboard.putData("Intake to Load Station",
-                                new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.LoadStation));
-                SmartDashboard.putData("Intake to Home",
-                                new SetIntakeDeployState(mIntakeDeploy, IntakeDeployState.Homed));
 
                 // SmartDashboard.putData("Test Path Planner Path",
                 // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
@@ -350,8 +293,6 @@ public class RobotContainer {
                 SmartDashboard.putData("Arm", mArm);
                 SmartDashboard.putData("Claw", mClaw);
                 SmartDashboard.putData("Elevator", mElevator);
-                SmartDashboard.putData("Intake", mIntake);
-                SmartDashboard.putData("Spindexer", mSpindexer);
                 SmartDashboard.putData("Butterfly Wheels", mButterflyWheels);
         }
 
