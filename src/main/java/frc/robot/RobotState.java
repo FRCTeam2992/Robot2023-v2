@@ -28,7 +28,7 @@ public class RobotState {
     }
 
     public EndgameModeState endgameMode = EndgameModeState.NotInEndgame;
-    
+
     public boolean isInEndgameMode() {
         return endgameMode == EndgameModeState.InEndgame;
     }
@@ -84,7 +84,7 @@ public class RobotState {
                     return Constants.ScoringGridConstants.Blue.grid8CenterYMeters;
                 default:
                     // NOTE: This case cannot happen due to the enum definition.
-                    return 0.0;                    
+                    return 0.0;
             }
         }
     }
@@ -110,8 +110,8 @@ public class RobotState {
     }
 
     public double currentTargetYCoordinateMeters() {
-        return this.currentTargetedGrid.getGridCenterYMeters() + 
-            this.currentTargetPosition.lateralScoringOffsetMeters;
+        return this.currentTargetedGrid.getGridCenterYMeters() +
+                this.currentTargetPosition.lateralScoringOffsetMeters;
     }
 
     public TargetingGrid currentTargetedGrid = TargetingGrid.GridDriverLeft;

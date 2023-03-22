@@ -6,7 +6,6 @@ import java.util.List;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 
-
 public class SwerveTrajectory {
 
     // Variables

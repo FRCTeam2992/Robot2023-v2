@@ -48,7 +48,8 @@ public class BalanceRobot extends CommandBase {
         priorPitch = currentPitch;
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
         currentPitchDelta = currentPitch - priorPitch;
-        executeCorrectionNow = !recentlyCorrected || (recentlyCorrected && correctionWaitTimer >= WAIT_CYCLES_NEXT_CORRECTION);
+        executeCorrectionNow = !recentlyCorrected
+                || (recentlyCorrected && correctionWaitTimer >= WAIT_CYCLES_NEXT_CORRECTION);
         boolean needForwardCorrection = (mDrivetrain.getRobotPitch() > Constants.DrivetrainConstants.pitchTolerance) &&
                 (currentPitchDelta > -Constants.DrivetrainConstants.pitchDeltaTolerance);
         boolean needReverseCorrection = (mDrivetrain.getRobotPitch() < -Constants.DrivetrainConstants.pitchTolerance) &&
@@ -80,7 +81,8 @@ public class BalanceRobot extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return inToleranceCount >= WAIT_CYCLES_INTOLERANCE || (Robot.balanceTimer.get() > 14.0 && DriverStation.isAutonomousEnabled());
+        return inToleranceCount >= WAIT_CYCLES_INTOLERANCE
+                || (Robot.balanceTimer.get() > 14.0 && DriverStation.isAutonomousEnabled());
     }
 
 }

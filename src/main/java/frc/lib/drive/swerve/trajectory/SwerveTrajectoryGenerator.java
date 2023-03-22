@@ -10,8 +10,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 
-
-
 public class SwerveTrajectoryGenerator {
 
     // Trajectory Settings

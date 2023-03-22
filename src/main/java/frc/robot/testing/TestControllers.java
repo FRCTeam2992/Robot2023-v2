@@ -42,9 +42,9 @@ public class TestControllers {
         }));
 
         testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onTrue(new SetClawState(mRobotContainer.mClaw, ClawState.Closed));
+                .onTrue(new SetClawState(mRobotContainer.mClaw, ClawState.Closed));
         testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onFalse(new SetClawState(mRobotContainer.mClaw, ClawState.Opened));
+                .onFalse(new SetClawState(mRobotContainer.mClaw, ClawState.Opened));
     }
-    
+
 }
