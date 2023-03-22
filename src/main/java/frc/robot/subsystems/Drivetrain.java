@@ -492,11 +492,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public double getRobotPitch() {
-        return -1 * (navx.getPitch());
+        return navx.getPitch() + Constants.DrivetrainConstants.gyroPitchOffset;
     }
 
     public double getRobotRoll() {
-        return -1 * (navx.getRoll());
+        return navx.getRoll() + Constants.DrivetrainConstants.gyroRollOffset;
     }
 
     public Pose2d getLatestSwervePose() {
