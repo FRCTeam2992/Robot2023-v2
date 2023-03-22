@@ -28,6 +28,8 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int slowLoopCounter = 0;
+    private int ledsLoopCounter = 0;
+    private int ledsFrameCounter = 1;
     private int slowAutoBuildCounter = 0;
 
     public static Timer balanceTimer = new Timer();
@@ -105,6 +107,19 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        if (ledsLoopCounter == 5) {
+            mRobotContainer.mLEDs.showNextCycleColor(
+                    Constants.LEDColors.blue,
+                    Constants.LEDColors.white,
+                    ledsFrameCounter);
+            if (ledsFrameCounter == 6) {
+                ledsFrameCounter = 0;
+            }
+            ledsLoopCounter = 0;
+            ledsFrameCounter++;
+        }
+        ledsLoopCounter++;
+
         // Update prematch auto selector and robot setup checks
         mRobotContainer.updateMatchStartChecksToDashboard();
 
