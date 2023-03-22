@@ -7,10 +7,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveIntakeDeploy;
-import frc.robot.commands.RehomeIntakeDeploy;
 import frc.robot.commands.SetClawState;
-import frc.robot.commands.SetIntakeSpeed;
 import frc.robot.subsystems.Claw.ClawState;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
@@ -27,12 +24,6 @@ public class TestControllers {
         /*
          * DO NOT USE "controller0" or "controller1" here
          */
-        testController0.povUp().whileTrue(new MoveIntakeDeploy(mRobotContainer.mIntakeDeploy, -0.3));
-        testController0.povDown().whileTrue(new MoveIntakeDeploy(mRobotContainer.mIntakeDeploy, 0.10));
-        testController0.povRight().onTrue(new RehomeIntakeDeploy(mRobotContainer.mIntakeDeploy));
-
-        testController0.a().whileTrue(new SetIntakeSpeed(mRobotContainer.mIntake, 1, 1));
-        testController0.b().whileTrue(new SetIntakeSpeed(mRobotContainer.mIntake, .75, 0));
 
         testController1.povUp().whileTrue(new MoveElevator(mRobotContainer.mElevator, .1));
         testController1.povDown().whileTrue(new MoveElevator(mRobotContainer.mElevator, -.1));
@@ -51,9 +42,9 @@ public class TestControllers {
         }));
 
         testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onTrue(new SetClawState(mRobotContainer.mClaw, ClawState.Closed));
+                .onTrue(new SetClawState(mRobotContainer.mClaw, ClawState.Closed));
         testController1.axisGreaterThan(XboxController.Axis.kRightTrigger.value, .3)
-                        .onFalse(new SetClawState(mRobotContainer.mClaw, ClawState.Opened));
+                .onFalse(new SetClawState(mRobotContainer.mClaw, ClawState.Opened));
     }
-    
+
 }

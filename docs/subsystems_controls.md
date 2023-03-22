@@ -1,6 +1,7 @@
 # Subsystems & Controls
 
 [Back to Project Documentation](./)
+
 ## Common Interface for All subsystems
 
 - `onDisable`: This method is used in the Robot disabledInit which is called when the Robot gets disabled.
@@ -18,18 +19,6 @@ Swerves each have(4 sets of):
 - 1 pneumatic solenoid controlling 2 pistons for release
 - one-way switch, can't put them back(spring loaded)
 - need some protection against deploying before last 30s of match
-
-## Intake
-
-- 2x motors to spin wheels (NEO 550 motor, SPARK MAX encoder)
-- TBD maybe use "follower mode" on one, and only need to control the other or one motor per each roller
-- Solenoid (2 pistons)controlling deployed state
-
-## Spindexer
-
-- 1 BAG motor, Victor SPX encoder
-- possibly detection electronics (limit switch? on the springed finger)
-- possibly Arduino color sensor assembly (bc of I2C port bug)
 
 ## Elevator
 
