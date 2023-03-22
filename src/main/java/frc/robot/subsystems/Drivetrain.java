@@ -145,40 +145,52 @@ public class Drivetrain extends SubsystemBase {
         this.mRobotState = robotState;
 
         // Motor Inits
-        frontLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftDrive, "CanBus2");
+        // frontLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftDrive, "CanBus2");
+        frontLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftDrive);
         initTalonFX(frontLeftDrive, false);
 
-        frontLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftTurn, "CanBus2");
+        // frontLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftTurn, "CanBus2");
+        frontLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontLeftTurn);
         initTalonFX(frontLeftTurn, true);
 
-        frontRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightDrive, "CanBus2");
+        // frontRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightDrive, "CanBus2");
+        frontRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightDrive);
         initTalonFX(frontRightDrive, false);
 
-        frontRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightTurn, "CanBus2");
+        // frontRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightTurn, "CanBus2");
+        frontRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.frontRightTurn);
         initTalonFX(frontRightTurn, true);
 
-        rearRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightDrive, "CanBus2");
+        // rearRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightDrive, "CanBus2");
+        rearRightDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightDrive);
         initTalonFX(rearRightDrive, false);
 
-        rearRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightTurn, "CanBus2");
+        // rearRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightTurn, "CanBus2");
+        rearRightTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearRightTurn);
         initTalonFX(rearRightTurn, true);
 
-        rearLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftDrive, "CanBus2");
+        // rearLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftDrive, "CanBus2");
+        rearLeftDrive = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftDrive);
         initTalonFX(rearLeftDrive, false);
 
-        rearLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftTurn, "CanBus2");
+        // rearLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftTurn, "CanBus2");
+        rearLeftTurn = new TalonFX(Constants.DrivetrainConstants.CanIDs.rearLeftTurn);
         initTalonFX(rearLeftTurn, true);
 
-        frontRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontRightEncoder, "CanBus2");
+        // frontRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontRightEncoder, "CanBus2");
+        frontRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontRightEncoder);
         initCANCoder(frontRightEncoder, AbsoluteSensorRange.Signed_PlusMinus180, true);
 
-        frontLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontLeftEncoder, "CanBus2");
+        // frontLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontLeftEncoder, "CanBus2");
+        frontLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.frontLeftEncoder);
         initCANCoder(frontLeftEncoder, AbsoluteSensorRange.Signed_PlusMinus180, true);
 
-        rearRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearRightEncoder, "CanBus2");
+        // rearRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearRightEncoder, "CanBus2");
+        rearRightEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearRightEncoder);
         initCANCoder(rearRightEncoder, AbsoluteSensorRange.Signed_PlusMinus180, true);
 
-        rearLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearLeftEncoder, "CanBus2");
+        // rearLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearLeftEncoder, "CanBus2");
+        rearLeftEncoder = new CANCoder(Constants.DrivetrainConstants.CanIDs.rearLeftEncoder);
         initCANCoder(rearLeftEncoder, AbsoluteSensorRange.Signed_PlusMinus180, true);
 
         setDriveNeutralMode(NeutralMode.Coast);

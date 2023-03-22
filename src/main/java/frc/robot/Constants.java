@@ -41,8 +41,10 @@ public final class Constants {
     public static double joystickRotationInverseDeadband = 0.14;
 
     // Length and Width of the Robot in Meters (Inches: 28 x 31.5)
-    public static final double swerveWidth = 0.578;
-    public static final double swerveLength = 0.667;
+    // public static final double swerveWidth = 0.578;
+    // public static final double swerveLength = 0.667;
+    public static final double swerveWidth = 0.591;
+    public static final double swerveLength = 0.654;
 
     // Max Swerve Speed (Velocity Control)
     public static final double swerveMaxSpeed = 4.5; // (Meters per Second)(2 Slow, 4.5 normal)
@@ -53,10 +55,14 @@ public final class Constants {
 
     // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
     // Right
-    public static final double frontLeftOffset = -174.3;
-    public static final double frontRightOffset = 90.8;
-    public static final double rearLeftOffset = 170.6;
-    public static final double rearRightOffset = 31.0;
+    // public static final double frontLeftOffset = -174.3;
+    // public static final double frontRightOffset = 90.8;
+    // public static final double rearLeftOffset = 170.6;
+    // public static final double rearRightOffset = 31.0;
+    public static final double frontLeftOffset = 146.42578125;
+    public static final double frontRightOffset = -144.140625;
+    public static final double rearLeftOffset = 101.25;
+    public static final double rearRightOffset = -24.521484375;
 
     public static class PIDConstants {
       // Swerve Drive PID (Velocity Control)
@@ -66,7 +72,7 @@ public final class Constants {
       public static final double driveF = 0.047;
 
       // Swerve Turn PIDs
-      public static final double turnP = 0.013; // .013
+      public static final double turnP = 0.0045; // .013
       public static final double turnI = 0.0;// .0
       public static final double turnD = 0.00005;
     }
@@ -127,19 +133,31 @@ public final class Constants {
     public static final double maxTurnToX = 20.0; // degrees/sec
 
     public static class CanIDs {
-      public static int frontLeftDrive = 2;
-      public static int frontLeftTurn = 3;
-      public static int frontRightDrive = 4;
-      public static int frontRightTurn = 5;
-      public static int rearLeftDrive = 6;
-      public static int rearLeftTurn = 7;
-      public static int rearRightDrive = 8;
-      public static int rearRightTurn = 9;
+      // public static int frontLeftDrive = 2;
+      // public static int frontLeftTurn = 3;
+      // public static int frontRightDrive = 4;
+      // public static int frontRightTurn = 5;
+      // public static int rearLeftDrive = 6;
+      // public static int rearLeftTurn = 7;
+      // public static int rearRightDrive = 8;
+      // public static int rearRightTurn = 9;
+      public static int frontLeftDrive = 4;
+      public static int frontLeftTurn = 5;
+      public static int frontRightDrive = 2;
+      public static int frontRightTurn = 3;
+      public static int rearLeftDrive = 8;
+      public static int rearLeftTurn = 9;
+      public static int rearRightDrive = 6;
+      public static int rearRightTurn = 7;
 
-      public static int frontLeftEncoder = 3;
-      public static int frontRightEncoder = 5;
-      public static int rearLeftEncoder = 7;
-      public static int rearRightEncoder = 9;
+      // public static int frontLeftEncoder = 3;
+      // public static int frontRightEncoder = 5;
+      // public static int rearLeftEncoder = 7;
+      // public static int rearRightEncoder = 9;
+      public static int frontLeftEncoder = 5;
+      public static int frontRightEncoder = 3;
+      public static int rearLeftEncoder = 9;
+      public static int rearRightEncoder = 7;
     }
 
     // Field Coordinates
