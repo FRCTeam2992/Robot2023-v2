@@ -104,7 +104,7 @@ public class LimeLight {
         Retroreflective
     }
 
-    public enum CoordinateSpace{
+    public enum CoordinateSpace {
         Field,
         Blue,
         Red,
@@ -115,14 +115,14 @@ public class LimeLight {
     /**
      * Uses the LimeLight's default network table name ("limelight").
      */
-        /*  ---only use if there is only 1 limelight
-    public LimeLight() {
-        limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-        getTableEntries();
-    }
-        */
+    /*
+     * ---only use if there is only 1 limelight
+     * public LimeLight() {
+     * limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+     * getTableEntries();
+     * }
+     */
 
-        
     /**
      * @param networkTableName the name of the LimeLight's network table.
      */
@@ -149,7 +149,7 @@ public class LimeLight {
         targetpose_cameraspace = limelightTable.getEntry("targetpose_cameraspace");
         targetpose_robotspace = limelightTable.getEntry("targetpose_robotspace");
         botpose_targetspace = limelightTable.getEntry("botpose_targetspace");
-        
+
         tID = limelightTable.getEntry("tid");
 
         // LimeLight Network Table Entries (Set Values)
@@ -158,7 +158,6 @@ public class LimeLight {
         pipeline = limelightTable.getEntry("pipeline");
         stream = limelightTable.getEntry("stream");
         snapshot = limelightTable.getEntry("snapshot");
-
 
     }
 
@@ -225,20 +224,20 @@ public class LimeLight {
         return getpipe.getDouble(0);
     }
 
-    public String getLimelightJson(){
+    public String getLimelightJson() {
         return limelightJson.getString("No Data");
     }
 
     public long getTargetID() {
-        if (this.hasTarget()){
+        if (this.hasTarget()) {
             return tID.getInteger(-1L);
-        } else{
+        } else {
             return -1L;
-        }       
+        }
     }
 
-    public double[] getBotPose(CoordinateSpace space){
-         switch (space) {
+    public double[] getBotPose(CoordinateSpace space) {
+        switch (space) {
             case Field:
                 return botpose.getDoubleArray(new double[6]);
             case Blue:
@@ -248,7 +247,7 @@ public class LimeLight {
             case Target:
                 return botpose_targetspace.getDoubleArray(new double[6]);
             case Camera:
-            //TODO: should return robot center offset from camera lens center
+                // TODO: should return robot center offset from camera lens center
                 return new double[6];
             default:
                 return null;
