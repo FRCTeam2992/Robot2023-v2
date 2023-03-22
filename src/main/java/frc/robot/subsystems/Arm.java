@@ -12,7 +12,6 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -54,11 +53,11 @@ public class Arm extends SubsystemBase {
   }
 
   public Arm() {
-    armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor);
+    armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor, "CanBus2");
     armMotor.setInverted(false);
     armMotor.setNeutralMode(NeutralMode.Brake);
 
-    armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder);
+    armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder, "CanBus2");
     armEncoder.configSensorDirection(true);
     armEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
 

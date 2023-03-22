@@ -45,5 +45,14 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.06,
+      "names": [
+        "UndeployElevator",
+        "TowerMoveStowed",
+        "EndIntake"
+      ]
+    }
+  ]
 }

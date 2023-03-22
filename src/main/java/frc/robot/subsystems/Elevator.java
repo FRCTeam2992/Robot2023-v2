@@ -49,11 +49,11 @@ public class Elevator extends SubsystemBase {
 
   /** Creates a new Elevator. */
   public Elevator() {
-    elevatorMotorLead = new TalonFX(Constants.ElevatorConstants.DeviceIDs.elevatorMotorLead);
+    elevatorMotorLead = new TalonFX(Constants.ElevatorConstants.DeviceIDs.elevatorMotorLead, "CanBus2");
     elevatorMotorLead.setInverted(TalonFXInvertType.CounterClockwise);
     elevatorMotorLead.setNeutralMode(NeutralMode.Brake);
 
-    elevatorMotorFollow = new TalonFX(Constants.ElevatorConstants.DeviceIDs.elevatorMotorFollow);
+    elevatorMotorFollow = new TalonFX(Constants.ElevatorConstants.DeviceIDs.elevatorMotorFollow, "CanBus2");
     elevatorMotorFollow.setNeutralMode(NeutralMode.Brake);
     elevatorMotorFollow.set(TalonFXControlMode.Follower, elevatorMotorLead.getDeviceID());
     elevatorMotorFollow.setInverted(TalonFXInvertType.OpposeMaster);
