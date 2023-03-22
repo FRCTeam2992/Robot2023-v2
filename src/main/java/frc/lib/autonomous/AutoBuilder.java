@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotState;
-import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
