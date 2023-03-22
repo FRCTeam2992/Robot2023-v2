@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotState;
-import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.DeployElevator;
+import frc.robot.commands.MoveClaw;
+import frc.robot.commands.StopClaw;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
@@ -117,7 +118,7 @@ public class AutoBuilder {
                 autoStartChooser.getSelected());
     }
 
-    private Command setupAutoInitialScoreCommand(PathPlannerTrajectory initialScorePath) {
+    private Command setupAutoInitialScoreCommand() {
         Command initialScoreCommand;
         Pose2d startingPose = getAutoStartPosition().getStartPose();
         if (startingPose == null) {
@@ -131,12 +132,9 @@ public class AutoBuilder {
                 initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
                         .andThen(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
                                 GridTargetingPosition.HighRight.towerWaypoint)))
-                        .alongWith(new WaitCommand(1.7)
-                                .andThen(new FollowTrajectoryCommand(mDrivetrain, initialScorePath, true)));
-                // Add Sequential Commands after initial move
-                initialScoreCommand = initialScoreCommand
-                        .andThen(new WaitCommand(0.2))
-                        .andThen(new WaitCommand(0.4));
+                        .andThen(new WaitCommand(0.5))
+                        .andThen(new MoveClaw(mClaw, -0.5).withTimeout(0.5))
+                        .andThen(new StopClaw(mClaw).withTimeout(0.04));
                 break;
             default:
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
@@ -222,7 +220,6 @@ public class AutoBuilder {
     }
 
     public Command buildAutoCommand() {
-        PathPlannerTrajectory initialScorepath;
         Command autoPathCommand = null;
         Command initialScoreCommand = null;
         Command afterInitialScoreCommand = null;
@@ -235,8 +232,7 @@ public class AutoBuilder {
         mRobotState.useLimelightOdometryUpdates = false;
 
         // Setup the initial preload scoring path and command sequence
-        initialScorepath = getAutoStartPosition().getInitialTrajectory();
-        initialScoreCommand = setupAutoInitialScoreCommand(initialScorepath);
+        initialScoreCommand = setupAutoInitialScoreCommand();
 
         if (!autoStartCompatible()) {
             // We have incompatible starting position for sequence.
