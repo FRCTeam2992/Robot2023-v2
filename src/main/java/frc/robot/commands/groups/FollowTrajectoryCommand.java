@@ -24,9 +24,9 @@ public class FollowTrajectoryCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     if (traj == null) {
-        // No trajectory so just end
-        addCommands(new InstantCommand());
-        return;
+      // No trajectory so just end
+      addCommands(new InstantCommand());
+      return;
     }
     addCommands(
         new InstantCommand(() -> {
@@ -36,18 +36,18 @@ public class FollowTrajectoryCommand extends SequentialCommandGroup {
             if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
               startPose = new Pose2d(startPose.getX(),
                   Constants.DrivetrainConstants.FieldSize.FIELD_WIDTH_METERS - startPose.getY(),
-                   startPose.getRotation().times(-1));
+                  startPose.getRotation().times(-1));
             }
             mDrivetrain.resetOdometryToPose(startPose);
-                    // System.out.println("DEBUG LOG: First path! Pose reset!");
+            // System.out.println("DEBUG LOG: First path! Pose reset!");
           }
         }),
-            // new InstantCommand(() -> {
-            // System.out.println("DEBUG LOG: initial holonomic pose = " +
-            // traj.getInitialHolonomicPose());
-            // System.out.println("DEBUG LOG: initial gyro yaw (adj) = " +
-            // mDrivetrain.getGyroYaw());
-            // }),
+        // new InstantCommand(() -> {
+        // System.out.println("DEBUG LOG: initial holonomic pose = " +
+        // traj.getInitialHolonomicPose());
+        // System.out.println("DEBUG LOG: initial gyro yaw (adj) = " +
+        // mDrivetrain.getGyroYaw());
+        // }),
         new PPSwerveControllerCommand(
             traj,
             mDrivetrain.swerveDrivePoseEstimator::getEstimatedPosition, // Pose supplier
@@ -61,7 +61,7 @@ public class FollowTrajectoryCommand extends SequentialCommandGroup {
             true, // Should the path be automatically mirrored depending on alliance color.
                   // Optional, defaults to true
             mDrivetrain // Requires this drive subsystem
-            ));
+        ));
 
   }
 }

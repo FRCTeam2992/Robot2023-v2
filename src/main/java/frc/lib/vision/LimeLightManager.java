@@ -16,20 +16,20 @@ public class LimeLightManager {
 
     public void ledModeRequest(LedMode ledMode) {
         switch (ledMode) {
-        case On:
-            ledOnRequest++;
-            break;
-        case Off:
-            ledOnRequest--;
-            break;
-        case Blink:
-            mLimelightCamera.setLedMode(LedMode.Blink);
-            ledOnRequest = 0;
-            break;
-        case Pipeline:
-            mLimelightCamera.setLedMode(LedMode.Pipeline);
-            ledOnRequest = 0;
-            break;
+            case On:
+                ledOnRequest++;
+                break;
+            case Off:
+                ledOnRequest--;
+                break;
+            case Blink:
+                mLimelightCamera.setLedMode(LedMode.Blink);
+                ledOnRequest = 0;
+                break;
+            case Pipeline:
+                mLimelightCamera.setLedMode(LedMode.Pipeline);
+                ledOnRequest = 0;
+                break;
         }
 
         ledOnRequest = Math.max(0, ledOnRequest);
