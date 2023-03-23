@@ -20,6 +20,8 @@ public class BalanceRobot2 extends CommandBase {
     private double currentPitch;
     private double currentPitchDelta;
     private PIDController pitchPID;
+    private boolean moving = false;
+    private boolean reached = false;
 
     /** Creates a new BalanceRobot. */
     public BalanceRobot2(Drivetrain driveTrain) {
@@ -27,7 +29,7 @@ public class BalanceRobot2 extends CommandBase {
         mDrivetrain = driveTrain;
         addRequirements(mDrivetrain);
         lowPass = LinearFilter.movingAverage(3);
-        pitchPID = new PIDController(.025, 0, 0.004);
+        pitchPID = new PIDController(.05, 0, 0.006);
 
     }
 
@@ -37,12 +39,15 @@ public class BalanceRobot2 extends CommandBase {
         priorPitch = currentPitch = mDrivetrain.getRobotPitch();
         lowPass.reset();
         mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
+        reached = false;
 
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        double speed = 0.0;
+
         priorPitch = currentPitch;
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
         currentPitchDelta = currentPitch - priorPitch;
@@ -50,7 +55,11 @@ public class BalanceRobot2 extends CommandBase {
         SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
         SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
 
-        double speed = pitchPID.calculate(currentPitch);
+        speed = pitchPID.calculate(currentPitch);
+        if ((Math.abs(currentPitch) < 2.0) || reached) {
+            reached = true;
+            speed *= 0.3;
+        }
         speed = Math.max(-0.75, speed);
         speed = Math.min(0.75, speed);
 
