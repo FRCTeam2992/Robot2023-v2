@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 
-public class BalanceRobot extends CommandBase {
+public class BalanceRobotStateDoNoUse extends CommandBase {
     private Drivetrain mDrivetrain;
     private LinearFilter lowPass;
     private BalanceStateMachine stateMachine;
@@ -20,7 +20,7 @@ public class BalanceRobot extends CommandBase {
     private double correctionSpeed;
 
     /** Creates a new BalanceRobot. */
-    public BalanceRobot(Drivetrain driveTrain) {
+    public BalanceRobotStateDoNoUse(Drivetrain driveTrain) {
         // Use addRequirements() here to declare subsystem dependencies.
         mDrivetrain = driveTrain;
         addRequirements(mDrivetrain);

@@ -7,11 +7,11 @@ package frc.robot;
 import frc.lib.autonomous.AutoBuilder;
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
+import frc.robot.commands.BalanceRobot2;
 import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
-import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
@@ -25,7 +25,6 @@ import frc.robot.commands.SetScoringTarget;
 import frc.robot.commands.ToggleDeployElevator;
 import frc.robot.commands.ToggleEndgameState;
 import frc.robot.commands.ZeroElevatorEncoders;
-import frc.robot.commands.Deprecated.BalanceRobot;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.AutoLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
@@ -207,7 +206,7 @@ public class RobotContainer {
 
                 controller0.start().onTrue(new ResetGyro(mDrivetrain));
 
-                controller0.back().onTrue(new BalanceRobot(mDrivetrain));
+                controller0.back().onTrue(new BalanceRobot2(mDrivetrain));
 
                 // Joysticks Buttons
 

@@ -18,11 +18,11 @@ import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
+import frc.robot.commands.BalanceRobot2;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.MoveClaw;
 import frc.robot.commands.StopClaw;
-import frc.robot.commands.Deprecated.BalanceRobot;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
@@ -226,7 +226,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new BalanceRobot(mDrivetrain));
+                followCommand = followCommand.andThen(new BalanceRobot2(mDrivetrain));
                 break;
             case CenterBalance:
                 if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
@@ -246,7 +246,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new BalanceRobot(mDrivetrain));
+                followCommand = followCommand.andThen(new BalanceRobot2(mDrivetrain));
                 break;
             default:
         }
