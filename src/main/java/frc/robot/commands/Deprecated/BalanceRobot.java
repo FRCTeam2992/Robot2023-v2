@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Deprecated;
 
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,7 +12,7 @@ import frc.robot.subsystems.Drivetrain;
 public class BalanceRobot extends CommandBase {
     private Drivetrain mDrivetrain;
     private LinearFilter lowPass;
-    private BalanceStateMachine stateMachine;   
+    private BalanceStateMachine stateMachine;
     private double priorPitch;
     private double currentPitch;
     private double currentPitchDelta;
@@ -94,7 +94,7 @@ public class BalanceRobot extends CommandBase {
     public static class BalanceStateMachine {
         public final int WAIT_CYCLES_INTOLERANCE = 250;
         public final int WAIT_CYCLES_NEXT_CORRECTION = 150;
-        
+
         public enum BalanceModeState {
             Uncorrected,
             ForwardCorrection,
@@ -137,7 +137,7 @@ public class BalanceRobot extends CommandBase {
                     break;
                 case Complete:
                     waitForNextCorrection();
-                    break;                                        
+                    break;
             }
         }
 
@@ -147,7 +147,7 @@ public class BalanceRobot extends CommandBase {
 
         public boolean canMakeCorrection() {
             return this.state == BalanceModeState.Uncorrected ||
-                this.state == BalanceModeState.Waiting;
+                    this.state == BalanceModeState.Waiting;
         }
 
         public boolean needsForwardCorrection(double currentPitch, double currentPitchDelta) {
