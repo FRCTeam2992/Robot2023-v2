@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
@@ -24,7 +27,7 @@ public class BalanceRobot extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         mDrivetrain = driveTrain;
         addRequirements(mDrivetrain);
-        lowPass = LinearFilter.movingAverage(3);
+        lowPass = LinearFilter.movingAverage(1);
         stateMachine = new BalanceStateMachine();
     }
 
@@ -34,6 +37,8 @@ public class BalanceRobot extends CommandBase {
         priorPitch = currentPitch = mDrivetrain.getRobotPitch();
         lowPass.reset();
         correctionsCompleted = 0;
+        mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
+        this.stateMachine.state = BalanceStateMachine.BalanceModeState.Uncorrected;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -44,22 +49,32 @@ public class BalanceRobot extends CommandBase {
         currentPitchDelta = currentPitch - priorPitch;
 
         stateMachine.execute(currentPitch, currentPitchDelta);
+        SmartDashboard.putString("Balance State", this.stateMachine.state.toString());
+        SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
+        SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
+        SmartDashboard.putNumber("Balance Corrections Completed", this.correctionsCompleted);
 
         switch (stateMachine.state) {
             case ForwardCorrection:
                 this.correctionSpeed = getCorrectionSpeed(true);
+                SmartDashboard.putNumber("Balance Speed", this.correctionSpeed);
                 mDrivetrain.moveRobotFrontBack(true, this.correctionSpeed);
                 break;
             case ReverseCorrection:
                 this.correctionSpeed = getCorrectionSpeed(false);
+                SmartDashboard.putNumber("Balance Speed", this.correctionSpeed);
                 mDrivetrain.moveRobotFrontBack(false, this.correctionSpeed);
                 break;
-            case Complete:
-                correctionsCompleted++;
+            case CorrectionComplete:
+                this.correctionsCompleted++;
+                mDrivetrain.stopDrive();
+                break;
+            case Waiting:
+            case MaybeBalanced:
+            case Balanced:
                 mDrivetrain.stopDrive();
                 break;
             default:
-                mDrivetrain.stopDrive();
                 break;
         }
     }
@@ -68,15 +83,16 @@ public class BalanceRobot extends CommandBase {
         if (forward) {
             return DrivetrainConstants.balanceMoveSpeed * getCorrectionFactor();
         } else {
-            return (DrivetrainConstants.balanceMoveSpeed - .1) * getCorrectionFactor();
+            return DrivetrainConstants.balanceMoveSpeed * getCorrectionFactor();
         }
     }
 
     private double getCorrectionFactor() {
         double correctionFactor = 1.0;
         if (this.correctionsCompleted > 0) {
-            correctionFactor *= 0.5 * Math.max(0.3, 1 - 0.1 * this.correctionsCompleted);
+            correctionFactor *= 0.8 * Math.max(0.3, 1 - 0.1 * this.correctionsCompleted);
         }
+        SmartDashboard.putNumber("Balance Correction Factor", correctionFactor);
         return correctionFactor;
     }
 
@@ -92,8 +108,8 @@ public class BalanceRobot extends CommandBase {
     }
 
     public static class BalanceStateMachine {
-        public final int WAIT_CYCLES_INTOLERANCE = 250;
-        public final int WAIT_CYCLES_NEXT_CORRECTION = 150;
+        public final int WAIT_CYCLES_IN_TOLERANCE = 250;
+        public final int WAIT_CYCLES_NEXT_CORRECTION = 100;
         
         public enum BalanceModeState {
             Uncorrected,
@@ -101,7 +117,8 @@ public class BalanceRobot extends CommandBase {
             ReverseCorrection,
             Waiting,
             Balanced,
-            Complete
+            MaybeBalanced,
+            CorrectionComplete
         }
 
         public BalanceModeState state;
@@ -117,8 +134,11 @@ public class BalanceRobot extends CommandBase {
         }
 
         public void execute(double currentPitch, double currentPitchDelta) {
+            SmartDashboard.putBoolean("Charge Station Moving", chargeStationMoving(currentPitchDelta));
+            SmartDashboard.putBoolean("Charge Station Level", chargeStationLevel(currentPitch));
+    
             switch (this.state) {
-                case Balanced:
+                case MaybeBalanced:
                     checkStillBalanced(currentPitch, currentPitchDelta);
                     break;
                 case Uncorrected:
@@ -135,9 +155,11 @@ public class BalanceRobot extends CommandBase {
                 case Waiting:
                     waitCycle();
                     break;
-                case Complete:
+                case CorrectionComplete:
                     waitForNextCorrection();
-                    break;                                        
+                    break;
+                case Balanced:
+                    break;
             }
         }
 
@@ -146,8 +168,7 @@ public class BalanceRobot extends CommandBase {
         }
 
         public boolean canMakeCorrection() {
-            return this.state == BalanceModeState.Uncorrected ||
-                this.state == BalanceModeState.Waiting;
+            return this.state == BalanceModeState.Uncorrected;
         }
 
         public boolean needsForwardCorrection(double currentPitch, double currentPitchDelta) {
@@ -162,7 +183,7 @@ public class BalanceRobot extends CommandBase {
 
         public boolean chargeStationMoving(double currentPitchDelta) {
             double pitchDeltaTolerance = DrivetrainConstants.pitchDeltaTolerance;
-            return (currentPitchDelta > -pitchDeltaTolerance) && (currentPitchDelta < pitchDeltaTolerance);
+            return (currentPitchDelta < -pitchDeltaTolerance) && (currentPitchDelta > pitchDeltaTolerance);
         }
 
         public boolean chargeStationLevel(double currentPitch) {
@@ -191,8 +212,10 @@ public class BalanceRobot extends CommandBase {
         }
 
         public void maybeCompleteCorrection(double currentPitch, double currentPitchDelta) {
-            if (chargeStationMoving(currentPitchDelta) && chargeStationLevel(currentPitch)) {
-                this.state = BalanceModeState.Complete;
+            boolean moving = chargeStationMoving(currentPitchDelta);
+            boolean level = chargeStationLevel(currentPitch);
+            if (moving || level) {
+                this.state = BalanceModeState.CorrectionComplete;
             } else {
                 this.state = BalanceModeState.Uncorrected;
             }
@@ -207,7 +230,7 @@ public class BalanceRobot extends CommandBase {
         public void waitCycle() {
             this.waitCycleCounter++;
             if (this.waitCycleCounter > this.WAIT_CYCLES_NEXT_CORRECTION) {
-                this.state = BalanceModeState.Balanced;
+                this.state = BalanceModeState.MaybeBalanced;
             }
         }
 
@@ -216,11 +239,11 @@ public class BalanceRobot extends CommandBase {
         }
 
         public void checkStillBalanced(double currentPitch, double currentPitchDelta) {
-            if (chargeStationMoving(currentPitchDelta) || !chargeStationLevel(currentPitch)) {
+            if (!chargeStationLevel(currentPitch)) {
                 this.state = BalanceModeState.Uncorrected;
             } else {
                 this.balancedCycleCounter++;
-                if (this.balancedCycleCounter > this.WAIT_CYCLES_INTOLERANCE) {
+                if (this.balancedCycleCounter > this.WAIT_CYCLES_IN_TOLERANCE) {
                     finish();
                 }
             }
