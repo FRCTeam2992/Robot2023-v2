@@ -54,6 +54,7 @@ public class BalanceRobot2 extends CommandBase {
 
         SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
         SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
+        SmartDashboard.putBoolean("Robot Balance Reached", reached);
 
         speed = pitchPID.calculate(currentPitch);
         if ((Math.abs(currentPitch) < 2.0) || reached) {
