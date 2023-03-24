@@ -151,7 +151,8 @@
       "names": [
         "UndeployElevator",
         "TowerMoveStowed",
-        "StopClaw"
+        "StopClaw",
+        "StopLimelight"
       ]
     }
   ]
