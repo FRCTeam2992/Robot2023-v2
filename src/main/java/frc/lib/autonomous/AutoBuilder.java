@@ -6,6 +6,7 @@ package frc.lib.autonomous;
 
 import java.util.HashMap;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -65,6 +66,8 @@ public class AutoBuilder {
         eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
                 Constants.TowerConstants.intakeBackstop));
         eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
+        eventMap.put("StartCubeOuttake", new MoveClaw(mClaw, -0.5));
+        eventMap.put("StopClaw", new StopClaw(mClaw));
         eventMap.put("EndIntake", new HoldClaw(mClaw));
     }
 
@@ -132,12 +135,12 @@ public class AutoBuilder {
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
                 break;
             case Hi_Cone:
-                initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
+                initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose))
+                        .andThen(new DeployElevator(mElevator, ElevatorState.Deployed))
                         .andThen(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
                                 GridTargetingPosition.HighRight.towerWaypoint)))
                         .andThen(new WaitCommand(0.5))
-                        .andThen(new MoveClaw(mClaw, -0.5).withTimeout(0.5))
-                        .andThen(new StopClaw(mClaw).withTimeout(0.04));
+                        .andThen(new MoveClaw(mClaw, -0.5).withTimeout(0.5));
                 break;
             default:
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));

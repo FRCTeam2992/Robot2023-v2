@@ -145,5 +145,14 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.01,
+      "names": [
+        "UndeployElevator",
+        "TowerMoveStowed",
+        "StopClaw"
+      ]
+    }
+  ]
 }
