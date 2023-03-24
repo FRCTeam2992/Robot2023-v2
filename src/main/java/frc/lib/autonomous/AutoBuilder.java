@@ -18,7 +18,7 @@ import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
-import frc.robot.commands.BalanceRobot2;
+import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.MoveClaw;
@@ -226,7 +226,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new BalanceRobot2(mDrivetrain));
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             case CenterBalance:
                 if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
@@ -246,7 +246,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new BalanceRobot2(mDrivetrain));
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             default:
         }
