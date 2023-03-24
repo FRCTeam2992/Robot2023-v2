@@ -218,7 +218,7 @@ public final class Constants {
     public static Waypoint scoreConeHigh = new Waypoint(32, 21.3);
     public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55);
     public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54);
-    public static Waypoint intakeBackstop = new Waypoint(0, 0);
+    public static Waypoint normal = new Waypoint(0, 0);
     // public static Waypoint intakeGrabCube = new Waypoint(1.0, 0.0);
     // public static Waypoint intakeGrabCone = new Waypoint(0.0, 11.0);
     // public static Waypoint intakeRegrab = new Waypoint(7.75, 5.0);
@@ -283,13 +283,13 @@ public final class Constants {
     }
 
     public static class Limits {
-      public static double hardStopTop = 221.0;
-      public static double hardStopBottom = -9.0;
-      public static double softStopTop = 216.0;
-      public static double softStopBottom = -4.0;
+        public static double hardStopTop = 135.0;
+        public static double hardStopBottom = -115.0;
+        public static double softStopTop = 130.0;
+        public static double softStopBottom = -111.0;
     }
 
-    public static double gearRatio = 128.0;
+    public static double gearRatio = 64.0 * (32.0 / 12.0);
     public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
     public static double armAngleToleranceDeg = 1.0; // Moves within 1 degree are "close enough"
 
@@ -297,13 +297,10 @@ public final class Constants {
 
     public static class ArmSlopConstants {
       // All of these constants need to be validated!
-      public static double topZoneLowEdge = 213; // Above this may be n the slop zone
-      public static double topZoneHiEdge = 219; // Past the slop zone -- use adjustment
-      public static double topZoneAdjustment = 9.6; // Slop adjustment to apply
-
-      public static double bottomZoneHiEdge = 43.8; // Past this in the slop zone
-      public static double bottomZoneLowEdge = 43.6; // Past the slop zone -- use adjustment
-      public static double bottomZoneAdjustment = 9.6;
+      public static double topZoneLowEdge = 21.0; // Above this may be n the slop zone
+      public static double topZoneHiEdge = 26.0; // Past the slop zone -- use adjustment
+      // TODO measure exact slop amount and update constant
+      public static double topZoneAdjustment = 2.0; // Slop adjustment to apply
     }
 
     public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive

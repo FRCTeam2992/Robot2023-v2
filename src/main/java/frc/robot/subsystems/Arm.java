@@ -155,21 +155,7 @@ public class Arm extends SubsystemBase {
     if (!hasArmMotorReset() && motorEncoderConfidentCalibrated == EncoderState.CALIBRATED) {
       // We previously had a good reset and no motor reset so still good
       return;
-    }
-
-    // If arm stowed at top of range, we have to adjust for mechanical chain slop
-    // if (Math.abs(armEncoder.getLastTimestamp() - Timer.getFPGATimestamp()) > 0.5)
-    // {
-    // // Not getting current Cancoder settings
-    // // Assume we are at Match Start position and PRAY!
-    // System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++> ARM
-    // ENCODER NO CURRENT READING");
-    // System.out.println("Encoder timestamp:" + armEncoder.getLastTimestamp());
-    // System.out.println("FPGA Timestamp:" + Timer.getFPGATimestamp());
-    // value = Constants.ArmConstants.Limits.hardStopTop -
-    // Constants.ArmConstants.ArmSlopConstants.topZoneAdjustment;
-    // motorEncoderConfidentCalibrated = EncoderState.CANCODER_FAILED;
-    // }
+  }
     if (value >= Constants.ArmConstants.ArmSlopConstants.topZoneHiEdge) {
       // Above the top slop zone -- apply adjustment
       value -= Constants.ArmConstants.ArmSlopConstants.topZoneAdjustment;
@@ -179,17 +165,8 @@ public class Arm extends SubsystemBase {
       value -= (Constants.ArmConstants.ArmSlopConstants.topZoneAdjustment / 2.0);
       motorEncoderConfidentCalibrated = EncoderState.TOP_SLOP_ZONE;
       // System.out.println("++++++++++++> Arm init in top slop zone");
-    } else if (value >= Constants.ArmConstants.ArmSlopConstants.bottomZoneHiEdge) {
-      // In the mid zone -- no offset to motor encoder needed
-      motorEncoderConfidentCalibrated = EncoderState.CALIBRATED;
-    } else if (value >= Constants.ArmConstants.ArmSlopConstants.bottomZoneLowEdge) {
-      // In the bottom slop zone -- assume midount but note we dont have good reading
-      value -= Constants.ArmConstants.ArmSlopConstants.bottomZoneAdjustment / 2.0;
-      motorEncoderConfidentCalibrated = EncoderState.BOTTOM_SLOP_ZONE;
-      // System.out.println("++++++++++++++> Arm init in bottom slop zone");
     } else {
-      // Below the bottom slop zone -- apply adjustment
-      value -= Constants.ArmConstants.ArmSlopConstants.bottomZoneAdjustment;
+        // Below the slop zone -- no adjustment needed
       motorEncoderConfidentCalibrated = EncoderState.CALIBRATED;
     }
 

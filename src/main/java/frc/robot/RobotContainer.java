@@ -199,7 +199,7 @@ public class RobotContainer {
                                 .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
                 controller0.leftTrigger(0.6)
-                                .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, TowerConstants.intakeBackstop));
+                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, TowerConstants.normal));
                 controller0.leftTrigger(0.6).onFalse(new DeployElevator(mElevator, ElevatorState.Undeployed));
 
                 // Back and Start

@@ -20,6 +20,6 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new SafeDumbTowerToPosition(elevator, arm, Constants.TowerConstants.intakeBackstop).asProxy());
+            new SafeDumbTowerToPosition(elevator, arm, Constants.TowerConstants.normal).asProxy());
   }
 }
