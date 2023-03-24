@@ -53,19 +53,25 @@ public class AutoBuilder {
         mArm = arm;
         mClaw = claw;
 
-        eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
-        eventMap.put("DeployElevator", new DeployElevator(mElevator, ElevatorState.Deployed));
-        eventMap.put("UndeployElevator", new DeployElevator(mElevator, ElevatorState.Undeployed));
-        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator, mArm,
-                GridTargetingPosition.HighRight.towerWaypoint));
-        eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator, mArm,
-                GridTargetingPosition.HighCenter.towerWaypoint));
-        eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(mElevator, mArm,
-                Constants.TowerConstants.intakeGrabCone));
-        eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
-                Constants.TowerConstants.intakeBackstop));
-        eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
-        eventMap.put("EndIntake", new HoldClaw(mClaw));
+        // eventMap.put("SetIntakeModeCube", new InstantCommand(() ->
+        // mRobotState.intakeMode = IntakeModeState.Cube));
+        // eventMap.put("DeployElevator", new DeployElevator(mElevator,
+        // ElevatorState.Deployed));
+        // eventMap.put("UndeployElevator", new DeployElevator(mElevator,
+        // ElevatorState.Undeployed));
+        // eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator,
+        // mArm,
+        // GridTargetingPosition.HighRight.towerWaypoint));
+        // eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator,
+        // mArm,
+        // GridTargetingPosition.HighCenter.towerWaypoint));
+        // eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(mElevator,
+        // mArm,
+        // Constants.TowerConstants.cubeGroundIntake));
+        // eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
+        // Constants.TowerConstants.intakeBackstop));
+        // eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
+        // eventMap.put("EndIntake", new HoldClaw(mClaw));
     }
 
     public void setupAutoSelector() {
