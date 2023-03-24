@@ -22,6 +22,7 @@ import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.MoveClaw;
+import frc.robot.commands.SetLimeLightOdometryUpdates;
 import frc.robot.commands.StopClaw;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
@@ -68,6 +69,8 @@ public class AutoBuilder {
         eventMap.put("StartCubeOuttake", new MoveClaw(mClaw, -0.5));
         eventMap.put("StopClaw", new StopClaw(mClaw));
         eventMap.put("EndIntake", new HoldClaw(mClaw));
+        eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, false));
+        eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, true));
     }
 
     public void setupAutoSelector() {
@@ -259,13 +262,6 @@ public class AutoBuilder {
         Command autoPathCommand = null;
         Command initialScoreCommand = null;
         Command afterInitialScoreCommand = null;
-
-        // Ensure Limelight odometry is turned off to prevent
-        // overcorrection upon AprilTag sightings during
-        // autonomous sequences
-        // (This should already be off as it is set in
-        // autonomousInit, but this is a failsafe.)
-        mRobotState.useLimelightOdometryUpdates = false;
 
         // Setup the initial preload scoring path and command sequence
         initialScoreCommand = setupAutoInitialScoreCommand();
