@@ -1,9 +1,6 @@
 package frc.lib.autonomous;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
