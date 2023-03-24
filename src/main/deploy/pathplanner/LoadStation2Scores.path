@@ -165,13 +165,7 @@
       "position": 3.6654545454544873,
       "names": [
         "EndIntake",
-        "TowerMoveStowed"
-      ]
-    },
-    {
-      "position": 4.40727272727262,
-      "names": [
-        "DeployElevator"
+        "TowerMoveLoadStation"
       ]
     }
   ]
