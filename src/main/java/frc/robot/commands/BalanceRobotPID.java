@@ -8,17 +8,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
-public class BalanceRobot2 extends CommandBase {
+public class BalanceRobotPID extends CommandBase {
     private Drivetrain mDrivetrain;
     private LinearFilter lowPass;
     private double priorPitch;
@@ -29,7 +27,7 @@ public class BalanceRobot2 extends CommandBase {
     private Timer doneTimer;
 
     /** Creates a new BalanceRobot. */
-    public BalanceRobot2(Drivetrain driveTrain) {
+    public BalanceRobotPID(Drivetrain driveTrain) {
         // Use addRequirements() here to declare subsystem dependencies.
         mDrivetrain = driveTrain;
         addRequirements(mDrivetrain);

@@ -7,7 +7,7 @@ package frc.robot;
 import frc.lib.autonomous.AutoBuilder;
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
-import frc.robot.commands.BalanceRobot2;
+import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
@@ -206,7 +206,7 @@ public class RobotContainer {
 
                 controller0.start().onTrue(new ResetGyro(mDrivetrain));
 
-                controller0.back().onTrue(new BalanceRobot2(mDrivetrain));
+                controller0.back().onTrue(new BalanceRobotPID(mDrivetrain));
 
                 // Joysticks Buttons
 
