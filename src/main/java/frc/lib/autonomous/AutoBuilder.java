@@ -6,7 +6,6 @@ package frc.lib.autonomous;
 
 import java.util.HashMap;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.geometry.Pose2d;
