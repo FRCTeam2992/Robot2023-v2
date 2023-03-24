@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
@@ -68,7 +70,7 @@ public class BalanceRobot2 extends CommandBase {
             speed *= 0.3;
         }
 
-        if (Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchDeltaTolerance) {
+        if (Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchTolerance) {
             // We are within the balanced range -- start timer
             doneTimer.start();
         } else {
@@ -89,14 +91,7 @@ public class BalanceRobot2 extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        mDrivetrain.frontLeftModule.setTurnAngle(45.0);
-        mDrivetrain.frontLeftModule.setDriveSpeed(0.0);
-        mDrivetrain.frontRightModule.setTurnAngle(-45.0);
-        mDrivetrain.frontRightModule.setDriveSpeed(0.0);
-        mDrivetrain.rearLeftModule.setTurnAngle(-45.0);
-        mDrivetrain.rearLeftModule.setDriveSpeed(0.0);
-        mDrivetrain.rearRightModule.setTurnAngle(45.0);
-        mDrivetrain.rearRightModule.setDriveSpeed(0.0);
+        CommandScheduler.getInstance().schedule(mDrivetrain.XWheels().withTimeout(0.3));
     }
 
     // Returns true when the command should end.
