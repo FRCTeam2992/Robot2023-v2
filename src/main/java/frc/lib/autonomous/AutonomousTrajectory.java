@@ -17,9 +17,16 @@ public enum AutonomousTrajectory {
     WallMobilityBalance(PathPlanner.loadPathGroup("WallMobilityBalance", new PathConstraints(2.9, 2.5))),
     LoadStation2Scores(PathPlanner.loadPathGroup("LoadStation2Scores", 4.0, 3.0)),
     Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 4.0, 3.0)),
-    CenterBalanceLoadStationSide(
-            PathPlanner.loadPathGroup("CenterBalanceLoadStationSide", new PathConstraints(2.8, 2.25))),
-    CenterBalanceWallSide(PathPlanner.loadPathGroup("CenterBalanceWallSide", new PathConstraints(2.8, 2.25)));
+    CenterBalanceLoadStationSide(PathPlanner.loadPathGroup("CenterBalanceLoadStationSide",
+            new PathConstraints(2.0, 2.5),
+            new PathConstraints(1.0, 2.5),
+            new PathConstraints(4.0, 2.5),
+            new PathConstraints(2.0, 2.5))),
+    CenterBalanceWallSide(PathPlanner.loadPathGroup("CenterBalanceWallSide",
+            new PathConstraints(2.0, 2.5),
+            new PathConstraints(1.0, 2.5),
+            new PathConstraints(4.0, 2.5),
+            new PathConstraints(2.0, 2.5)));
 
     public List<PathPlannerTrajectory> trajectoryGroup;
 
