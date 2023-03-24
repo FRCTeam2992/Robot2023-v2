@@ -65,6 +65,8 @@ public class AutoBuilder {
                 Constants.TowerConstants.cubeGroundIntake));
         eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
                 Constants.TowerConstants.intakeBackstop));
+        eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(mElevator, mArm,
+                Constants.TowerConstants.loadStation));
         eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
         eventMap.put("StartCubeOuttake", new MoveClaw(mClaw, -0.5));
         eventMap.put("StopClaw", new StopClaw(mClaw));
