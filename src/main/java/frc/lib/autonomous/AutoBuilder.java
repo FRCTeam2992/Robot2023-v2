@@ -61,7 +61,7 @@ public class AutoBuilder {
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator, mArm,
                 GridTargetingPosition.HighCenter.towerWaypoint));
         eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(mElevator, mArm,
-                Constants.TowerConstants.intakeGrabCone));
+                Constants.TowerConstants.cubeGroundIntake));
         eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
                 Constants.TowerConstants.intakeBackstop));
         eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
