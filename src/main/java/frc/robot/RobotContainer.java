@@ -41,6 +41,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.testing.commands.TestArmPID;
 import frc.robot.testing.commands.TestClawIntake;
 import frc.robot.testing.commands.TestClawOuttake;
+import frc.robot.testing.commands.TestElevatorPID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -274,11 +275,12 @@ public class RobotContainer {
                 // SmartDashboard.putData("Test Path Planner Path",
                 // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
 
-                // SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
+                SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
                 SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
                 // SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
                 // mArm));
                 SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
+                SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
 
                 // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
         }
