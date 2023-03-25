@@ -34,7 +34,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                                         WaypointSafety.WaypointSafetyClassification.Inside_TooHigh,
                                         new UnsafeMoveTowerToPosition(mElevator,
                                                 mArm,
-                                                frc.lib.manipulator.Constants.Waypoints.INSIDE_ENTRY)),
+                                                frc.lib.manipulator.Constants.Waypoints.HI_INSIDE_EDGE)),
                                 Map.entry(
                                         WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed,
                                         new UnsafeMoveTowerToPosition(elevator,
@@ -48,7 +48,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                         Map.entry(true, new UnsafeMoveTowerToPosition(
                                 mElevator,
                                 mArm,
-                                frc.lib.manipulator.Constants.Waypoints.INSIDE_ENTRY)),
+                                frc.lib.manipulator.Constants.Waypoints.NEUTRAL)),
                         Map.entry(false, new InstantCommand())),
                         this::checkNeedsMiddleHeightAvoidWaypoint),
 
@@ -92,14 +92,16 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
     }
 
     private boolean checkNeedsMiddleHeightAvoidWaypoint() {
-        if (mArm.getArmMotorPositionDeg() > 7.0 && mEnd.angle() > 7.0) {
+        if (mArm.getArmMotorPositionDeg() > Constants.INSIDE_ENTRY_DEGREES
+                && mEnd.angle() > Constants.INSIDE_ENTRY_DEGREES) {
             return false;
         }
-        if (mArm.getArmMotorPositionDeg() < -20.0 && mEnd.angle() < -20.0) {
+        if (mArm.getArmMotorPositionDeg() < Constants.INSIDE_EXIT_DEGREES
+                && mEnd.angle() < Constants.INSIDE_EXIT_DEGREES) {
             return false;
         }
-        if ((mElevator.getElevatorInches() <= Constants.INSIDE_ENTRY_INCHES) &&
-                (mEnd.height() <= Constants.INSIDE_ENTRY_INCHES)) {
+        if ((mElevator.getElevatorInches() <= Constants.INSIDE_ZONE_INCHES) &&
+                (mEnd.height() <= Constants.INSIDE_ZONE_INCHES)) {
             return false;
         }
         return true;
