@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -54,15 +56,18 @@ public class Arm extends SubsystemBase {
 
   public Arm() {
     armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor, "CanBus2");
-    armMotor.setInverted(true);
+    armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
+    armMotor.setSensorPhase(false);
+    armMotor.setInverted(TalonFXInvertType.Clockwise);
+    // armMotor.setNeutralMode(NeutralMode.Brake);
     armMotor.setNeutralMode(NeutralMode.Brake);
 
     armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder, "CanBus2");
     armEncoder.configSensorDirection(false);
-    armEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    armEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
 
     // Wait for CANCoder config to take effect
-    Timer.delay(0.5);
+    Timer.delay(1.0);
 
     initArmMotorEncoder();
     setPIDConstants();
@@ -73,7 +78,7 @@ public class Arm extends SubsystemBase {
     if (dashboardCounter++ >= 5) {
 
       if (hasArmMotorReset()) {
-        initArmMotorEncoder();
+          // initArmMotorEncoder();
       }
 
       SmartDashboard.putNumber("Arm CANcoder", getArmCANCoderPositionCorrected());
@@ -108,7 +113,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double getArmMotorPositionRaw() {
-    return armMotor.getSensorCollection().getIntegratedSensorPosition();
+      return armMotor.getSelectedSensorPosition();
   }
 
   public double getArmMotorPositionDeg() {
@@ -118,9 +123,9 @@ public class Arm extends SubsystemBase {
   public void setArmSpeed(double speed) {
     holdPositionRecorded = false; // Hold position invalidated since we moved
     if (getArmMotorPositionDeg() > Constants.ArmConstants.Limits.softStopTop) {
-      speed = Math.min(0.0, speed);
+        speed = Math.min(0.05, speed);
     } else if (getArmMotorPositionDeg() < Constants.ArmConstants.Limits.softStopBottom) {
-      speed = Math.max(0.0, speed);
+        speed = Math.max(-0.05, speed);
     }
     armMotor.set(ControlMode.PercentOutput, speed);
   }
@@ -130,7 +135,13 @@ public class Arm extends SubsystemBase {
   }
 
   public double getArmCANCoderPositionCorrected() {
-    return armEncoder.getAbsolutePosition() + Constants.ArmConstants.CANCoderOffset;
+      double value = armEncoder.getAbsolutePosition() + Constants.ArmConstants.CANCoderOffset;
+      if (value > 180.0) {
+          value -= 360.0;
+      } else if (value < -180.0) {
+          value += 360.0;
+      }
+      return value;
   }
 
   public EncoderState motorEncoderCalibrated() {
@@ -152,10 +163,11 @@ public class Arm extends SubsystemBase {
   public void initArmMotorEncoder() {
     double value = getArmCANCoderPositionCorrected();
 
-    if (!hasArmMotorReset() && motorEncoderConfidentCalibrated == EncoderState.CALIBRATED) {
-      // We previously had a good reset and no motor reset so still good
-      return;
-  }
+    // if (!hasArmMotorReset() && motorEncoderConfidentCalibrated ==
+    // EncoderState.CALIBRATED) {
+    // // We previously had a good reset and no motor reset so still good
+    // return;
+    // }
     if (value >= Constants.ArmConstants.ArmSlopConstants.topZoneHiEdge) {
       // Above the top slop zone -- apply adjustment
       value -= Constants.ArmConstants.ArmSlopConstants.topZoneAdjustment;
@@ -174,7 +186,12 @@ public class Arm extends SubsystemBase {
     // System.out.println("==========================================> Encoder set
     // to " + value);
     value *= Constants.ArmConstants.motorEncoderClicksPerDegree;
+    // System.out.println("******************************** Target Arm Encoder
+    // value: " + value);
     armMotor.setSelectedSensorPosition(value);
+    // Timer.delay(1.0);
+    // System.out.println("******************************** Arm encoder after set: "
+    // + getArmMotorPositionRaw());
 
   }
 

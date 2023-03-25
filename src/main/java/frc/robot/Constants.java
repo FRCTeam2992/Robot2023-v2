@@ -284,23 +284,24 @@ public final class Constants {
 
     public static class Limits {
         public static double hardStopTop = 135.0;
-        public static double hardStopBottom = -115.0;
-        public static double softStopTop = 130.0;
-        public static double softStopBottom = -111.0;
+        public static double hardStopBottom = -77.0;
+        // public static double softStopTop = 130.0;
+        // public static double softStopBottom = -111.0;
+        public static double softStopTop = 100.0;
+        public static double softStopBottom = -55.0;
+
     }
 
     public static double gearRatio = 64.0 * (32.0 / 12.0);
     public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
     public static double armAngleToleranceDeg = 1.0; // Moves within 1 degree are "close enough"
 
-    public static double CANCoderOffset = -67.9;
+    public static double CANCoderOffset = -128.6;
 
     public static class ArmSlopConstants {
-      // All of these constants need to be validated!
-      public static double topZoneLowEdge = 21.0; // Above this may be n the slop zone
-      public static double topZoneHiEdge = 26.0; // Past the slop zone -- use adjustment
-      // TODO measure exact slop amount and update constant
-      public static double topZoneAdjustment = 2.0; // Slop adjustment to apply
+        public static double topZoneLowEdge = 12.0; // Above this may be n the slop zone
+        public static double topZoneHiEdge = 23.0; // Past the slop zone -- use adjustment
+        public static double topZoneAdjustment = 3.5; // Slop adjustment to apply
     }
 
     public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive
