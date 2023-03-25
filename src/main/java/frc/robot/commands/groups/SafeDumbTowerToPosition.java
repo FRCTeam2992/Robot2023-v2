@@ -82,7 +82,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
 
     private WaypointSafety.WaypointSafetyClassification checkStart() {
         WaypointSafety.WaypointSafetyClassification zoneClass = WaypointSafety.nonSafeZones(
-                new Waypoint(mElevator.getElevatorInches(), mArm.getArmMotorPositionDeg()));
+                new Waypoint(mElevator.getElevatorInches(), mArm.getArmCANCoderPositionCorrected()));
         switch (zoneClass) {
             case Ground_If_Deployed:
                 if (mElevator.getElevatorState() == ElevatorState.Deployed) {
@@ -118,11 +118,11 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
     }
 
     private boolean checkNeedsMiddleHeightAvoidWaypoint() {
-        if (mArm.getArmMotorPositionDeg() > Constants.INSIDE_ENTRY_DEGREES
+        if (mArm.getArmCANCoderPositionCorrected() > Constants.INSIDE_ENTRY_DEGREES
                 && mEnd.angle() > Constants.INSIDE_ENTRY_DEGREES) {
             return false;
         }
-        if (mArm.getArmMotorPositionDeg() < Constants.INSIDE_EXIT_DEGREES
+        if (mArm.getArmCANCoderPositionCorrected() < Constants.INSIDE_EXIT_DEGREES
                 && mEnd.angle() < Constants.INSIDE_EXIT_DEGREES) {
             return false;
         }
