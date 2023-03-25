@@ -37,8 +37,13 @@ public class Claw extends SubsystemBase {
     // This method will be called once per scheduler run
     if (dashboardCounter++ >= 5) {
       SmartDashboard.putNumber("Claw Position", getClawMotorPosition());
+      SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
       dashboardCounter = 0;
     }
+  }
+
+  public boolean getBeamBreakTriggered() {
+    return clawMotor.isFwdLimitSwitchClosed() == 1;
   }
 
   public void setClawSpeed(double speed) {
