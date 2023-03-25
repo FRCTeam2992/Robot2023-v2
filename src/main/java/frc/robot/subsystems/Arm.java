@@ -111,6 +111,8 @@ public class Arm extends SubsystemBase {
             // SmartDashboard.putData("ZeroArm", new InstantCommand(() ->
             // initArmMotorEncoder()));
 
+            SmartDashboard.putBoolean("Arm Hold Position Recoreded", holdPositionRecorded);
+
             dashboardCounter = 0;
         }
 
@@ -145,11 +147,17 @@ public class Arm extends SubsystemBase {
     public void holdArm() {
         if (!holdPositionRecorded) {
             // We haven't recorded where we are yet, so get it
-            // holdPosition = getArmMotorPositionRaw(); // encoder clicks
+            holdPosition = getArmCANCoderPositionCorrected(); // encoder clicks
             holdPositionRecorded = true;
-            pidMode = false;
+            pidMode = true;
+            targetAngleDeg = holdPosition;
+            armController.setSetpoint(targetAngleDeg);
         } else {
-            // armMotor.set(ControlMode.MotionMagic, holdPosition);
+            double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
+            // Temporarily clamp speed for testing
+            speed = Math.min(0.2, speed);
+            speed = Math.max(-0.2, speed);
+            armMotor.set(TalonFXControlMode.PercentOutput, speed);
         }
 
     }
