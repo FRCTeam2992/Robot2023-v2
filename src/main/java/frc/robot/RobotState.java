@@ -33,6 +33,9 @@ public class RobotState {
         return endgameMode == EndgameModeState.InEndgame;
     }
 
+    public boolean towerIsMoving = false;
+    public Waypoint towerCurrentMoveTarget = null;
+
     public enum IntakeModeState {
         Unknown,
         Cube,

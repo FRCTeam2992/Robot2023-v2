@@ -138,7 +138,7 @@ public class RobotContainer {
                         mDrivetrain.setScoringMode(false);
                 }));
                 controller0.b().onTrue(
-                                new AutoLoadStationIntake(mElevator, mArm, mClaw));
+                                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
                 controller0.b().onTrue(new InstantCommand(() -> {
                         mDrivetrain.setLoadingMode(true);
                 }));
@@ -146,7 +146,7 @@ public class RobotContainer {
                         mDrivetrain.setLoadingMode(false);
                 }));
                 controller0.x().onTrue(
-                                new AutoGroundIntakeCube(mElevator, mArm, mClaw));// cubes
+                                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
                 controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
                 controller0.x().onTrue(new InstantCommand(
                                 () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
@@ -195,12 +195,12 @@ public class RobotContainer {
                                                                 || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
                 controller0.leftTrigger(0.6)
                                 .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
-                controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, ElevatorState.Deployed)
+                controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
                                 .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
                 controller0.leftTrigger(0.6)
-                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, TowerConstants.normal));
-                controller0.leftTrigger(0.6).onFalse(new DeployElevator(mElevator, ElevatorState.Undeployed));
+                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
+                controller0.leftTrigger(0.6).onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
 
                 // Back and Start
 
@@ -236,8 +236,8 @@ public class RobotContainer {
         }
 
         private void configureShuffleboardBindings() {
-                SmartDashboard.putData("Scoring", new DeployElevator(mElevator, ElevatorState.Undeployed));
-                SmartDashboard.putData("Loading", new DeployElevator(mElevator, ElevatorState.Deployed));
+                SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+                SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
 
                 SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
                 SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
