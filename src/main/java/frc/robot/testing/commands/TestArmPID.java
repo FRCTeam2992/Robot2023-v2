@@ -33,7 +33,7 @@ public class TestArmPID extends CommandBase {
         double angle;
 
         angle = SmartDashboard.getNumber("ArmTestMoveAngle", 100);
-        System.out.println("ArmTestMove running to " + angle);
+        // System.out.println("ArmTestMove running to " + angle);
 
         CommandScheduler.getInstance().schedule(new SetArmPosition(mArm, angle));
     }
