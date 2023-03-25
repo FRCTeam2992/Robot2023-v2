@@ -20,7 +20,6 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.StopClaw;
-import frc.robot.commands.TestArmPID;
 import frc.robot.commands.MoveElevator;
 
 import frc.robot.commands.SetLEDsColor;
@@ -39,6 +38,7 @@ import frc.robot.subsystems.Elevator;
 
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorState;
+import frc.robot.testing.commands.TestArmPID;
 import frc.robot.testing.commands.TestClawIntake;
 import frc.robot.testing.commands.TestClawOuttake;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -250,8 +250,6 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
 
-                SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
-
                 // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw, mRobotState));
 
                 SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
@@ -277,7 +275,7 @@ public class RobotContainer {
                 // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
 
                 // SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
-                SmartDashboard.putNumber("ArmTestMoveAngle", 150);
+                SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
                 // SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
                 // mArm));
                 SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
@@ -399,8 +397,6 @@ public class RobotContainer {
                                 mAutoBuilder.getAutoPreloadScore().description);
                 SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
                 SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
-                SmartDashboard.putBoolean("Arm Encoders Match?", Math
-                                .abs(mArm.getArmCANCoderPositionCorrected() - mArm.getArmMotorPositionDeg()) <= 1.0);
         }
 
         public CommandXboxController getController0() {
