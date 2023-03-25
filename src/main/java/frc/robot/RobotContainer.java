@@ -18,6 +18,7 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.StopClaw;
+import frc.robot.commands.TestArmPID;
 import frc.robot.commands.MoveElevator;
 
 import frc.robot.commands.SetLEDsColor;
@@ -246,8 +247,6 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
 
-                SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
-
                 // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
                 // new InstantCommand(() -> mDrivetrain
                 // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
@@ -263,9 +262,10 @@ public class RobotContainer {
                 // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
 
                 // SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
-                // SmartDashboard.putNumber("ArmTestMoveAngle", 150);
+                SmartDashboard.putNumber("ArmTestMoveAngle", 150);
                 // SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
                 // mArm));
+                SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
 
                 // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
         }
