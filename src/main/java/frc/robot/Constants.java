@@ -329,6 +329,11 @@ public final class Constants {
     public static double coneCurrent = 0.0;
     public static double cubeCurrent = 0.0;
 
+    public static double cubeSpeedIn = 0.1;
+    public static double coneSpeedIn = 0.1;
+    public static double cubeSpeedOut = 0.1;
+    public static double coneSpeedOut = 0.1;
+
     public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive
 
   }

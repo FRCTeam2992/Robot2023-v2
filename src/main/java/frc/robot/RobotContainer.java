@@ -12,7 +12,9 @@ import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
+import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
+import frc.robot.commands.IntakeGamePiece;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
@@ -37,7 +39,8 @@ import frc.robot.subsystems.Elevator;
 
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorState;
-
+import frc.robot.testing.commands.TestClawIntake;
+import frc.robot.testing.commands.TestClawOuttake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -90,7 +93,7 @@ public class RobotContainer {
                 mArm.setDefaultCommand(new HoldArm(mArm));
 
                 mClaw = new Claw();
-                mClaw.setDefaultCommand(new StopClaw(mClaw));
+                mClaw.setDefaultCommand(new HoldClaw(mClaw));
 
                 mButterflyWheels = new ButterflyWheels();
 
@@ -246,6 +249,18 @@ public class RobotContainer {
                 SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
                 SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
+
+                SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
+
+                // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw, mRobotState));
+
+                SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
+                SmartDashboard.putNumber("Test Claw Cone In Spd %", 0.7);
+                SmartDashboard.putData("Test Claw Intake", new TestClawIntake(mClaw, mRobotState));
+
+                SmartDashboard.putNumber("Test Claw Cube Out Spd %", 0.7);
+                SmartDashboard.putNumber("Test Claw Cone Out Spd %", 0.5);
+                SmartDashboard.putData("Test Claw Outtake", new TestClawOuttake(mClaw, mRobotState));
 
                 // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
                 // new InstantCommand(() -> mDrivetrain
