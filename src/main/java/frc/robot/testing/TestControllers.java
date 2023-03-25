@@ -28,8 +28,12 @@ public class TestControllers {
         testController1.povLeft().whileTrue(new MoveArm(mRobotContainer.mArm, .1));
         testController1.povRight().whileTrue(new MoveArm(mRobotContainer.mArm, -.1));
 
-        testController1.a().onTrue(new DeployElevator(mRobotContainer.mElevator, ElevatorState.Deployed));
-        testController1.b().onTrue(new DeployElevator(mRobotContainer.mElevator, ElevatorState.Undeployed));
+        testController1.a().onTrue(new DeployElevator(
+                mRobotContainer.mElevator, mRobotContainer.mArm,
+                mRobotContainer.mRobotState, ElevatorState.Deployed));
+        testController1.b().onTrue(new DeployElevator(
+                mRobotContainer.mElevator, mRobotContainer.mArm,
+                mRobotContainer.mRobotState, ElevatorState.Undeployed));
 
         testController1.leftBumper().onTrue(new InstantCommand(() -> {
             mRobotContainer.mDrivetrain.setInSlowMode(true);
