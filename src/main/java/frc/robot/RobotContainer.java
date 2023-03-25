@@ -60,352 +60,352 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * be declared here.
  */
 public class RobotContainer {
-        // Replace with CommandPS4Controller or CommandJoystick if needed
-        private final CommandXboxController controller0 = new CommandXboxController(0);
-        private final CommandXboxController controller1 = new CommandXboxController(1);
+    // Replace with CommandPS4Controller or CommandJoystick if needed
+    private final CommandXboxController controller0 = new CommandXboxController(0);
+    private final CommandXboxController controller1 = new CommandXboxController(1);
 
-        public final RobotState mRobotState;
-        public final AutoBuilder mAutoBuilder;
+    public final RobotState mRobotState;
+    public final AutoBuilder mAutoBuilder;
 
-        public final Drivetrain mDrivetrain;
+    public final Drivetrain mDrivetrain;
 
-        public final Elevator mElevator;
-        public final Arm mArm;
-        public final Claw mClaw;
+    public final Elevator mElevator;
+    public final Arm mArm;
+    public final Claw mClaw;
 
-        public final ButterflyWheels mButterflyWheels;
+    public final ButterflyWheels mButterflyWheels;
 
-        public final LEDs mLEDs;
+    public final LEDs mLEDs;
 
-        /**
-         * The container for the robot. Contains subsystems, OI devices, and commands.
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+
+        mRobotState = new RobotState();
+
+        mDrivetrain = new Drivetrain(mRobotState);
+        mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain, mRobotState));
+
+        mElevator = new Elevator();
+        mElevator.setDefaultCommand(new HoldElevator(mElevator));
+
+        mArm = new Arm();
+        // mArm.setDefaultCommand(new StopArm(mArm));
+        mArm.setDefaultCommand(new HoldArm(mArm));
+
+        mClaw = new Claw();
+        mClaw.setDefaultCommand(new HoldClaw(mClaw));
+        // mClaw.setDefaultCommand(new StopClaw(mClaw));
+
+        mButterflyWheels = new ButterflyWheels();
+
+        mLEDs = new LEDs();
+
+        mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
+                mClaw);
+
+        // Setup the Auto Selectors
+        mAutoBuilder.setupAutoSelector();
+
+        // Add dashboard things
+        addSubsystemsToDashboard();
+        addRobotStateToDashboard();
+        updateMatchStartChecksToDashboard();
+
+        // Configure the trigger bindings
+        configureShuffleboardBindings();
+        configRealButtonBindings();
+        // (new TestControllers()).configTestButtonBindings(this);
+    }
+
+    /**
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)}
+     * constructor with an arbitrary predicate, or via the named factories in
+     * t * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     * PS4} controllers or {@link
+     * edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
+     */
+
+    private void configRealButtonBindings() {
+        /*
+         * DO NOT PUT TEST BUTTONS IN THIS
+         * ONLY REAL BUTTONS FOR COMPETITION
          */
-        public RobotContainer() {
 
-                mRobotState = new RobotState();
+        // -----------------------controller0-----------------------
 
-                mDrivetrain = new Drivetrain(mRobotState);
-                mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain, mRobotState));
+        // ABXY
 
-                mElevator = new Elevator();
-                mElevator.setDefaultCommand(new HoldElevator(mElevator));
+        controller0.a().onTrue(new InstantCommand(() -> {
+            mDrivetrain.setScoringMode(true);
+        }));
+        controller0.a().onFalse(new InstantCommand(() -> {
+            mDrivetrain.setScoringMode(false);
+        }));
+        controller0.b().onTrue(
+                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
+        controller0.b().onTrue(new InstantCommand(() -> {
+            mDrivetrain.setLoadingMode(true);
+        }));
+        controller0.b().onFalse(new InstantCommand(() -> {
+            mDrivetrain.setLoadingMode(false);
+        }));
+        controller0.x().onTrue(
+                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
+        controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
+        controller0.x().onTrue(new InstantCommand(
+                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
 
-                mArm = new Arm();
-                // mArm.setDefaultCommand(new StopArm(mArm));
-                mArm.setDefaultCommand(new HoldArm(mArm));
+        // D-Pad
+        controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels
 
-                mClaw = new Claw();
-                mClaw.setDefaultCommand(new HoldClaw(mClaw));
-                // mClaw.setDefaultCommand(new StopClaw(mClaw));
+        controller0.povUp().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.yellow));
+        controller0.povUp()
+                .onTrue(new InstantCommand(
+                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
+        controller0.povDown().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
+        controller0.povDown()
+                .onTrue(new InstantCommand(
+                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
 
-                mButterflyWheels = new ButterflyWheels();
+        // Bumpers/Triggers
+        controller0.leftBumper().onTrue(new InstantCommand(
+                () -> {
+                    mDrivetrain.setDoFieldOreint(false);
+                }));// Disable Field Orient
+        controller0.leftBumper().onFalse(new InstantCommand(
+                () -> {
+                    mDrivetrain.setDoFieldOreint(true);
+                }));// Disable Field Orient
 
-                mLEDs = new LEDs();
+        controller0.rightBumper().onTrue(new InstantCommand(
+                () -> {
+                    mDrivetrain.setInSlowMode(true);
+                })); // Slow Mode
+        controller0.rightBumper().onFalse(new InstantCommand(
+                () -> {
+                    mDrivetrain.setInSlowMode(false);
+                })); // Slow Mode
 
-                mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
-                                mClaw);
+        controller0.leftTrigger(0.6)
+                .whileTrue((new WaitCommand(0.5).unless(
+                        () -> (mRobotState.currentTargetPosition == GridTargetingPosition.MidLeft
+                                ||
+                                mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
+                                || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
+        controller0.leftTrigger(0.6)
+                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
+        controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
+                .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreCubeMid
+                        ||
+                        mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
-                // Setup the Auto Selectors
-                mAutoBuilder.setupAutoSelector();
+        controller0.leftTrigger(0.6)
+                .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
+        controller0.leftTrigger(0.6)
+                .onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
 
-                // Add dashboard things
-                addSubsystemsToDashboard();
-                addRobotStateToDashboard();
-                updateMatchStartChecksToDashboard();
+        // Back and Start
 
-                // Configure the trigger bindings
-                configureShuffleboardBindings();
-                configRealButtonBindings();
-                // (new TestControllers()).configTestButtonBindings(this);
+        controller0.start().onTrue(new ResetGyro(mDrivetrain));
+
+        controller0.back().onTrue(new BalanceRobotPID(mDrivetrain));
+
+        // Joysticks Buttons
+
+        // -----------------------controller1-----------------------
+        // ABXY
+
+        // Bumper/Trigger
+        controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
+
+        // Back and Start
+        controller1.start().onTrue(new ToggleEndgameState(mRobotState));
+        controller1.back().onTrue(new DeployButterflyWheels(mButterflyWheels)
+                .unless(() -> !mRobotState.isInEndgameMode()));
+
+        // Joysticks and Buttons
+        controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
+                new MoveArm(mArm, 0.20));
+        controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
+                new MoveArm(mArm, -0.20));
+
+        controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
+                new MoveElevator(mElevator, 0.2));
+        controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
+                new MoveElevator(mElevator, -0.2));
+        controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
+
+    }
+
+    private void configureShuffleboardBindings() {
+        SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+        SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
+
+        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
+        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
+        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
+        SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
+
+        SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
+
+        // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() ->
+        // mArm.initArmMotorEncoder()));
+
+        // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw,
+        // mRobotState));
+
+        SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
+        SmartDashboard.putNumber("Test Claw Cone In Spd %", 0.7);
+        SmartDashboard.putData("Test Claw Intake", new TestClawIntake(mClaw, mRobotState));
+
+        SmartDashboard.putNumber("Test Claw Cube Out Spd %", 0.7);
+        SmartDashboard.putNumber("Test Claw Cone Out Spd %", 0.5);
+        SmartDashboard.putData("Test Claw Outtake", new TestClawOuttake(mClaw, mRobotState));
+
+        // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
+        // new InstantCommand(() -> mDrivetrain
+        // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
+        // Rotation2d.fromDegrees(0.0)))));
+        SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+
+        // SmartDashboard.putData("Test Path Planner Path",
+        // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
+
+        // SmartDashboard.putData("Deploy Butterfly Wheels", new
+        // DeployButterflyWheels(mButterflyWheels));
+        // SmartDashboard.putData("Test Path Planner Path",
+        // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
+
+        SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
+        SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
+        SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
+                mArm, mRobotState));
+        SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
+        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
+
+        // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
+    }
+
+    public void addSubsystemsToDashboard() {
+        SmartDashboard.putData("Drivetrain", mDrivetrain);
+        SmartDashboard.putData("Arm", mArm);
+        SmartDashboard.putData("Claw", mClaw);
+        SmartDashboard.putData("Elevator", mElevator);
+        SmartDashboard.putData("Butterfly Wheels", mButterflyWheels);
+    }
+
+    public void addRobotStateToDashboard() {
+        SmartDashboard.putBoolean("Target: Left Grid High Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+        SmartDashboard.putBoolean("Target: Left Grid High Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+        SmartDashboard.putBoolean("Target: Left Grid High Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+        SmartDashboard.putBoolean("Target: Left Grid Mid Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+        SmartDashboard.putBoolean("Target: Left Grid Mid Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+        SmartDashboard.putBoolean("Target: Left Grid Mid Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+        SmartDashboard.putBoolean("Target: Left Grid Low Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+        SmartDashboard.putBoolean("Target: Left Grid Low Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+        SmartDashboard.putBoolean("Target: Left Grid Low Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+
+        SmartDashboard.putBoolean("Target: Center Grid High Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+        SmartDashboard.putBoolean("Target: Center Grid High Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+        SmartDashboard.putBoolean("Target: Center Grid High Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+        SmartDashboard.putBoolean("Target: Center Grid Mid Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+        SmartDashboard.putBoolean("Target: Center Grid Mid Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+        SmartDashboard.putBoolean("Target: Center Grid Mid Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+        SmartDashboard.putBoolean("Target: Center Grid Low Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+        SmartDashboard.putBoolean("Target: Center Grid Low Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+        SmartDashboard.putBoolean("Target: Center Grid Low Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+
+        SmartDashboard.putBoolean("Target: Right Grid High Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
+        SmartDashboard.putBoolean("Target: Right Grid High Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
+        SmartDashboard.putBoolean("Target: Right Grid High Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
+        SmartDashboard.putBoolean("Target: Right Grid Mid Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
+        SmartDashboard.putBoolean("Target: Right Grid Mid Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
+        SmartDashboard.putBoolean("Target: Right Grid Mid Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
+        SmartDashboard.putBoolean("Target: Right Grid Low Left",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
+        SmartDashboard.putBoolean("Target: Right Grid Low Center",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
+        SmartDashboard.putBoolean("Target: Right Grid Low Right",
+                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
+                        mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
+
+        SmartDashboard.putBoolean("Blue Alliance",
+                DriverStation.getAlliance() == DriverStation.Alliance.Blue);
+        SmartDashboard.putBoolean("Red Alliance",
+                DriverStation.getAlliance() == DriverStation.Alliance.Red);
+
+        SmartDashboard.putBoolean("Endgame Mode",
+                mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
+    }
+
+    public void updateMatchStartChecksToDashboard() {
+        SmartDashboard.putString("Confirmed Auto Start Position",
+                mAutoBuilder.getAutoStartPosition().description);
+        if (mAutoBuilder.autoStartCompatible()) {
+            SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
+        } else {
+            SmartDashboard.putString("Confirmed Auto Sequence", "INVALID SEQUENCE FOR THIS START POSN");
         }
+        SmartDashboard.putString("Confirmed Auto Preload Score",
+                mAutoBuilder.getAutoPreloadScore().description);
+        SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
+        SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
+    }
 
-        /**
-         * Use this method to define your trigger->command mappings. Triggers can be
-         * created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)}
-         * constructor with an arbitrary predicate, or via the named factories in
-         * t * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-         * PS4} controllers or {@link
-         * edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
-         */
-
-        private void configRealButtonBindings() {
-                /*
-                 * DO NOT PUT TEST BUTTONS IN THIS
-                 * ONLY REAL BUTTONS FOR COMPETITION
-                 */
-
-                // -----------------------controller0-----------------------
-
-                // ABXY
-
-                controller0.a().onTrue(new InstantCommand(() -> {
-                        mDrivetrain.setScoringMode(true);
-                }));
-                controller0.a().onFalse(new InstantCommand(() -> {
-                        mDrivetrain.setScoringMode(false);
-                }));
-                controller0.b().onTrue(
-                                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
-                controller0.b().onTrue(new InstantCommand(() -> {
-                        mDrivetrain.setLoadingMode(true);
-                }));
-                controller0.b().onFalse(new InstantCommand(() -> {
-                        mDrivetrain.setLoadingMode(false);
-                }));
-                controller0.x().onTrue(
-                                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
-                controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
-                controller0.x().onTrue(new InstantCommand(
-                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
-
-                // D-Pad
-                controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels
-
-
-                controller0.povUp().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.yellow));
-                controller0.povUp()
-                                .onTrue(new InstantCommand(
-                                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
-                controller0.povDown().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
-                controller0.povDown()
-                                .onTrue(new InstantCommand(
-                                                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
-
-                // Bumpers/Triggers
-                controller0.leftBumper().onTrue(new InstantCommand(
-                                () -> {
-                                        controller0.povUp().onTrue(
-                                                        new InstantCommand(
-                                                                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
-
-                                        mDrivetrain.setDoFieldOreint(false);
-                                }));// Disable Field Orient
-                controller0.leftBumper().onFalse(new InstantCommand(
-                                () -> {
-                                        mDrivetrain.setDoFieldOreint(true);
-                                }));// Disable Field Orient
-
-                controller0.rightBumper().onTrue(new InstantCommand(
-                                () -> {
-                                        mDrivetrain.setInSlowMode(true);
-                                })); // Slow Mode
-                controller0.rightBumper().onFalse(new InstantCommand(
-                                () -> {
-                                        mDrivetrain.setInSlowMode(false);
-                                })); // Slow Mode
-
-                controller0.leftTrigger(0.6)
-                                .whileTrue((new WaitCommand(0.5).unless(
-                                                () -> (mRobotState.currentTargetPosition == GridTargetingPosition.MidLeft
-                                                                ||
-                                                                mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
-                                                                || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
-                controller0.leftTrigger(0.6)
-                                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
-                controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
-                                .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
-
-                controller0.leftTrigger(0.6)
-                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
-                controller0.leftTrigger(0.6).onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
-
-                // Back and Start
-
-                controller0.start().onTrue(new ResetGyro(mDrivetrain));
-
-                controller0.back().onTrue(new BalanceRobotPID(mDrivetrain));
-
-                // Joysticks Buttons
-
-                // -----------------------controller1-----------------------
-                // ABXY
-
-                // Bumper/Trigger
-                controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
-
-                // Back and Start
-                controller1.start().onTrue(new ToggleEndgameState(mRobotState));
-                controller1.back().onTrue(new DeployButterflyWheels(mButterflyWheels)
-                                .unless(() -> !mRobotState.isInEndgameMode()));
-
-                // Joysticks and Buttons
-                controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                                new MoveArm(mArm, 0.20));
-                controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                                new MoveArm(mArm, -0.20));
-
-                controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
-                                new MoveElevator(mElevator, 0.2));
-                controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
-                                new MoveElevator(mElevator, -0.2));
-                controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
-
-        }
-
-        private void configureShuffleboardBindings() {
-                SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
-                SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
-
-                SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
-                SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
-                SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
-                SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
-
-                SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
-
-                // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
-
-                // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw, mRobotState));
-
-                SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
-                SmartDashboard.putNumber("Test Claw Cone In Spd %", 0.7);
-                SmartDashboard.putData("Test Claw Intake", new TestClawIntake(mClaw, mRobotState));
-
-                SmartDashboard.putNumber("Test Claw Cube Out Spd %", 0.7);
-                SmartDashboard.putNumber("Test Claw Cone Out Spd %", 0.5);
-                SmartDashboard.putData("Test Claw Outtake", new TestClawOuttake(mClaw, mRobotState));
-
-                // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
-                // new InstantCommand(() -> mDrivetrain
-                // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
-                // Rotation2d.fromDegrees(0.0)))));
-                SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
-
-                // SmartDashboard.putData("Test Path Planner Path",
-                // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
-
-                // SmartDashboard.putData("Deploy Butterfly Wheels", new
-                // DeployButterflyWheels(mButterflyWheels));
-                // SmartDashboard.putData("Test Path Planner Path",
-                // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
-
-                SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
-                SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
-                SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
-                        mArm, mRobotState));
-                SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
-                SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
-
-                // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
-        }
-
-        public void addSubsystemsToDashboard() {
-                SmartDashboard.putData("Drivetrain", mDrivetrain);
-                SmartDashboard.putData("Arm", mArm);
-                SmartDashboard.putData("Claw", mClaw);
-                SmartDashboard.putData("Elevator", mElevator);
-                SmartDashboard.putData("Butterfly Wheels", mButterflyWheels);
-        }
-
-        public void addRobotStateToDashboard() {
-                SmartDashboard.putBoolean("Target: Left Grid High Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
-                SmartDashboard.putBoolean("Target: Left Grid High Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
-                SmartDashboard.putBoolean("Target: Left Grid High Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
-                SmartDashboard.putBoolean("Target: Left Grid Mid Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
-                SmartDashboard.putBoolean("Target: Left Grid Mid Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
-                SmartDashboard.putBoolean("Target: Left Grid Mid Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
-                SmartDashboard.putBoolean("Target: Left Grid Low Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
-                SmartDashboard.putBoolean("Target: Left Grid Low Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
-                SmartDashboard.putBoolean("Target: Left Grid Low Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverLeft &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
-
-                SmartDashboard.putBoolean("Target: Center Grid High Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
-                SmartDashboard.putBoolean("Target: Center Grid High Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
-                SmartDashboard.putBoolean("Target: Center Grid High Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
-                SmartDashboard.putBoolean("Target: Center Grid Mid Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
-                SmartDashboard.putBoolean("Target: Center Grid Mid Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
-                SmartDashboard.putBoolean("Target: Center Grid Mid Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
-                SmartDashboard.putBoolean("Target: Center Grid Low Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
-                SmartDashboard.putBoolean("Target: Center Grid Low Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
-                SmartDashboard.putBoolean("Target: Center Grid Low Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridCenter &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
-
-                SmartDashboard.putBoolean("Target: Right Grid High Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighLeft);
-                SmartDashboard.putBoolean("Target: Right Grid High Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighCenter);
-                SmartDashboard.putBoolean("Target: Right Grid High Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.HighRight);
-                SmartDashboard.putBoolean("Target: Right Grid Mid Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidLeft);
-                SmartDashboard.putBoolean("Target: Right Grid Mid Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidCenter);
-                SmartDashboard.putBoolean("Target: Right Grid Mid Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.MidRight);
-                SmartDashboard.putBoolean("Target: Right Grid Low Left",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowLeft);
-                SmartDashboard.putBoolean("Target: Right Grid Low Center",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowCenter);
-                SmartDashboard.putBoolean("Target: Right Grid Low Right",
-                                mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
-                                                mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
-
-                SmartDashboard.putBoolean("Blue Alliance",
-                                DriverStation.getAlliance() == DriverStation.Alliance.Blue);
-                SmartDashboard.putBoolean("Red Alliance",
-                                DriverStation.getAlliance() == DriverStation.Alliance.Red);
-
-                SmartDashboard.putBoolean("Endgame Mode",
-                                mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
-        }
-
-        public void updateMatchStartChecksToDashboard() {
-                SmartDashboard.putString("Confirmed Auto Start Position",
-                                mAutoBuilder.getAutoStartPosition().description);
-                if (mAutoBuilder.autoStartCompatible()) {
-                        SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
-                } else {
-                        SmartDashboard.putString("Confirmed Auto Sequence", "INVALID SEQUENCE FOR THIS START POSN");
-                }
-                SmartDashboard.putString("Confirmed Auto Preload Score",
-                                mAutoBuilder.getAutoPreloadScore().description);
-                SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
-                SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
-        }
-
-        public CommandXboxController getController0() {
-                return controller0;
-        }
+    public CommandXboxController getController0() {
+        return controller0;
+    }
 }

@@ -76,6 +76,7 @@ public class Elevator extends SubsystemBase {
       SmartDashboard.putNumber("Follow Elevator Encoder", getFollowElevatorPostion());
 
       SmartDashboard.putNumber("Elevator Inches", getElevatorInches());
+      SmartDashboard.putBoolean("Elevator Deployed State", getElevatorState() == ElevatorState.Deployed);
 
       dashboardCounter = 0;
     }
