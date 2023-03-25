@@ -9,6 +9,7 @@ import frc.lib.manipulator.Constants;
 import frc.lib.manipulator.Waypoint;
 import frc.lib.manipulator.WaypointSafety;
 import frc.lib.manipulator.WaypointSafety.WaypointSafetyClassification;
+import frc.robot.RobotState;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorState;
@@ -16,11 +17,13 @@ import frc.robot.subsystems.Elevator.ElevatorState;
 public class SafeDumbTowerToPosition extends SequentialCommandGroup {
     Elevator mElevator;
     Arm mArm;
+    RobotState mRobotState;
     Waypoint mEnd;
 
-    public SafeDumbTowerToPosition(Elevator elevator, Arm arm, Waypoint point) {
+    public SafeDumbTowerToPosition(Elevator elevator, Arm arm, RobotState robotState, Waypoint point) {
         mElevator = elevator;
         mArm = arm;
+        mRobotState = robotState;
         mEnd = point;
         addCommands(
 
@@ -87,6 +90,8 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
             return WaypointSafetyClassification.Ground_If_Deployed;
         } else {
             zoneClass = WaypointSafetyClassification.Safe;
+            mRobotState.towerIsMoving = true;
+            mRobotState.towerCurrentMoveTarget = mEnd;
         }
         return zoneClass;
     }

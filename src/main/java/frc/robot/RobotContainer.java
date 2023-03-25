@@ -138,7 +138,7 @@ public class RobotContainer {
                         mDrivetrain.setScoringMode(false);
                 }));
                 controller0.b().onTrue(
-                                new AutoLoadStationIntake(mElevator, mArm, mClaw));
+                                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
                 controller0.b().onTrue(new InstantCommand(() -> {
                         mDrivetrain.setLoadingMode(true);
                 }));
@@ -146,7 +146,7 @@ public class RobotContainer {
                         mDrivetrain.setLoadingMode(false);
                 }));
                 controller0.x().onTrue(
-                                new AutoGroundIntakeCube(mElevator, mArm, mClaw));// cubes
+                                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
                 controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
                 controller0.x().onTrue(new InstantCommand(
                                 () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
@@ -199,7 +199,7 @@ public class RobotContainer {
                                 .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
 
                 controller0.leftTrigger(0.6)
-                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, TowerConstants.normal));
+                        .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
                 controller0.leftTrigger(0.6).onFalse(new DeployElevator(mElevator, ElevatorState.Undeployed));
 
                 // Back and Start
