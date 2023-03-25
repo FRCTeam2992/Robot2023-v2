@@ -235,13 +235,13 @@ public final class Constants {
     }
 
     public static class PIDConstants {
-      public static double P = 0.4;
+        public static double P = 0.5;
       public static double I = 0;
       public static double D = 0.5;
-      public static double FF = 0.1;
-      public static double cruiseVelocity = 13200;
+      public static double FF = 0.15;
+      public static double cruiseVelocity = 70000;
       // public static double cruiseVelocity = 1000;
-      public static double acceleration = 26400;
+      public static double acceleration = 50000;
       // public static double acceleration = 2000;
     }
 
