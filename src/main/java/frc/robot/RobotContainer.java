@@ -42,6 +42,7 @@ import frc.robot.testing.commands.TestArmPID;
 import frc.robot.testing.commands.TestClawIntake;
 import frc.robot.testing.commands.TestClawOuttake;
 import frc.robot.testing.commands.TestElevatorPID;
+import frc.robot.testing.commands.TestTowerSafeMove;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -280,8 +281,8 @@ public class RobotContainer {
 
                 SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
                 SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
-                // SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
-                // mArm));
+                SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
+                        mArm, mRobotState));
                 SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
                 SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
 
