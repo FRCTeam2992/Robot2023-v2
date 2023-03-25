@@ -252,6 +252,8 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
 
+                // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() -> mArm.initArmMotorEncoder()));
+
                 // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw, mRobotState));
 
                 SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
