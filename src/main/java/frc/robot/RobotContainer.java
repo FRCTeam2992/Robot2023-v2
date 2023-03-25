@@ -94,8 +94,8 @@ public class RobotContainer {
                 mArm.setDefaultCommand(new HoldArm(mArm));
 
                 mClaw = new Claw();
-                // mClaw.setDefaultCommand(new HoldClaw(mClaw));
-                mClaw.setDefaultCommand(new StopClaw(mClaw));
+                mClaw.setDefaultCommand(new HoldClaw(mClaw));
+                // mClaw.setDefaultCommand(new StopClaw(mClaw));
 
                 mButterflyWheels = new ButterflyWheels();
 
