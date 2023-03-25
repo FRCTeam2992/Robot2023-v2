@@ -37,9 +37,9 @@ public class RobotState {
     public Waypoint towerCurrentMoveTarget = null;
 
     public enum IntakeModeState {
-        Unknown(Constants.ClawConstants.cubeSpeedIn),
-        Cube(Constants.ClawConstants.cubeSpeedIn),
-        Cone(Constants.ClawConstants.coneSpeedIn);
+        Unknown(Constants.ClawConstants.Intake.Speed.cone),
+        Cube(Constants.ClawConstants.Intake.Speed.cube),
+        Cone(Constants.ClawConstants.Intake.Speed.cone);
 
         public double clawSpeed;
 

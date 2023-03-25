@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClawConstants;
 import frc.robot.RobotState;
 import frc.robot.subsystems.Claw;
 
@@ -12,11 +13,8 @@ public class IntakeGamePiece extends CommandBase {
   private Claw mClaw;
   private RobotState mRobotState;
 
-  private boolean beamBreakTriggered;
   private int cyclesAfterBeamBreak;
-
-  public static final int DELAY_CYCLES_AFTER_BEAM_BREAK_CONE = 15;
-  public static final int DELAY_CYCLES_AFTER_BEAM_BREAK_CUBE = 5;
+  private double speed;
 
   /** Creates a new IntakeGamePiece. */
   public IntakeGamePiece(Claw claw, RobotState robotState) {
@@ -29,19 +27,27 @@ public class IntakeGamePiece extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    beamBreakTriggered = false;
     cyclesAfterBeamBreak = 0;
+    speed = 0.0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = mRobotState.intakeMode.clawSpeed;
+    switch (mRobotState.intakeMode) {
+      case Cube:
+        speed = ClawConstants.Intake.Speed.cube;
+        break;
+      case Cone:
+      case Unknown:
+      default:
+        speed = ClawConstants.Intake.Speed.cone;
+    }
     mClaw.setClawSpeed(speed);
     if (mClaw.getBeamBreakTriggered()) {
-      beamBreakTriggered = true;
-    } else if (beamBreakTriggered) {
       cyclesAfterBeamBreak++;
+    } else {
+      cyclesAfterBeamBreak = 0;
     }
   }
 
@@ -54,11 +60,11 @@ public class IntakeGamePiece extends CommandBase {
   public boolean isFinished() {
     switch (mRobotState.intakeMode) {
       case Cube:
-        return cyclesAfterBeamBreak >= IntakeGamePiece.DELAY_CYCLES_AFTER_BEAM_BREAK_CONE;
+        return cyclesAfterBeamBreak >= ClawConstants.Intake.DelayCyclesAfterBeamBreak.cube;
       case Cone:
       case Unknown:
       default:
-        return cyclesAfterBeamBreak >= IntakeGamePiece.DELAY_CYCLES_AFTER_BEAM_BREAK_CONE;
+        return cyclesAfterBeamBreak >= ClawConstants.Intake.DelayCyclesAfterBeamBreak.cone;
     }
   }
 }
