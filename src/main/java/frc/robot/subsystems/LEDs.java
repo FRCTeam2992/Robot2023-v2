@@ -34,12 +34,26 @@ public class LEDs extends SubsystemBase {
     }
 
     public void showNextCycleColor(Color color1, Color color2, int frameCounter) {
-        if (frameCounter / 3 == 0) {
-            cjColorChaseFrame1(color1, color2);
-        } else if (frameCounter / 3 == 1) {
-            cjColorChaseFrame2(color1, color2);
-        } else {
-            cjColorChaseFrame3(color1, color2);
+        switch (frameCounter % 6) {
+            case 0:
+                cjColorChaseFrame1(color1, color2);
+                break;
+            case 1:
+                cjColorChaseFrame2(color1, color2);
+                break;
+            case 2:
+                cjColorChaseFrame3(color1, color2);
+                break;
+            case 3:
+                cjColorChaseFrame1(color2, color1);
+                break;
+            case 4:
+                cjColorChaseFrame2(color2, color1);
+                break;
+            case 5:
+                cjColorChaseFrame3(color2, color1);
+                break;
+            default:
         }
     }
 
