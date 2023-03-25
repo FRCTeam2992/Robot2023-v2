@@ -284,9 +284,12 @@ public final class Constants {
 
     public static class Limits {
         public static double hardStopTop = 135.0;
-        public static double hardStopBottom = -115.0;
-        public static double softStopTop = 130.0;
-        public static double softStopBottom = -111.0;
+        public static double hardStopBottom = -77.0;
+        // public static double softStopTop = 130.0;
+        // public static double softStopBottom = -111.0;
+        public static double softStopTop = 100.0;
+        public static double softStopBottom = -55.0;
+
     }
 
     public static double gearRatio = 64.0 * (32.0 / 12.0);

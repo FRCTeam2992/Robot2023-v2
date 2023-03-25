@@ -58,9 +58,9 @@ public class Arm extends SubsystemBase {
     armMotor = new TalonFX(Constants.ArmConstants.DeviceIDs.armMotor, "CanBus2");
     armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
     armMotor.setSensorPhase(false);
-    armMotor.setInverted(TalonFXInvertType.CounterClockwise);
+    armMotor.setInverted(TalonFXInvertType.Clockwise);
     // armMotor.setNeutralMode(NeutralMode.Brake);
-    armMotor.setNeutralMode(NeutralMode.Coast);
+    armMotor.setNeutralMode(NeutralMode.Brake);
 
     armEncoder = new CANCoder(Constants.ArmConstants.DeviceIDs.armEncoder, "CanBus2");
     armEncoder.configSensorDirection(false);
@@ -123,9 +123,9 @@ public class Arm extends SubsystemBase {
   public void setArmSpeed(double speed) {
     holdPositionRecorded = false; // Hold position invalidated since we moved
     if (getArmMotorPositionDeg() > Constants.ArmConstants.Limits.softStopTop) {
-      speed = Math.min(0.0, speed);
+        speed = Math.min(0.05, speed);
     } else if (getArmMotorPositionDeg() < Constants.ArmConstants.Limits.softStopBottom) {
-      speed = Math.max(0.0, speed);
+        speed = Math.max(-0.05, speed);
     }
     armMotor.set(ControlMode.PercentOutput, speed);
   }
@@ -163,10 +163,11 @@ public class Arm extends SubsystemBase {
   public void initArmMotorEncoder() {
     double value = getArmCANCoderPositionCorrected();
 
-    if (!hasArmMotorReset() && motorEncoderConfidentCalibrated == EncoderState.CALIBRATED) {
-      // We previously had a good reset and no motor reset so still good
-      return;
-  }
+    // if (!hasArmMotorReset() && motorEncoderConfidentCalibrated ==
+    // EncoderState.CALIBRATED) {
+    // // We previously had a good reset and no motor reset so still good
+    // return;
+    // }
     if (value >= Constants.ArmConstants.ArmSlopConstants.topZoneHiEdge) {
       // Above the top slop zone -- apply adjustment
       value -= Constants.ArmConstants.ArmSlopConstants.topZoneAdjustment;
