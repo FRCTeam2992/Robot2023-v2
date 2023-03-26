@@ -196,7 +196,8 @@ public class RobotContainer {
                                 mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
                                 || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
         controller0.leftTrigger(0.6)
-                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
+                .onTrue(new WaitCommand(0.75)
+                        .andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState)));
         controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
                 .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreCubeMid
                         ||
