@@ -40,7 +40,7 @@ public class DeployElevator extends CommandBase {
                     new Waypoint(
                             mRobotState.towerCurrentMoveTarget.height(),
                             mRobotState.towerCurrentMoveTarget.angle(),
-                            Waypoint.OuttakeType.None, ElevatorState.Deployed, 0.0));
+                            Waypoint.OuttakeType.Unknown, ElevatorState.Deployed, 0.0));
             if (zoneClass == WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed) {
                 CommandScheduler.getInstance().schedule(
                         new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, Waypoints.NEUTRAL));

@@ -84,7 +84,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
     private WaypointSafety.WaypointSafetyClassification checkStart() {
         WaypointSafety.WaypointSafetyClassification zoneClass = WaypointSafety.nonSafeZones(
                 new Waypoint(mElevator.getElevatorInches(), mArm.getArmCANCoderPositionCorrected(),
-                        OuttakeType.None, ElevatorState.Undeployed, 0.0));
+                        OuttakeType.Unknown, ElevatorState.Undeployed, 0.0));
         switch (zoneClass) {
             case Ground_If_Deployed:
                 if (mElevator.getElevatorState() == ElevatorState.Deployed) {

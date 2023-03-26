@@ -190,11 +190,11 @@ public final class Constants {
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
-                OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint cubeGroundIntake = new Waypoint(0, 120.00,
-                OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint loadStation = new Waypoint(0, -70.00,
-                OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
     }
 
     public static class ElevatorConstants {

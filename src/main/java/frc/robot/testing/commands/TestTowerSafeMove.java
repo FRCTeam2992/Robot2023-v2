@@ -40,7 +40,7 @@ public class TestTowerSafeMove extends CommandBase {
     // System.out.println("TowerSafeMove running to " + height + "," + angle);
 
     CommandScheduler.getInstance().schedule(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
-            new Waypoint(height, angle, OuttakeType.None, ElevatorState.Undeployed, 0.0)));
+            new Waypoint(height, angle, OuttakeType.Unknown, ElevatorState.Undeployed, 0.0)));
 
   }
 

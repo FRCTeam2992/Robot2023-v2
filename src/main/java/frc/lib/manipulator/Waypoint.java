@@ -38,7 +38,7 @@ public class Waypoint extends Point2D.Double {
     }
 
     public static enum OuttakeType {
-        None(0.0, 0.0), // Not a waypoint we outtake at
+        Unknown(0.5, 0.5), // Not a waypoint we outtake at or unknown so use some defaults
         Hi_Cone(0.5, 0.5),
         Mid_Cone(0.5, 0.5),
         Hi_Cube(0.7, 0.5),

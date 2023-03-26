@@ -37,12 +37,12 @@ public final class Constants {
 
         public static final class Waypoints {
             public static final Waypoint HI_OUTSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_ENTRY_DEGREES,
-                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                    Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
             public static final Waypoint HI_INSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_EXIT_DEGREES,
-                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                    Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
             public static final Waypoint GROUND_EXIT = new Waypoint(GROUND_HIT_INCHES, GROUND_HIT_ANGLE,
-                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                    Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
             public static final Waypoint NEUTRAL = new Waypoint(0.0, INSIDE_ENTRY_DEGREES,
-                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+                    Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         }
 }

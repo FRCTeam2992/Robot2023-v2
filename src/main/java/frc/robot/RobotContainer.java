@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.lib.autonomous.AutoBuilder;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobotPID;
@@ -199,17 +200,11 @@ public class RobotContainer {
                                 mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
                                 || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
         controller0.leftTrigger(0.6)
-                .onTrue(new WaitCommand(0.75)
-                        .andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState)));
-        controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
-                .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreCubeMid
-                        ||
-                        mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
-
+                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
         controller0.leftTrigger(0.6)
-                .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
-        controller0.leftTrigger(0.6)
-                .onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+                .onFalse(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Unknown)
+                        .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal)));
 
         // FIXME: change this to use the actual outtake command once built
         controller0.rightTrigger(0.6)

@@ -131,6 +131,6 @@ public class RobotState {
         currentTargetPosition = position;
     }
 
-    public OuttakeType currentOuttakeType = OuttakeType.None;
+    public OuttakeType currentOuttakeType = OuttakeType.Unknown;
 
 }
