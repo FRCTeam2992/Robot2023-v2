@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.lib.manipulator.Waypoint;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -129,4 +130,7 @@ public class RobotState {
     public void setTargetPosition(GridTargetingPosition position) {
         currentTargetPosition = position;
     }
+
+    public OuttakeType currentOuttakeType = OuttakeType.Unknown;
+
 }

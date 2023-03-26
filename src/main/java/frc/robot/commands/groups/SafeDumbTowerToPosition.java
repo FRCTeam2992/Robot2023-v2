@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.manipulator.Constants;
 import frc.lib.manipulator.Waypoint;
 import frc.lib.manipulator.WaypointSafety;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.lib.manipulator.WaypointSafety.WaypointSafetyClassification;
 import frc.robot.RobotState;
 import frc.robot.subsystems.Arm;
@@ -82,7 +83,8 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
 
     private WaypointSafety.WaypointSafetyClassification checkStart() {
         WaypointSafety.WaypointSafetyClassification zoneClass = WaypointSafety.nonSafeZones(
-                new Waypoint(mElevator.getElevatorInches(), mArm.getArmCANCoderPositionCorrected()));
+                new Waypoint(mElevator.getElevatorInches(), mArm.getArmCANCoderPositionCorrected(),
+                        OuttakeType.Unknown, ElevatorState.Undeployed, 0.0));
         switch (zoneClass) {
             case Ground_If_Deployed:
                 if (mElevator.getElevatorState() == ElevatorState.Deployed) {

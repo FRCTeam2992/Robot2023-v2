@@ -6,6 +6,7 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.commands.DeployElevator;
@@ -28,6 +29,7 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
                 new SafeDumbTowerToPosition(
                         elevator, arm, robotState, Constants.TowerConstants.loadStation).asProxy(),
                 new InstantCommand(() -> {
+                    robotState.currentOuttakeType = OuttakeType.Unknown;
                     if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
                         robotState.intakeMode = RobotState.IntakeModeState.Cone;
                     }

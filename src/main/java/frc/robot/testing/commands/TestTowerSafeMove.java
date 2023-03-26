@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.manipulator.Waypoint;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.RobotState;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 public class TestTowerSafeMove extends CommandBase {
   private Elevator mElevator;
@@ -38,7 +40,7 @@ public class TestTowerSafeMove extends CommandBase {
     // System.out.println("TowerSafeMove running to " + height + "," + angle);
 
     CommandScheduler.getInstance().schedule(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
-        new Waypoint(height, angle)));
+            new Waypoint(height, angle, OuttakeType.Unknown, ElevatorState.Undeployed, 0.0)));
 
   }
 
