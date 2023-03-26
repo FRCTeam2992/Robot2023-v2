@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Claw;
@@ -29,18 +28,14 @@ public class HoldClaw extends CommandBase {
     public void initialize() {
         timer.reset();
         timer.start();
-        // mClaw.setClawSpeed(0.0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Claw Hold Timer", timer.get());
         if (timer.get() > Constants.ClawConstants.holdPositionMaxTime) {
-            SmartDashboard.putBoolean("Claw Holding PID", false);
             mClaw.setClawSpeed(0.0);
         } else {
-            SmartDashboard.putBoolean("Claw Holding PID", true);
             mClaw.holdClaw();
         }
     }

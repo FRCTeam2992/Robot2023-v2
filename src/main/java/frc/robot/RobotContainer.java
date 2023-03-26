@@ -5,9 +5,11 @@
 package frc.robot;
 
 import frc.lib.autonomous.AutoBuilder;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobotPID;
+import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
@@ -199,21 +201,14 @@ public class RobotContainer {
                                 mRobotState.currentTargetPosition == GridTargetingPosition.MidRight
                                 || mRobotState.currentTargetPosition == GridTargetingPosition.MidCenter))));
         controller0.leftTrigger(0.6)
-                .onTrue(new WaitCommand(0.75)
-                        .andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState)));
-        controller0.leftTrigger(0.6).onTrue(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
-                .unless(() -> (mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreCubeMid
-                        ||
-                        mRobotState.currentTargetPosition.towerWaypoint == Constants.TowerConstants.scoreFloor)));
-
+                .onTrue(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
         controller0.leftTrigger(0.6)
-                .onFalse(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal));
-        controller0.leftTrigger(0.6)
-                .onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+                .onFalse(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Unknown)
+                        .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal)));
 
-        // FIXME: change this to use the actual outtake command once built
         controller0.rightTrigger(0.6)
-                .onTrue(new TestClawOuttake(mClaw, mRobotState));
+                .onTrue(new ClawOuttake(mClaw, mRobotState));
 
         controller0.rightStick().onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
 
@@ -247,14 +242,14 @@ public class RobotContainer {
 
         // Joysticks and Buttons
         controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                new MoveArm(mArm, 0.20));
+                new MoveArm(mArm, mRobotState, 0.40));
         controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                new MoveArm(mArm, -0.20));
+                new MoveArm(mArm, mRobotState, -0.40));
 
         controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
-                new MoveElevator(mElevator, 0.2));
+                new MoveElevator(mElevator, mRobotState, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
-                new MoveElevator(mElevator, -0.2));
+                new MoveElevator(mElevator, mRobotState, -0.4));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
@@ -263,9 +258,9 @@ public class RobotContainer {
         SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
         SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
 
-        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
-        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
-        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
+        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, mRobotState, -0.1));
+        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, mRobotState, 0.0));
+        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, mRobotState, 0.1));
         SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
         SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());

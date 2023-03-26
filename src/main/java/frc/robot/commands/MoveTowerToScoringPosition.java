@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.manipulator.Waypoint;
 import frc.robot.RobotState;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
@@ -29,8 +30,13 @@ public class MoveTowerToScoringPosition extends CommandBase {
     @Override
     public void initialize() {
         Waypoint waypoint = mRobotState.currentTargetPosition.towerWaypoint;
-        CommandScheduler.getInstance().schedule(new SafeDumbTowerToPosition(
-                mElevator, mArm, mRobotState, waypoint));
+        mRobotState.currentOuttakeType = waypoint.outtakeType();
+
+        CommandScheduler.getInstance().schedule(new DeployElevator(mElevator, mArm,
+                mRobotState, waypoint.elevatorState()));
+        CommandScheduler.getInstance().schedule(new WaitCommand(waypoint.delay())
+                .andThen(new SafeDumbTowerToPosition(
+                        mElevator, mArm, mRobotState, waypoint)));
     }
 
     // Called every time the scheduler runs while the command is scheduled.

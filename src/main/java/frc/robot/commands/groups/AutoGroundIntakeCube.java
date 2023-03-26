@@ -6,6 +6,7 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.commands.DeployElevator;
@@ -28,6 +29,7 @@ public class AutoGroundIntakeCube extends ParallelCommandGroup {
                         elevator, arm, robotState, Constants.TowerConstants.cubeGroundIntake).asProxy(),
                 new InstantCommand(() -> {
                     robotState.intakeMode = RobotState.IntakeModeState.Cube;
+                    robotState.currentOuttakeType = OuttakeType.Unknown;
                 }).andThen(new IntakeGamePiece(claw, robotState)));
     }
 }
