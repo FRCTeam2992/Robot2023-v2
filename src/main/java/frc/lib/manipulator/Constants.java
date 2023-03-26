@@ -3,6 +3,7 @@ package frc.lib.manipulator;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 public final class Constants {
         public static final double MAX_HEIGHT_INCHES = ElevatorConstants.Limits.hardStopTop;
@@ -35,9 +36,13 @@ public final class Constants {
         }
 
         public static final class Waypoints {
-            public static final Waypoint HI_OUTSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_ENTRY_DEGREES);
-            public static final Waypoint HI_INSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_EXIT_DEGREES);
-            public static final Waypoint GROUND_EXIT = new Waypoint(GROUND_HIT_INCHES, GROUND_HIT_ANGLE);
-            public static final Waypoint NEUTRAL = new Waypoint(0.0, INSIDE_ENTRY_DEGREES);
+            public static final Waypoint HI_OUTSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_ENTRY_DEGREES,
+                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+            public static final Waypoint HI_INSIDE_EDGE = new Waypoint(INSIDE_ZONE_INCHES, INSIDE_EXIT_DEGREES,
+                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+            public static final Waypoint GROUND_EXIT = new Waypoint(GROUND_HIT_INCHES, GROUND_HIT_ANGLE,
+                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
+            public static final Waypoint NEUTRAL = new Waypoint(0.0, INSIDE_ENTRY_DEGREES,
+                    Waypoint.OuttakeType.None, ElevatorState.Undeployed, 0.0);
         }
 }

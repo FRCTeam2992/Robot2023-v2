@@ -7,6 +7,8 @@ package frc.robot;
 import frc.lib.leds.Color;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.lib.manipulator.Waypoint;
+import frc.lib.manipulator.Waypoint.OuttakeType;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -177,14 +179,22 @@ public final class Constants {
     }
 
     public static class TowerConstants {
-        public static Waypoint scoreFloor = new Waypoint(0.0, 80.00);
-        public static Waypoint scoreConeMid = new Waypoint(10.015, 10.93);
-        public static Waypoint scoreConeHigh = new Waypoint(32, 21.3);
-        public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55);
-        public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54);
-        public static Waypoint normal = new Waypoint(0, 15);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 120.00);
-        public static Waypoint loadStation = new Waypoint(0, -70.00);
+        public static Waypoint scoreFloor = new Waypoint(0.0, 80.00,
+                OuttakeType.Hybrid, ElevatorState.Undeployed, 0.0);
+        public static Waypoint scoreConeMid = new Waypoint(10.015, 10.93,
+                OuttakeType.Mid_Cone, ElevatorState.Deployed, 0.2);
+        public static Waypoint scoreConeHigh = new Waypoint(32, 21.3,
+                OuttakeType.Hi_Cone, ElevatorState.Deployed, 0.75);
+        public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55,
+                OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
+        public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
+                OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
+        public static Waypoint normal = new Waypoint(0, 15,
+                OuttakeType.None, ElevatorState.Undeployed, 0.0);
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 120.00,
+                OuttakeType.None, ElevatorState.Undeployed, 0.0);
+        public static Waypoint loadStation = new Waypoint(0, -70.00,
+                OuttakeType.None, ElevatorState.Undeployed, 0.0);
     }
 
     public static class ElevatorConstants {
