@@ -84,6 +84,7 @@ public class Claw extends SubsystemBase {
         motor.config_kI(0, Constants.ClawConstants.PIDConstants.I);
         motor.config_kD(0, Constants.ClawConstants.PIDConstants.D);
         motor.config_kF(0, Constants.ClawConstants.PIDConstants.FF);
+        motor.configClosedLoopPeakOutput(0, 0.2);
     }
     public void onDisable() {
         clawMotor.set(ControlMode.PercentOutput, 0.0);
