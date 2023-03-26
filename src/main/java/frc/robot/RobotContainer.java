@@ -242,14 +242,14 @@ public class RobotContainer {
 
         // Joysticks and Buttons
         controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                new MoveArm(mArm, 0.40));
+                new MoveArm(mArm, mRobotState, 0.40));
         controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                new MoveArm(mArm, -0.40));
+                new MoveArm(mArm, mRobotState, -0.40));
 
         controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
-                new MoveElevator(mElevator, 0.4));
+                new MoveElevator(mElevator, mRobotState, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
-                new MoveElevator(mElevator, -0.4));
+                new MoveElevator(mElevator, mRobotState, -0.4));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
@@ -258,9 +258,9 @@ public class RobotContainer {
         SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
         SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
 
-        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
-        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
-        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
+        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, mRobotState, -0.1));
+        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, mRobotState, 0.0));
+        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, mRobotState, 0.1));
         SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
         SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());

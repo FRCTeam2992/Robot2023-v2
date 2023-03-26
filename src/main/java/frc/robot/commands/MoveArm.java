@@ -4,18 +4,23 @@
 
 package frc.robot.commands;
 
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.manipulator.Waypoint.OuttakeType;
+import frc.robot.RobotState;
 import frc.robot.subsystems.Arm;
 
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm mArm;
+  private RobotState mRobotState;
 
   private double mArmSpeed;
 
-  public MoveArm(Arm subsystem, double armspeed) {
+  public MoveArm(Arm subsystem, RobotState robotState, double armspeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     mArm = subsystem;
+    mRobotState = robotState;
     mArmSpeed = armspeed;
 
     addRequirements(mArm);
@@ -30,7 +35,8 @@ public class MoveArm extends CommandBase {
   @Override
   public void execute() {
     mArm.setArmSpeed(mArmSpeed);
-  }
+    // mRobotState.currentOuttakeType = OuttakeType.Unknown;
+}
 
   // Called once the command ends or is interrupted.
   @Override
