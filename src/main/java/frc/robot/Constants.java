@@ -183,7 +183,7 @@ public final class Constants {
         public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55);
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54);
         public static Waypoint normal = new Waypoint(0, 15);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 129.64);
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 120.00);
         public static Waypoint loadStation = new Waypoint(0, -70.00);
     }
 
