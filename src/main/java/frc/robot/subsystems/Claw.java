@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,14 +30,12 @@ public class Claw extends SubsystemBase {
         clawMotor.setInverted(false);
         clawMotor.setNeutralMode(NeutralMode.Brake);
         clawMotor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        clawMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
         clawMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(
-                true, 5.0,
-                25.0, 0.1));
+                true, 10,
+                25.0, 1.0));
 
-        clawMotor.config_kP(0, Constants.ClawConstants.PIDConstants.P);
-        clawMotor.config_kI(0, Constants.ClawConstants.PIDConstants.I);
-        clawMotor.config_kD(0, Constants.ClawConstants.PIDConstants.D);
-        clawMotor.config_kF(0, Constants.ClawConstants.PIDConstants.FF);
+        setPIDConstants(clawMotor);
     }
 
     @Override
@@ -45,6 +44,8 @@ public class Claw extends SubsystemBase {
         if (dashboardCounter++ >= 5) {
             SmartDashboard.putNumber("Claw Position", getClawMotorPosition());
             SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
+            SmartDashboard.putBoolean("Claw Hold Recoreded", holdPositionRecorded);
+            SmartDashboard.putNumber("Claw Hold Position", holdPosition);
             dashboardCounter = 0;
         }
     }
@@ -54,6 +55,7 @@ public class Claw extends SubsystemBase {
     }
 
     public void setClawSpeed(double speed) {
+        holdPositionRecorded = false;
         clawMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
@@ -62,7 +64,7 @@ public class Claw extends SubsystemBase {
     }
 
     public void setClawMotorPosition(double position) {
-        clawMotor.set(TalonFXControlMode.Position, position);
+        clawMotor.set(TalonFXControlMode.MotionMagic, position);
     }
 
     public double getClawCurrent() {
@@ -70,19 +72,27 @@ public class Claw extends SubsystemBase {
     }
 
     public void holdClaw() {
-        clawMotor.set(TalonFXControlMode.PercentOutput, 0.1);
         // if (!holdPositionRecorded) {
-        //     // We haven't recorded where we are yet, so get it
-        //     holdPosition = getClawMotorPosition();
-        //     holdPositionRecorded = true;
-        //     clawMotor.set(TalonFXControlMode.PercentOutput, 0.0);
-        // } else {
-        //     clawMotor.set(TalonFXControlMode.Position, holdPosition);
+        // // We haven't recorded where we are yet, so get it
+        // holdPosition = getClawMotorPosition() + 500;
+        // holdPositionRecorded = true;
         // }
+        // setClawMotorPosition(holdPosition);
+        setClawSpeed(0.075);
+    }
 
+
+    private void setPIDConstants(TalonFX motor) {
+        motor.config_kP(0, Constants.ClawConstants.PIDConstants.P);
+        motor.config_kI(0, Constants.ClawConstants.PIDConstants.I);
+        motor.config_kD(0, Constants.ClawConstants.PIDConstants.D);
+        motor.config_kF(0, Constants.ClawConstants.PIDConstants.FF);
+        motor.configClosedLoopPeakOutput(0, 0.2);
+        motor.configAllowableClosedloopError(0, 0, 0);
     }
 
     public void onDisable() {
         clawMotor.set(ControlMode.PercentOutput, 0.0);
+        holdPositionRecorded = false;
     }
 }

@@ -30,6 +30,7 @@ import frc.robot.commands.ZeroElevatorEncoders;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.AutoLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
+import frc.robot.commands.groups.StopIntake;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ButterflyWheels;
 import frc.robot.subsystems.Claw;
@@ -137,13 +138,15 @@ public class RobotContainer {
         // -----------------------controller0-----------------------
 
         // ABXY
-
+        // A = auto-align for scoring
         controller0.a().onTrue(new InstantCommand(() -> {
             mDrivetrain.setScoringMode(true);
         }));
         controller0.a().onFalse(new InstantCommand(() -> {
             mDrivetrain.setScoringMode(false);
         }));
+
+        // B = intake from load station
         controller0.b().onTrue(
                 new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
         controller0.b().onTrue(new InstantCommand(() -> {
@@ -152,11 +155,11 @@ public class RobotContainer {
         controller0.b().onFalse(new InstantCommand(() -> {
             mDrivetrain.setLoadingMode(false);
         }));
+
+        // X = ground intake cube
         controller0.x().onTrue(
                 new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
         controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
-        controller0.x().onTrue(new InstantCommand(
-                () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
 
         // D-Pad
         controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels
@@ -208,6 +211,12 @@ public class RobotContainer {
         controller0.leftTrigger(0.6)
                 .onFalse(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
 
+        // FIXME: change this to use the actual outtake command once built
+        controller0.rightTrigger(0.6)
+                .onTrue(new TestClawOuttake(mClaw, mRobotState));
+
+        controller0.rightStick().onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
+
         // Back and Start
 
         controller0.start().onTrue(new ResetGyro(mDrivetrain));
@@ -219,7 +228,16 @@ public class RobotContainer {
         // -----------------------controller1-----------------------
         // ABXY
 
-        // Bumper/Trigger
+        // Bumpers/Triggers
+        controller1.leftBumper().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
+        controller1.leftBumper()
+                .onTrue(new InstantCommand(
+                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cube));
+        controller1.rightBumper().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.yellow));
+        controller1.rightBumper()
+                .onTrue(new InstantCommand(
+                        () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
+
         controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
 
         // Back and Start
