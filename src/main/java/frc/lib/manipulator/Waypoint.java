@@ -38,12 +38,14 @@ public class Waypoint extends Point2D.Double {
     }
 
     public static enum OuttakeType {
-        Unknown(0.5, 0.5), // Not a waypoint we outtake at or unknown so use some defaults
-        Hi_Cone(0.5, 0.5),
-        Mid_Cone(0.5, 0.5),
-        Hi_Cube(0.7, 0.5),
-        Mid_Cube(1.0, 0.5),
-        Hybrid(0.4, 0.5);
+        Unknown(0.6, 1.0), // Not a waypoint we outtake at or unknown so use some defaults
+        Assumed_Cube(0.9, 1.0),
+        Assume_Cone(0.5, 1.0),
+        Hi_Cone(0.5, 1.0),
+        Mid_Cone(0.5, 1.0),
+        Hi_Cube(0.7, 1.0),
+        Mid_Cube(1.0, 1.0),
+        Hybrid(0.35, 1.0);
 
         public double speed; // How fast to spin claw
         public double time; // How long to spin claw

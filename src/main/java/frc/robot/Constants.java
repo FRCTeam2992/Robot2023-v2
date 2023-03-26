@@ -185,7 +185,7 @@ public final class Constants {
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreConeHigh = new Waypoint(32, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreCubeMid = new Waypoint(4.347, 52.55,
+        public static Waypoint scoreCubeMid = new Waypoint(5.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
@@ -286,7 +286,7 @@ public final class Constants {
         public static class Intake {
             public static class Speed {
                 public static double cube = 0.5;
-                public static double cone = 0.7;
+                public static double cone = 0.8;
             }
 
             public static class DelayCyclesAfterBeamBreak {
