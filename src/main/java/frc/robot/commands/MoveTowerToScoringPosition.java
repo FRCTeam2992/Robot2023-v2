@@ -33,10 +33,11 @@ public class MoveTowerToScoringPosition extends CommandBase {
         mRobotState.currentOuttakeType = waypoint.outtakeType();
 
         CommandScheduler.getInstance().schedule(new DeployElevator(mElevator, mArm,
-                mRobotState, waypoint.elevatorState()));
-        CommandScheduler.getInstance().schedule(new WaitCommand(waypoint.delay())
-                .andThen(new SafeDumbTowerToPosition(
-                        mElevator, mArm, mRobotState, waypoint)));
+                mRobotState, waypoint.elevatorState())
+                .alongWith(new WaitCommand(waypoint.delay())
+                        .andThen(new SafeDumbTowerToPosition(
+                                mElevator, mArm, mRobotState, waypoint))));
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
