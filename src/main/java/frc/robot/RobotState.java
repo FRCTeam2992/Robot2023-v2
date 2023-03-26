@@ -33,10 +33,19 @@ public class RobotState {
         return endgameMode == EndgameModeState.InEndgame;
     }
 
+    public boolean towerIsMoving = false;
+    public Waypoint towerCurrentMoveTarget = null;
+
     public enum IntakeModeState {
-        Unknown,
-        Cube,
-        Cone
+        Unknown(Constants.ClawConstants.Intake.Speed.cone),
+        Cube(Constants.ClawConstants.Intake.Speed.cube),
+        Cone(Constants.ClawConstants.Intake.Speed.cone);
+
+        public double clawSpeed;
+
+        private IntakeModeState(double clawSpeed) {
+            this.clawSpeed = clawSpeed;
+        }
     }
 
     public IntakeModeState intakeMode = IntakeModeState.Unknown;
