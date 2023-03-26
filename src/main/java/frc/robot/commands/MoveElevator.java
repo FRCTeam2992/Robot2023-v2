@@ -33,7 +33,7 @@ public class MoveElevator extends CommandBase {
     @Override
     public void execute() {
         mElevator.setElevatorSpeed(mElevatorSpeed);
-        mRobotState.currentOuttakeType = OuttakeType.Unknown;
+        // mRobotState.currentOuttakeType = OuttakeType.Unknown;
     }
 
     // Called once the command ends or is interrupted.
