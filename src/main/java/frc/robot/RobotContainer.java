@@ -242,14 +242,14 @@ public class RobotContainer {
 
         // Joysticks and Buttons
         controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                new MoveArm(mArm, 0.20));
+                new MoveArm(mArm, 0.40));
         controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                new MoveArm(mArm, -0.20));
+                new MoveArm(mArm, -0.40));
 
         controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
-                new MoveElevator(mElevator, 0.2));
+                new MoveElevator(mElevator, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
-                new MoveElevator(mElevator, -0.2));
+                new MoveElevator(mElevator, -0.4));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
