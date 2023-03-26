@@ -231,38 +231,22 @@ public final class Constants {
         }
 
         public static class PIDConstants {
-            // public static double P = 1;
-            // public static double I = 0;
-            // public static double D = 0;
-            // public static double FF = 0;
-
-            // public static double cruiseVelocity = 15000;
-            // public static double acceleration = 29000;
-
-            // New PID constants for RIO PID
             public static double P = 0.020;
             public static double I = 0;
             public static double D = 0.0;
             public static double FF = 0;
-
-            public static double MaxVelocity = 180; // Degrees / sec -- initially very slow for testing
-            public static double MaxAcceleration = 90; // Degrees / sec / sec
         }
 
         public static class Limits {
             public static double hardStopTop = 130.0;
             public static double hardStopBottom = -75.0;
-            // public static double softStopTop = 130.0;
-            // public static double softStopBottom = -111.0;
             public static double softStopTop = 100.0;
             public static double softStopBottom = -55.0;
-
         }
 
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
         public static double armAngleToleranceDeg = 0.1; // Moves within 1 degree are "close enough"
-
         public static double CANCoderOffset = -128.6;
 
         public static class ArmSlopConstants {
@@ -280,7 +264,7 @@ public final class Constants {
         }
 
         public static class PIDConstants {
-            public static double P = 0;
+            public static double P = 0.02;
             public static double I = 0;
             public static double D = 0;
             public static double FF = 0;
