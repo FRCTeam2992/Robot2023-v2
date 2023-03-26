@@ -285,7 +285,8 @@ public final class Constants {
             }
         }
 
-        public static double holdPositionMaxTime = 120; // Seconds -- How long to prevent backdrive
+        public static double holdPositionMaxTime = 150; // Seconds -- How long to prevent backdrive
+        public static double holdPositionPower = 0.075;
 
     }
 

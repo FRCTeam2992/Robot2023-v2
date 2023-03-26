@@ -22,9 +22,6 @@ public class Claw extends SubsystemBase {
 
     private int dashboardCounter;
 
-    private boolean holdPositionRecorded = false; // Have we logged the hold position yet
-    private double holdPosition; // motor encoder clicks
-
     public Claw() {
         clawMotor = new TalonFX(Constants.ClawConstants.DeviceIDs.clawMotor, "CanBus2");
         clawMotor.setInverted(false);
@@ -44,8 +41,6 @@ public class Claw extends SubsystemBase {
         if (dashboardCounter++ >= 5) {
             SmartDashboard.putNumber("Claw Position", getClawMotorPosition());
             SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
-            SmartDashboard.putBoolean("Claw Hold Recoreded", holdPositionRecorded);
-            SmartDashboard.putNumber("Claw Hold Position", holdPosition);
             dashboardCounter = 0;
         }
     }
@@ -55,7 +50,6 @@ public class Claw extends SubsystemBase {
     }
 
     public void setClawSpeed(double speed) {
-        holdPositionRecorded = false;
         clawMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
@@ -72,13 +66,7 @@ public class Claw extends SubsystemBase {
     }
 
     public void holdClaw() {
-        // if (!holdPositionRecorded) {
-        // // We haven't recorded where we are yet, so get it
-        // holdPosition = getClawMotorPosition() + 500;
-        // holdPositionRecorded = true;
-        // }
-        // setClawMotorPosition(holdPosition);
-        setClawSpeed(0.075);
+        setClawSpeed(Constants.ClawConstants.holdPositionPower);
     }
 
 
@@ -93,6 +81,5 @@ public class Claw extends SubsystemBase {
 
     public void onDisable() {
         clawMotor.set(ControlMode.PercentOutput, 0.0);
-        holdPositionRecorded = false;
     }
 }
