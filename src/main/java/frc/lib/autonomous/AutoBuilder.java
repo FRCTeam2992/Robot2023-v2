@@ -13,15 +13,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobotPID;
+import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldClaw;
+import frc.robot.commands.IntakeGamePiece;
 import frc.robot.commands.MoveClaw;
+import frc.robot.commands.OuttakeGamePiece;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
 import frc.robot.commands.StopClaw;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
@@ -72,8 +77,8 @@ public class AutoBuilder {
         eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 Constants.TowerConstants.loadStation));
-        eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
-        eventMap.put("StartCubeOuttake", new MoveClaw(mClaw, -0.5));
+        eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mRobotState));
+        eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
         eventMap.put("EndIntake", new HoldClaw(mClaw));
         eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, false));
@@ -139,17 +144,23 @@ public class AutoBuilder {
         if (startingPose == null) {
             return new InstantCommand();
         }
+        initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
         switch (getAutoPreloadScore()) {
             case No_Preload:
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
                 break;
             case Hi_Cone:
-                initialScoreCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
-                        .andThen(new WaitCommand(0.5))
+                initialScoreCommand = initialScoreCommand
+                        .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
+                                .andThen(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Hi_Cone))
+                                .andThen(new WaitCommand(0.2))
                         .andThen(new SafeDumbTowerToPosition(
-                                mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint))
-                        .andThen(new WaitCommand(0.5))
-                        .andThen(new MoveClaw(mClaw, -0.5).withTimeout(0.5));
+                                        mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
+                                        .withTimeout(1.4))
+                                .andThen(new WaitCommand(0.3))
+                                .andThen(new PrintCommand(
+                                        "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
+                                .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
             default:
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
@@ -158,7 +169,9 @@ public class AutoBuilder {
     }
 
     private Command setupAutoPathFollowCommand(boolean isFirstPath) {
-        Command followCommand = new InstantCommand();
+        Command followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
+                .alongWith(new WaitCommand(0.1).andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+                        Constants.TowerConstants.normal)));
         switch (getAutoSequence()) {
             case Do_Nothing:
                 break;
@@ -241,6 +254,8 @@ public class AutoBuilder {
                 followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             case CenterBalance:
+                isFirstPath = true;
+                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, false));
                 if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.CenterBalanceLoadStationSide.trajectoryGroup) {
                         followCommand = followCommand.andThen(new FollowPathWithEvents(

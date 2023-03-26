@@ -65,7 +65,7 @@ public class BalanceRobotPID extends CommandBase {
         speed = pitchPID.calculate(currentPitch);
         if ((Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchTolerance) || reached) {
             reached = true;
-            speed *= 0.3;
+            speed *= 0.5;
         }
 
         if (Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchTolerance) {
@@ -81,7 +81,7 @@ public class BalanceRobotPID extends CommandBase {
         if (speed > 0.0) {
             mDrivetrain.moveRobotFrontBack(true, -speed);
         } else {
-            mDrivetrain.moveRobotFrontBack(false, speed);
+            mDrivetrain.moveRobotFrontBack(false, 0.85 * speed);
         }
         SmartDashboard.putNumber("Balance speed", speed);
     }

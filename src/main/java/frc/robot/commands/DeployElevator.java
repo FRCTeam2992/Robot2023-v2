@@ -35,17 +35,20 @@ public class DeployElevator extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (mElevatorState == ElevatorState.Deployed && mRobotState.towerIsMoving) {
-            WaypointSafety.WaypointSafetyClassification zoneClass = WaypointSafety.nonSafeZones(
-                    new Waypoint(
-                            mRobotState.towerCurrentMoveTarget.height(),
-                            mRobotState.towerCurrentMoveTarget.angle(),
-                            Waypoint.OuttakeType.Unknown, ElevatorState.Deployed, 0.0));
-            if (zoneClass == WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed) {
-                CommandScheduler.getInstance().schedule(
-                        new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, Waypoints.NEUTRAL));
-            }
-        }
+        // if (mElevatorState == ElevatorState.Deployed && mRobotState.towerIsMoving) {
+        // WaypointSafety.WaypointSafetyClassification zoneClass =
+        // WaypointSafety.nonSafeZones(
+        // new Waypoint(
+        // mRobotState.towerCurrentMoveTarget.height(),
+        // mRobotState.towerCurrentMoveTarget.angle(),
+        // Waypoint.OuttakeType.Unknown, ElevatorState.Deployed, 0.0));
+        // if (zoneClass ==
+        // WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed) {
+        // CommandScheduler.getInstance().schedule(
+        // new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+        // Waypoints.NEUTRAL));
+        // }
+        // }
         mElevator.setElevatorState(mElevatorState);
     }
 
