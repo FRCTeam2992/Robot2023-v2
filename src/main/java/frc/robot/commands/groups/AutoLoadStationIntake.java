@@ -4,9 +4,11 @@
 
 package frc.robot.commands.groups;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotState;
+import frc.robot.commands.IntakeGamePiece;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
@@ -21,6 +23,11 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new SafeDumbTowerToPosition(
-                        elevator, arm, robotState, Constants.TowerConstants.normal).asProxy());
+                        elevator, arm, robotState, Constants.TowerConstants.loadStation).asProxy(),
+                new InstantCommand(() -> {
+                    if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
+                        robotState.intakeMode = RobotState.IntakeModeState.Cone;
+                    }
+                }).andThen(new IntakeGamePiece(claw, robotState)));
     }
 }
