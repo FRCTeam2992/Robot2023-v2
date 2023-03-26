@@ -9,6 +9,7 @@ import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
 import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobotPID;
+import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployButterflyWheels;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.DriveSticks;
@@ -206,9 +207,8 @@ public class RobotContainer {
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
                         .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, TowerConstants.normal)));
 
-        // FIXME: change this to use the actual outtake command once built
         controller0.rightTrigger(0.6)
-                .onTrue(new TestClawOuttake(mClaw, mRobotState));
+                .onTrue(new ClawOuttake(mClaw, mRobotState));
 
         controller0.rightStick().onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
 

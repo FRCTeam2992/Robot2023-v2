@@ -183,7 +183,7 @@ public final class Constants {
                 OuttakeType.Hybrid, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreConeMid = new Waypoint(10.015, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreConeHigh = new Waypoint(32, 21.3,
+        public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreCubeMid = new Waypoint(5.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
