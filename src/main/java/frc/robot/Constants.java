@@ -116,7 +116,7 @@ public final class Constants {
         public static final double yCorrectionD = 0.0;
 
         // Swerve Theta Axis Correction PID (Path Following)
-        public static final double thetaCorrectionP = 60.0;
+        public static final double thetaCorrectionP = 150.0;
         public static final double thetaCorrectionI = 0.0;
         public static final double thetaCorrectionD = 0.0;
 
@@ -191,7 +191,7 @@ public final class Constants {
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 126.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 124.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint loadStation = new Waypoint(0, -70.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);

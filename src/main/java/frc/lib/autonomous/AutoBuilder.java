@@ -157,7 +157,7 @@ public class AutoBuilder {
                         .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.4))
-                                .andThen(new WaitCommand(0.3))
+                                .andThen(new WaitCommand(0.5))
                                 .andThen(new PrintCommand(
                                         "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
@@ -214,6 +214,7 @@ public class AutoBuilder {
                 }
                 break;
             case Side2Scores:
+                isFirstPath = true;
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation2Scores.trajectoryGroup) {
                         followCommand = followCommand.andThen(new FollowPathWithEvents(
@@ -231,7 +232,11 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new WaitCommand(0.5));
+                followCommand = followCommand.andThen(new WaitCommand(0.5))
+                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5)
+                                .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
+                                .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+                                        Constants.TowerConstants.normal)));
                 break;
             case SideMobilityBalance:
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
