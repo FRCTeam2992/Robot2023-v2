@@ -36,7 +36,7 @@ public class HoldArm extends CommandBase {
     if (timer.get() > Constants.ArmConstants.holdPositionMaxTime) {
       mArm.setArmSpeed(0.0);
     } else {
-      if (timer.get() > 0.150) {
+        if (timer.get() > 0.050) {
         mArm.holdArm();
       }
     }

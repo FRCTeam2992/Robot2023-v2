@@ -54,16 +54,23 @@ public class AutoBuilder {
         mClaw = claw;
 
         eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
-        eventMap.put("DeployElevator", new DeployElevator(mElevator, ElevatorState.Deployed));
-        eventMap.put("UndeployElevator", new DeployElevator(mElevator, ElevatorState.Undeployed));
-        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(mElevator, mArm,
+        eventMap.put("DeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
+        eventMap.put("UndeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
                 GridTargetingPosition.HighRight.towerWaypoint));
-        eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(mElevator, mArm,
+        eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
                 GridTargetingPosition.HighCenter.towerWaypoint));
-        eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(mElevator, mArm,
-                Constants.TowerConstants.intakeGrabCone));
-        eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(mElevator, mArm,
-                Constants.TowerConstants.intakeBackstop));
+        eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
+                Constants.TowerConstants.cubeGroundIntake));
+        eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
+                Constants.TowerConstants.normal));
+        eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
+                Constants.TowerConstants.loadStation));
         eventMap.put("StartCubeIntake", new MoveClaw(mClaw, 0.5));
         eventMap.put("EndIntake", new HoldClaw(mClaw));
     }
@@ -132,9 +139,10 @@ public class AutoBuilder {
                 initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
                 break;
             case Hi_Cone:
-                initialScoreCommand = new DeployElevator(mElevator, ElevatorState.Deployed)
-                        .andThen(new WaitCommand(0.5).andThen(new SafeDumbTowerToPosition(mElevator, mArm,
-                                GridTargetingPosition.HighRight.towerWaypoint)))
+                initialScoreCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
+                        .andThen(new WaitCommand(0.5))
+                        .andThen(new SafeDumbTowerToPosition(
+                                mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint))
                         .andThen(new WaitCommand(0.5))
                         .andThen(new MoveClaw(mClaw, -0.5).withTimeout(0.5))
                         .andThen(new StopClaw(mClaw).withTimeout(0.04));
