@@ -5,12 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.lib.manipulator.Constants.Waypoints;
-import frc.lib.manipulator.Waypoint;
-import frc.lib.manipulator.WaypointSafety;
 import frc.robot.RobotState;
-import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorState;

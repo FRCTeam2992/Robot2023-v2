@@ -25,8 +25,6 @@ import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.IntakeGamePiece;
-import frc.robot.commands.MoveClaw;
-import frc.robot.commands.OuttakeGamePiece;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
 import frc.robot.commands.StopClaw;
 import frc.robot.commands.groups.FollowTrajectoryCommand;

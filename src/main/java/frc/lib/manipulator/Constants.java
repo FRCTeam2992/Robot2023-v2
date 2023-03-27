@@ -2,7 +2,6 @@ package frc.lib.manipulator;
 
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 public final class Constants {

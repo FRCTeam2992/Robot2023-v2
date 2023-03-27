@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.RobotState;
 import frc.robot.subsystems.Arm;
 

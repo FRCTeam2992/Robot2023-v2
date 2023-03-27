@@ -7,7 +7,6 @@ package frc.robot;
 import frc.lib.autonomous.AutoBuilder;
 import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
-import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployButterflyWheels;
@@ -16,12 +15,10 @@ import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
-import frc.robot.commands.IntakeGamePiece;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
-import frc.robot.commands.StopClaw;
 import frc.robot.commands.MoveElevator;
 
 import frc.robot.commands.SetLEDsColor;
@@ -50,7 +47,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
