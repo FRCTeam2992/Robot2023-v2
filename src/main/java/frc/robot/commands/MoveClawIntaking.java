@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
 
@@ -13,16 +12,12 @@ public class MoveClawIntaking extends CommandBase {
   private double mSpeed;
   private double mTargetCurrent;
 
-  private LinearFilter lowPass;
-
   /** Creates a new MoveClawIntaking. */
   public MoveClawIntaking(Claw subsystem, double speed, double targetCurrent) {
     // Use addRequirements() here to declare subsystem dependencies.
     mClaw = subsystem;
     mSpeed = speed;
     mTargetCurrent = targetCurrent;
-
-    lowPass = LinearFilter.movingAverage(3);
 
     addRequirements(mClaw);
   }

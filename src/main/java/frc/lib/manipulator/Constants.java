@@ -16,7 +16,6 @@ public final class Constants {
         public static final double GROUND_HIT_ANGLE = 75.0;
 
         public static final class NoFlyZones {
-            // TODO: set proper constant values
             // Corner x, corner y, width, height, zonetype
             public static final NoFlyZone HI_INSIDE = new NoFlyZone(INSIDE_ZONE_INCHES,
                     MIN_ANGLE_DEGREES, MAX_HEIGHT_INCHES, INSIDE_ENTRY_DEGREES, NoFlyZone.ZoneType.Always);
