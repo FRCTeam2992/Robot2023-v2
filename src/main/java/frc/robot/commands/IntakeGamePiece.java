@@ -50,7 +50,8 @@ public class IntakeGamePiece extends CommandBase {
     } else {
       cyclesAfterBeamBreak = 0;
     }
-    SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
+    // Troubleshooting only dashboard
+    // SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
   }
 
   // Called once the command ends or is interrupted.

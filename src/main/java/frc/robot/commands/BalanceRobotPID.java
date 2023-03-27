@@ -58,9 +58,10 @@ public class BalanceRobotPID extends CommandBase {
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
         currentPitchDelta = currentPitch - priorPitch;
 
-        SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
-        SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
-        SmartDashboard.putBoolean("Robot Balance Reached", reached);
+        // Troubleshooting only dashboard entries
+        // SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
+        // SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
+        // SmartDashboard.putBoolean("Robot Balance Reached", reached);
 
         speed = pitchPID.calculate(currentPitch);
         if ((Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchTolerance) || reached) {
@@ -83,7 +84,8 @@ public class BalanceRobotPID extends CommandBase {
         } else {
             mDrivetrain.moveRobotFrontBack(false, 0.85 * speed);
         }
-        SmartDashboard.putNumber("Balance speed", speed);
+        // Troubleshooting only dashboard
+        // SmartDashboard.putNumber("Balance speed", speed);
     }
 
     // Called once the command ends or is interrupted.
