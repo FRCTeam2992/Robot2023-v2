@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -21,7 +21,7 @@ public class BalanceRobotPID extends CommandBase {
     private LinearFilter lowPass;
     private double priorPitch;
     private double currentPitch;
-    private double currentPitchDelta;
+    // private double currentPitchDelta;
     private PIDController pitchPID;
     private boolean reached = false;
     private Timer doneTimer;
@@ -56,7 +56,7 @@ public class BalanceRobotPID extends CommandBase {
 
         priorPitch = currentPitch;
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
-        currentPitchDelta = currentPitch - priorPitch;
+        // currentPitchDelta = currentPitch - priorPitch;
 
         // Troubleshooting only dashboard entries
         // SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
