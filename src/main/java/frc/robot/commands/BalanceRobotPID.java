@@ -19,7 +19,7 @@ import frc.robot.subsystems.Drivetrain;
 public class BalanceRobotPID extends CommandBase {
     private Drivetrain mDrivetrain;
     private LinearFilter lowPass;
-    private double priorPitch;
+    // private double priorPitch;
     private double currentPitch;
     // private double currentPitchDelta;
     private PIDController pitchPID;
@@ -41,7 +41,8 @@ public class BalanceRobotPID extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        priorPitch = currentPitch = mDrivetrain.getRobotPitch();
+        currentPitch = mDrivetrain.getRobotPitch();
+        // priorPitch = currentPitch;
         lowPass.reset();
         mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         reached = false;
@@ -54,7 +55,7 @@ public class BalanceRobotPID extends CommandBase {
     public void execute() {
         double speed;
 
-        priorPitch = currentPitch;
+        // priorPitch = currentPitch;
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
         // currentPitchDelta = currentPitch - priorPitch;
 
