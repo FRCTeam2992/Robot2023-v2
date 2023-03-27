@@ -30,6 +30,8 @@ public class DeployElevator extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        // FIXME Need to get elevator deploy safety working -- maybe implement in
+        // elevator and arm periodic?
         // if (mElevatorState == ElevatorState.Deployed && mRobotState.towerIsMoving) {
         // WaypointSafety.WaypointSafetyClassification zoneClass =
         // WaypointSafety.nonSafeZones(
