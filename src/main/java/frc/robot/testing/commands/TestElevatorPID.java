@@ -26,7 +26,7 @@ public class TestElevatorPID extends CommandBase {
         double height;
 
         height = SmartDashboard.getNumber("ElevTestMoveHeight", 20);
-        System.out.println("ElevatorTestMove running to " + height);
+        // System.out.println("ElevatorTestMove running to " + height);
 
         CommandScheduler.getInstance().schedule(new SetElevatorPosition(mElevator, height));
     }
