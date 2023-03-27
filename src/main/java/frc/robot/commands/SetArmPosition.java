@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import javax.lang.model.util.ElementScanner14;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
@@ -13,7 +11,6 @@ public class SetArmPosition extends CommandBase {
     /** Creates a new SetArmPosition. */
     private Arm mArm;
     private double mAngle;
-    private int thereCounter = 0;
 
     public SetArmPosition(Arm subsystem, double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +24,6 @@ public class SetArmPosition extends CommandBase {
     @Override
     public void initialize() {
         mArm.setArmTarget(mAngle);
-        thereCounter = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
