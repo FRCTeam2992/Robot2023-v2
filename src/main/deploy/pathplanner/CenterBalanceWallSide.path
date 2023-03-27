@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.84,
-        "y": 2.189
+        "x": 1.89,
+        "y": 2.19
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.889999999999999,
-        "y": 2.189
+        "x": 2.889999999999996,
+        "y": 2.19
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -24,15 +24,140 @@
     },
     {
       "anchorPoint": {
-        "x": 4.8,
+        "x": 3.6112359404205985,
         "y": 2.19
       },
       "prevControl": {
-        "x": 3.4799999999999995,
+        "x": 2.6112359404205985,
+        "y": 2.19
+      },
+      "nextControl": {
+        "x": 4.611235940420596,
+        "y": 2.19
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": 2.0,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.5,
+        "y": 2.19
+      },
+      "prevControl": {
+        "x": 5.423119702228422,
+        "y": 2.19
+      },
+      "nextControl": {
+        "x": 5.727394103030552,
+        "y": 2.19
+      },
+      "holonomicAngle": 0.0,
+      "isReversal": false,
+      "velOverride": 1.0,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.135758914247042,
+        "y": 2.19
+      },
+      "prevControl": {
+        "x": 5.779480868357616,
+        "y": 1.98
+      },
+      "nextControl": {
+        "x": 6.389113635368083,
+        "y": 2.34
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.172619381130367,
+        "y": 2.19
+      },
+      "prevControl": {
+        "x": 6.1711851356122525,
+        "y": 2.19
+      },
+      "nextControl": {
+        "x": 6.1711851356122525,
+        "y": 2.19
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": 2.0,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.35,
+        "y": 2.19
+      },
+      "prevControl": {
+        "x": 7.0131601989808665,
+        "y": 2.19
+      },
+      "nextControl": {
+        "x": 3.686839801019133,
+        "y": 2.19
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": 2.8,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.2,
+        "y": 2.19
+      },
+      "prevControl": {
+        "x": 5.037932987389789,
         "y": 2.19
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -47,11 +172,32 @@
   ],
   "markers": [
     {
-      "position": 0.05818181818181901,
+      "position": 0.01,
       "names": [
         "UndeployElevator",
         "TowerMoveStowed",
-        "EndIntake"
+        "StopClaw",
+        "StopLimelight"
+      ]
+    },
+    {
+      "position": 1.2654545454545605,
+      "names": [
+        "TowerMoveGroundIntake",
+        "SetIntakeModeCube"
+      ]
+    },
+    {
+      "position": 2.181818181818022,
+      "names": [
+        "StartCubeIntake"
+      ]
+    },
+    {
+      "position": 4.712727272727134,
+      "names": [
+        "EndIntake",
+        "TowerMoveStowed"
       ]
     }
   ]

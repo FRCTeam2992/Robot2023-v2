@@ -91,7 +91,7 @@ public final class Constants {
         public static final double pitchDeltaTolerance = 0.08; // degrees/20ms robot cycle
         public static final double balanceMoveSpeed = 0.75; // m/sec -- max speed to crawl for final balance
         public static final double balanceWaitTimer = 1.0; // How long to wait before declaring balanced
-        public static final double balanceP = 0.05;
+        public static final double balanceP = 0.04;
         public static final double balanceI = 0.0;
         public static final double balanceD = 0.006;
 
@@ -116,7 +116,7 @@ public final class Constants {
         public static final double yCorrectionD = 0.0;
 
         // Swerve Theta Axis Correction PID (Path Following)
-        public static final double thetaCorrectionP = 40.0;
+        public static final double thetaCorrectionP = 150.0;
         public static final double thetaCorrectionI = 0.0;
         public static final double thetaCorrectionD = 0.0;
 
@@ -191,9 +191,9 @@ public final class Constants {
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 126.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 122.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint loadStation = new Waypoint(0, -70.00,
+        public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
     }
 
@@ -226,7 +226,7 @@ public final class Constants {
         public static int encoderClicksPerRevolution = 2048; // clicks per revolution
         public static double gearRatio = 6.0; // 6:1 ratio
         public static double sprocketPitchDiameter = 1.751; // inches
-        public static double elevatorHeightToleranceInch = 0.5; // Moves within .5 inch are "close enough
+        public static double elevatorHeightToleranceInch = 0.75; // Moves within .5 inch are "close enough
 
         public static double encoderClicksPerInch = (encoderClicksPerRevolution * gearRatio)
                 / (sprocketPitchDiameter * Math.PI);
@@ -241,8 +241,8 @@ public final class Constants {
         }
 
         public static class PIDConstants {
-            public static double P = 0.020;
-            public static double I = 0;
+            public static double P = 0.025;
+            public static double I = 0.01;
             public static double D = 0.0;
             public static double FF = 0;
         }
@@ -256,7 +256,7 @@ public final class Constants {
 
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
-        public static double armAngleToleranceDeg = 0.1; // Moves within 1 degree are "close enough"
+        public static double armAngleToleranceDeg = 1.5; // Moves within 1 degree are "close enough"
         public static double CANCoderOffset = -128.6;
 
         public static class ArmSlopConstants {

@@ -123,7 +123,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setElevatorPosition(double inches) {
-    holdPositionRecorded = false; // Hold position invalidated since we moved
+      holdPositionRecorded = true;
 
     if (inches < Constants.ElevatorConstants.Limits.softStopBottom) {
       inches = Constants.ElevatorConstants.Limits.softStopBottom;
@@ -131,6 +131,7 @@ public class Elevator extends SubsystemBase {
       inches = Constants.ElevatorConstants.Limits.softStopTop;
     }
     targetHeightInch = inches;
+    holdPosition = targetHeightInch;
     elevatorMotorLead.set(TalonFXControlMode.MotionMagic, inchesToEncoderClicks(inches));
     // System.out.println("MOVING: " + inchesToEncoderClicks(inches));
   }

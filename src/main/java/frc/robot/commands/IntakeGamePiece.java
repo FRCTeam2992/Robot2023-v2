@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClawConstants;
 import frc.robot.RobotState;
@@ -49,11 +50,14 @@ public class IntakeGamePiece extends CommandBase {
     } else {
       cyclesAfterBeamBreak = 0;
     }
+    SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+      mClaw.setClawSpeed(0.0);
+  }
 
   // Returns true when the command should end.
   @Override

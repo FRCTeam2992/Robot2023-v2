@@ -1,9 +1,6 @@
 package frc.lib.autonomous;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -15,11 +12,18 @@ public enum AutonomousTrajectory {
     WallMobilityIntake(PathPlanner.loadPathGroup("WallMobilityIntake", 2.0, 1.5)),
     LoadStationMobilityBalance(PathPlanner.loadPathGroup("LoadStationMobilityBalance", new PathConstraints(2.9, 2.5))),
     WallMobilityBalance(PathPlanner.loadPathGroup("WallMobilityBalance", new PathConstraints(2.9, 2.5))),
-    LoadStation2Scores(PathPlanner.loadPathGroup("LoadStation2Scores", 4.0, 3.0)),
-    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 4.0, 3.0)),
-    CenterBalanceLoadStationSide(
-            PathPlanner.loadPathGroup("CenterBalanceLoadStationSide", new PathConstraints(2.8, 2.25))),
-    CenterBalanceWallSide(PathPlanner.loadPathGroup("CenterBalanceWallSide", new PathConstraints(2.8, 2.25)));
+    LoadStation2Scores(PathPlanner.loadPathGroup("LoadStation2Scores", 4.0, 1.8)),
+    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 4.0, 1.8)),
+    CenterBalanceLoadStationSide(PathPlanner.loadPathGroup("CenterBalanceLoadStationSide",
+            new PathConstraints(3.0, 2.5),
+            new PathConstraints(1.5, 2.5),
+            new PathConstraints(1.3, 1.0),
+            new PathConstraints(3.0, 2.5))),
+    CenterBalanceWallSide(PathPlanner.loadPathGroup("CenterBalanceWallSide",
+            new PathConstraints(3.0, 2.5),
+            new PathConstraints(1.5, 2.5),
+            new PathConstraints(1.3, 1.0),
+            new PathConstraints(3.0, 2.5)));
 
     public List<PathPlannerTrajectory> trajectoryGroup;
 
