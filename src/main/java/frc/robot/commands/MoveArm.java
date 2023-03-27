@@ -6,20 +6,17 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotState;
 import frc.robot.subsystems.Arm;
 
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm mArm;
-  private RobotState mRobotState;
 
   private double mArmSpeed;
 
-  public MoveArm(Arm subsystem, RobotState robotState, double armspeed) {
+  public MoveArm(Arm subsystem, double armspeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     mArm = subsystem;
-    mRobotState = robotState;
     mArmSpeed = armspeed;
 
     addRequirements(mArm);
@@ -33,8 +30,7 @@ public class MoveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mArm.setArmSpeed(mArmSpeed);
-    // mRobotState.currentOuttakeType = OuttakeType.Unknown;
+      mArm.setArmSpeed(mArmSpeed);
 }
 
   // Called once the command ends or is interrupted.

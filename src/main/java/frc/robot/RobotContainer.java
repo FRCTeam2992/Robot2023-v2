@@ -232,9 +232,9 @@ public class RobotContainer {
 
         // Joysticks and Buttons
         controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                new MoveArm(mArm, mRobotState, 0.40));
+                new MoveArm(mArm, 0.40));
         controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                new MoveArm(mArm, mRobotState, -0.40));
+                new MoveArm(mArm, -0.40));
 
         controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
                 new MoveElevator(mElevator, mRobotState, 0.4));
