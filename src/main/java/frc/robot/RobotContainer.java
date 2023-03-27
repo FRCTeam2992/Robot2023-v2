@@ -288,7 +288,7 @@ public class RobotContainer {
         SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
                 mArm, mRobotState));
         SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm));
-        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
+        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator));
 
         // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
     }
