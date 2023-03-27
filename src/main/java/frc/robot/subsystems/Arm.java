@@ -84,13 +84,19 @@ public class Arm extends SubsystemBase {
     public void setArmTarget(double angle) {
         targetAngleDeg = Math.min(angle, Constants.ArmConstants.Limits.hardStopTop);
         targetAngleDeg = Math.max(targetAngleDeg, Constants.ArmConstants.Limits.hardStopBottom);
-        holdPositionRecorded = false; // Hold position invalidated since we moved
+        holdPositionRecorded = true;
+        holdPosition = targetAngleDeg;
         pidMode = true;
         lowPass.reset();
+        armController.reset();
         armController.setSetpoint(targetAngleDeg);
     }
 
     public void moveArmToTarget() {
+        if (Math.abs(getArmCANCoderPositionCorrected() - targetAngleDeg) > 10.0) {
+            armController.reset();
+            armController.setSetpoint(targetAngleDeg);
+        }
         double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
         speed = Math.min(1.0, speed);
         speed = Math.max(-1.0, speed);

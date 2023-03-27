@@ -64,19 +64,19 @@ public class AutoBuilder {
         eventMap.put("UndeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
         eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighRight.towerWaypoint));
+                GridTargetingPosition.HighRight.towerWaypoint).withTimeout(1.5));
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighCenter.towerWaypoint));
+                GridTargetingPosition.HighCenter.towerWaypoint).withTimeout(1.5));
         eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.cubeGroundIntake));
+                Constants.TowerConstants.cubeGroundIntake).withTimeout(1.5));
         eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.normal));
+                Constants.TowerConstants.normal).withTimeout(1.5));
         eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.loadStation));
+                Constants.TowerConstants.loadStation).withTimeout(1.5));
         eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mRobotState));
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
@@ -156,8 +156,8 @@ public class AutoBuilder {
                                 .andThen(new WaitCommand(0.2))
                         .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
-                                        .withTimeout(1.4))
-                                .andThen(new WaitCommand(0.5))
+                                        .withTimeout(1.2))
+                                .andThen(new WaitCommand(0.3))
                                 .andThen(new PrintCommand(
                                         "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
@@ -171,7 +171,7 @@ public class AutoBuilder {
     private Command setupAutoPathFollowCommand(boolean isFirstPath) {
         Command followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
                 .alongWith(new WaitCommand(0.1).andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
-                        Constants.TowerConstants.normal)));
+                        Constants.TowerConstants.normal)).withTimeout(0.5));
         switch (getAutoSequence()) {
             case Do_Nothing:
                 break;

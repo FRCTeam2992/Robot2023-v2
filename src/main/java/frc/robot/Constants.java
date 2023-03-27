@@ -191,9 +191,9 @@ public final class Constants {
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 124.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 122.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint loadStation = new Waypoint(0, -70.00,
+        public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
     }
 
@@ -241,8 +241,8 @@ public final class Constants {
         }
 
         public static class PIDConstants {
-            public static double P = 0.020;
-            public static double I = 0;
+            public static double P = 0.025;
+            public static double I = 0.01;
             public static double D = 0.0;
             public static double FF = 0;
         }
@@ -256,7 +256,7 @@ public final class Constants {
 
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
-        public static double armAngleToleranceDeg = 1.0; // Moves within 1 degree are "close enough"
+        public static double armAngleToleranceDeg = 1.5; // Moves within 1 degree are "close enough"
         public static double CANCoderOffset = -128.6;
 
         public static class ArmSlopConstants {

@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9739879235585334,
-        "y": 5.082068099763281
+        "x": 2.921850670162487,
+        "y": 4.851081795649914
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -28,14 +28,14 @@
         "y": 4.788340897436512
       },
       "prevControl": {
-        "x": 3.2227339288133257,
-        "y": 4.83149812433264
+        "x": 3.250722712521957,
+        "y": 4.668375105450208
       },
       "nextControl": {
-        "x": 4.589487536355761,
-        "y": 4.760803972218378
+        "x": 4.832939142866744,
+        "y": 4.903761452024549
       },
-      "holonomicAngle": 27.0126653479386,
+      "holonomicAngle": 23.301472697047704,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -49,18 +49,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.104018423353163,
-        "y": 4.705730121782109
+        "x": 5.892442620616557,
+        "y": 5.600298181789945
       },
       "prevControl": {
-        "x": 5.084986816764934,
-        "y": 4.705730121782109
+        "x": 4.784149451960432,
+        "y": 5.857038183647399
       },
       "nextControl": {
-        "x": 6.691544534373113,
-        "y": 4.705730121782109
+        "x": 6.5896770867928876,
+        "y": 5.438781370892112
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 127.82275414914506,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -74,18 +74,18 @@
     },
     {
       "anchorPoint": {
-        "x": 7.334001083096508,
-        "y": 4.4854347200370315
+        "x": 6.9506299257396185,
+        "y": 4.683575375034255
       },
       "prevControl": {
-        "x": 6.982193587449755,
-        "y": 4.4854347200370315
+        "x": 6.735284443148513,
+        "y": 5.276918062673987
       },
       "nextControl": {
-        "x": 7.952339794001148,
-        "y": 4.4854347200370315
+        "x": 7.579079769725378,
+        "y": 2.9520037860201893
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 137.45436013889557,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -99,18 +99,18 @@
     },
     {
       "anchorPoint": {
-        "x": 3.7542008047390127,
-        "y": 4.71490909685482
+        "x": 4.6796570107083175,
+        "y": 4.964486315447778
       },
       "prevControl": {
-        "x": 4.217852514613334,
-        "y": 4.71490909685482
+        "x": 5.700204419996744,
+        "y": 4.909218392393128
       },
       "nextControl": {
-        "x": 3.2905490948646907,
-        "y": 4.71490909685482
+        "x": 3.8216811193960347,
+        "y": 5.010950149574656
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 12.264773727892441,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -124,15 +124,15 @@
     },
     {
       "anchorPoint": {
-        "x": 1.94,
-        "y": 4.42
+        "x": 1.89,
+        "y": 4.188654094562303
       },
       "prevControl": {
-        "x": 2.3914534979264355,
-        "y": 4.42
+        "x": 3.1388647016178535,
+        "y": 4.176044192552601
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -145,14 +145,16 @@
       }
     }
   ],
+  "maxVelocity": null,
+  "maxAcceleration": 1.5,
+  "isReversed": null,
   "markers": [
     {
       "position": 0.1,
       "names": [
-        "EndIntake",
-        "UndeployElevator",
         "SetIntakeModeCube",
-        "TowerMoveGroundIntake"
+        "TowerMoveGroundIntake",
+        "StopLimelight"
       ]
     },
     {
@@ -165,7 +167,19 @@
       "position": 3.6654545454544873,
       "names": [
         "EndIntake",
-        "TowerMoveLoadStation"
+        "TowerMoveStowed"
+      ]
+    },
+    {
+      "position": 4.3,
+      "names": [
+        "DeployElevator"
+      ]
+    },
+    {
+      "position": 4.6,
+      "names": [
+        "TowerMoveHighCenter"
       ]
     }
   ]
