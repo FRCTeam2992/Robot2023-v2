@@ -110,8 +110,8 @@ public class AutoBuilder {
                 AutoSequence.SideMobilityOnly);
         autoSequenceChooser.addOption(AutoSequence.SideMobilityBalance.description,
                 AutoSequence.SideMobilityBalance);
-        // autoSequenceChooser.addOption(AutoSequence.SideMobilityIntake.description,
-        // AutoSequence.SideMobilityIntake);
+        autoSequenceChooser.addOption(AutoSequence.SideIntakeBalance.description,
+                AutoSequence.SideIntakeBalance);
         autoSequenceChooser.addOption(AutoSequence.Side2Scores.description, AutoSequence.Side2Scores);
         autoSequenceChooser.addOption(AutoSequence.CenterBalance.description, AutoSequence.CenterBalance);
         autoSequenceChooser.addOption(AutoSequence.CenterIntakeBalance.description, AutoSequence.CenterIntakeBalance);
@@ -196,27 +196,27 @@ public class AutoBuilder {
                     }
                 }
                 break;
-            // case SideMobilityIntake:
-            // if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
-            // for (PathPlannerTrajectory path :
-            // AutonomousTrajectory.LoadStationMobilityIntake.trajectoryGroup) {
-            // followCommand = followCommand.andThen(new FollowPathWithEvents(
-            // new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
-            // path.getMarkers(),
-            // eventMap));
-            // isFirstPath = false; // Make sure it's false for subsequent paths
-            // }
-            // } else if (getAutoStartPosition() == AutoStartPosition.WallEnd) {
-            // for (PathPlannerTrajectory path :
-            // AutonomousTrajectory.WallMobilityIntake.trajectoryGroup) {
-            // followCommand = followCommand.andThen(new FollowPathWithEvents(
-            // new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
-            // path.getMarkers(),
-            // eventMap));
-            // isFirstPath = false; // Make sure it's false for subsequent paths
-            // }
-            // }
-            // break;
+            case SideIntakeBalance:
+                if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStationIntakeBalance.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                } else if (getAutoStartPosition() == AutoStartPosition.WallEnd) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.WallIntakeBalance.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                }
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
+                break;
+
             case Side2Scores:
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation2Scores.trajectoryGroup) {
