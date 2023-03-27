@@ -113,8 +113,7 @@ public class AutoBuilder {
         // autoSequenceChooser.addOption(AutoSequence.SideMobilityIntake.description,
         // AutoSequence.SideMobilityIntake);
         autoSequenceChooser.addOption(AutoSequence.Side2Scores.description, AutoSequence.Side2Scores);
-        // autoSequenceChooser.addOption(AutoSequence.CenterBalance.description,
-        // AutoSequence.CenterBalance);
+        autoSequenceChooser.addOption(AutoSequence.CenterBalance.description, AutoSequence.CenterBalance);
         autoSequenceChooser.addOption(AutoSequence.CenterIntakeBalance.description, AutoSequence.CenterIntakeBalance);
 
         SmartDashboard.putData("Auto Sequence", autoSequenceChooser);
@@ -156,7 +155,7 @@ public class AutoBuilder {
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
                                 .andThen(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Hi_Cone))
                                 .andThen(new WaitCommand(0.2))
-                        .andThen(new SafeDumbTowerToPosition(
+                                .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.2))
                                 .andThen(new WaitCommand(0.3))
@@ -266,6 +265,28 @@ public class AutoBuilder {
             // }
             // followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
             // break;
+            case CenterBalance:
+                isFirstPath = true;
+                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, false));
+                if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.CenterBalanceLoadStationSide.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                } else if (getAutoStartPosition() == AutoStartPosition.CenterWallSide) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.CenterBalanceWallSide.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                }
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
+                break;
             case CenterIntakeBalance:
                 isFirstPath = true;
                 followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, false));
