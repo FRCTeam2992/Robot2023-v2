@@ -35,6 +35,7 @@ public class Elevator extends SubsystemBase {
   // Variables for managing "hold position" to prevent backdrive
   private boolean holdPositionRecorded = false; // Have we logged the hold position yet
   private double holdPosition; // lead motor encoder clicks
+  private ElevatorState currentState = ElevatorState.Undeployed;
 
   public enum ElevatorState {
     Undeployed(false),
@@ -75,6 +76,7 @@ public class Elevator extends SubsystemBase {
       SmartDashboard.putNumber("Follow Elevator Encoder", getFollowElevatorPostion());
 
       SmartDashboard.putNumber("Elevator Inches", getElevatorInches());
+      SmartDashboard.putBoolean("Elevator Deployed State", getElevatorState() == ElevatorState.Deployed);
 
       dashboardCounter = 0;
     }
@@ -121,7 +123,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setElevatorPosition(double inches) {
-    holdPositionRecorded = false; // Hold position invalidated since we moved
+      holdPositionRecorded = true;
 
     if (inches < Constants.ElevatorConstants.Limits.softStopBottom) {
       inches = Constants.ElevatorConstants.Limits.softStopBottom;
@@ -129,6 +131,7 @@ public class Elevator extends SubsystemBase {
       inches = Constants.ElevatorConstants.Limits.softStopTop;
     }
     targetHeightInch = inches;
+    holdPosition = targetHeightInch;
     elevatorMotorLead.set(TalonFXControlMode.MotionMagic, inchesToEncoderClicks(inches));
     // System.out.println("MOVING: " + inchesToEncoderClicks(inches));
   }
@@ -154,14 +157,21 @@ public class Elevator extends SubsystemBase {
 
   public void setElevatorState(ElevatorState state) {
     elevatorSolenoid.set(state.solenoidSetting);
+    currentState = state;
   }
 
-  public void deployElevator(boolean toggle) {
-    elevatorSolenoid.set(toggle);
+  public ElevatorState getElevatorState() {
+      return currentState;
   }
+
 
   public void toggleElevatorDeploy() {
-    elevatorSolenoid.set(!getElevatorSolenoidState());
+      if (currentState == ElevatorState.Undeployed) {
+          currentState = ElevatorState.Deployed;
+      } else {
+          currentState = ElevatorState.Undeployed;
+      }
+      setElevatorState(currentState);
   }
 
   public boolean getElevatorSolenoidState() {

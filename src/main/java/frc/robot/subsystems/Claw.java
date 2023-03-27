@@ -4,60 +4,82 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Claw extends SubsystemBase {
-  /** Creates a new Claw. */
-  private Solenoid clawSolenoid;
+    /** Creates a new Claw. */
+    private TalonFX clawMotor;
 
-  private int dashboardCounter;
+    private int dashboardCounter;
 
-  public enum ClawState {
-    Opened(true),
-    Closed(false);
+    public Claw() {
+        clawMotor = new TalonFX(Constants.ClawConstants.DeviceIDs.clawMotor, "CanBus2");
+        clawMotor.setInverted(false);
+        clawMotor.setNeutralMode(NeutralMode.Brake);
+        clawMotor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        clawMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
+        clawMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(
+                true, 10,
+                25.0, 1.0));
 
-    public final boolean solenoidSetting;
-
-    private ClawState(boolean solenoidSetting) {
-      this.solenoidSetting = solenoidSetting;
+        setPIDConstants(clawMotor);
     }
-  }
 
-  public Claw() {
-    clawSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.ClawConstants.DeviceIDs.clawSolenoid);
-
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    if (dashboardCounter++ >= 5) {
-
-      dashboardCounter = 0;
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        if (dashboardCounter++ >= 5) {
+            SmartDashboard.putNumber("Claw Position", getClawMotorPosition());
+            SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
+            dashboardCounter = 0;
+        }
     }
-  }
 
-  public void setClawState(ClawState state) {
-    clawSolenoid.set(state.solenoidSetting);
-  }
-
-  public void toggleClawState() {
-    clawSolenoid.set(!clawSolenoid.get());
-  }
-
-  public ClawState getClawState() {
-    if (clawSolenoid.get()) {
-      return ClawState.Opened;
+    public boolean getBeamBreakTriggered() {
+        return clawMotor.isFwdLimitSwitchClosed() == 1;
     }
-    return ClawState.Closed;
 
-  }
+    public void setClawSpeed(double speed) {
+        clawMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
 
-  public void onDisable() {
-    // Solenoid needs to be in false state when disabled.
-    setClawState(ClawState.Closed);
-  }
+    public double getClawMotorPosition() {
+        return clawMotor.getSensorCollection().getIntegratedSensorPosition();
+    }
+
+    public void setClawMotorPosition(double position) {
+        clawMotor.set(TalonFXControlMode.MotionMagic, position);
+    }
+
+    public double getClawCurrent() {
+        return clawMotor.getSupplyCurrent();
+    }
+
+    public void holdClaw() {
+        setClawSpeed(Constants.ClawConstants.holdPositionPower);
+    }
+
+
+    private void setPIDConstants(TalonFX motor) {
+        motor.config_kP(0, Constants.ClawConstants.PIDConstants.P);
+        motor.config_kI(0, Constants.ClawConstants.PIDConstants.I);
+        motor.config_kD(0, Constants.ClawConstants.PIDConstants.D);
+        motor.config_kF(0, Constants.ClawConstants.PIDConstants.FF);
+        motor.configClosedLoopPeakOutput(0, 0.2);
+        motor.configAllowableClosedloopError(0, 0, 0);
+    }
+
+    public void onDisable() {
+        clawMotor.set(ControlMode.PercentOutput, 0.0);
+    }
 }

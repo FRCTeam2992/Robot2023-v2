@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.lib.manipulator.Waypoint;
+import frc.lib.manipulator.Waypoint.OuttakeType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -33,10 +34,19 @@ public class RobotState {
         return endgameMode == EndgameModeState.InEndgame;
     }
 
+    public boolean towerIsMoving = false;
+    public Waypoint towerCurrentMoveTarget = null;
+
     public enum IntakeModeState {
-        Unknown,
-        Cube,
-        Cone
+        Unknown(Constants.ClawConstants.Intake.Speed.cone),
+        Cube(Constants.ClawConstants.Intake.Speed.cube),
+        Cone(Constants.ClawConstants.Intake.Speed.cone);
+
+        public double clawSpeed;
+
+        private IntakeModeState(double clawSpeed) {
+            this.clawSpeed = clawSpeed;
+        }
     }
 
     public IntakeModeState intakeMode = IntakeModeState.Unknown;
@@ -120,4 +130,7 @@ public class RobotState {
     public void setTargetPosition(GridTargetingPosition position) {
         currentTargetPosition = position;
     }
+
+    public OuttakeType currentOuttakeType = OuttakeType.Unknown;
+
 }

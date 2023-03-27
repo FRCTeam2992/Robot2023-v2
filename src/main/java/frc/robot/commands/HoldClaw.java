@@ -4,43 +4,51 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.Constants;
+import frc.robot.subsystems.Claw;
 
-public class SetArmPosition extends CommandBase {
-    /** Creates a new SetArmPosition. */
-    private Arm mArm;
-    private double mAngle;
+public class HoldClaw extends CommandBase {
+    /** Creates a new MoveClaw. */
+    private Claw mClaw;
 
-    public SetArmPosition(Arm subsystem, double angle) {
+    private Timer timer;
+
+    public HoldClaw(Claw subsystem) {
         // Use addRequirements() here to declare subsystem dependencies.
-        mArm = subsystem;
-        mAngle = angle;
+        mClaw = subsystem;
+        timer = new Timer();
 
-        addRequirements(mArm);
+        addRequirements(mClaw);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        mArm.setArmTarget(mAngle);
+        timer.reset();
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // PID loop runs in subsystem periodic
+        if (timer.get() > Constants.ClawConstants.holdPositionMaxTime) {
+            mClaw.setClawSpeed(0.0);
+        } else {
+            mClaw.holdClaw();
+        }
     }
+
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        mArm.setArmSpeed(0.0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return mArm.atPosition();
+        return false;
     }
 }

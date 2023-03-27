@@ -4,26 +4,17 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.manipulator.Waypoint.OuttakeType;
-import frc.robot.RobotState;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
 
-public class MoveArm extends CommandBase {
-  /** Creates a new MoveArm. */
-  private Arm mArm;
-  private RobotState mRobotState;
+public class StopClaw extends CommandBase {
+  private Claw mClaw;
 
-  private double mArmSpeed;
-
-  public MoveArm(Arm subsystem, RobotState robotState, double armspeed) {
+  /** Creates a new StopClaw. */
+  public StopClaw(Claw subsystem) {
+    mClaw = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    mArm = subsystem;
-    mRobotState = robotState;
-    mArmSpeed = armspeed;
-
-    addRequirements(mArm);
+    addRequirements(mClaw);
   }
 
   // Called when the command is initially scheduled.
@@ -34,14 +25,12 @@ public class MoveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mArm.setArmSpeed(mArmSpeed);
-    // mRobotState.currentOuttakeType = OuttakeType.Unknown;
-}
+    mClaw.setClawSpeed(0.0);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mArm.setArmSpeed(0.0);
   }
 
   // Returns true when the command should end.

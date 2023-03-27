@@ -2,42 +2,40 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.testing.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.manipulator.Waypoint;
 import frc.robot.RobotState;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 
-public class MoveTowerToScoringPosition extends CommandBase {
+public class TestArmPID extends CommandBase {
     private Elevator mElevator;
     private Arm mArm;
     private RobotState mRobotState;
 
-    /** Creates a new MoveTowerToScoringPosition. */
-    public MoveTowerToScoringPosition(Elevator elevator, Arm arm, RobotState robotState) {
-        mElevator = elevator;
+    /** Creates a new TestTowerSafeMove. */
+    public TestArmPID(Arm arm, RobotState robotState) {
+        // Use addRequirements() here to declare subsystem dependencies.
         mArm = arm;
         mRobotState = robotState;
-        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(arm);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Waypoint waypoint = mRobotState.currentTargetPosition.towerWaypoint;
-        mRobotState.currentOuttakeType = waypoint.outtakeType();
+        double angle;
 
-        CommandScheduler.getInstance().schedule(new DeployElevator(mElevator, mArm,
-                mRobotState, waypoint.elevatorState())
-                .alongWith(new WaitCommand(waypoint.delay())
-                        .andThen(new SafeDumbTowerToPosition(
-                                mElevator, mArm, mRobotState, waypoint))));
+        angle = SmartDashboard.getNumber("ArmTestMoveAngle", 100);
+        // System.out.println("ArmTestMove running to " + angle);
 
+        CommandScheduler.getInstance().schedule(new SetArmPosition(mArm, angle));
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -151,7 +151,8 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
 
         // Arm make sure encoders are current
-        mRobotContainer.mArm.initArmMotorEncoder(); // Reset each time we enter Teleop or Auto
+        // mRobotContainer.mArm.initArmMotorEncoder(); // Reset each time we enter
+        // Teleop or Auto
 
         balanceTimer.reset();
         balanceTimer.start();
@@ -187,7 +188,8 @@ public class Robot extends TimedRobot {
         mRobotContainer.mRobotState.useLimelightOdometryUpdates = true;
 
         // Arm make sure encoders are current
-        mRobotContainer.mArm.initArmMotorEncoder(); // Attempt reset at each teleop init
+        // mRobotContainer.mArm.initArmMotorEncoder(); // Attempt reset at each teleop
+        // init
 
         balanceTimer.stop();
 
