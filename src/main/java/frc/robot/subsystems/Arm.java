@@ -40,8 +40,6 @@ public class Arm extends SubsystemBase {
         CALIBRATED
     }
 
-    private EncoderState motorEncoderConfidentCalibrated = EncoderState.UNKNOWN;
-
     // Variables for managing "hold position" to prevent backdrive
     private boolean holdPositionRecorded = false; // Have we logged the hold position yet
     private double holdPosition; // arm motor encoder clicks
