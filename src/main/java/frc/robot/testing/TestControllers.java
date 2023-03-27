@@ -22,9 +22,9 @@ public class TestControllers {
          * DO NOT USE "controller0" or "controller1" here
          */
 
-        testController1.povUp().whileTrue(new MoveElevator(mRobotContainer.mElevator, mRobotContainer.mRobotState, .1));
+        testController1.povUp().whileTrue(new MoveElevator(mRobotContainer.mElevator, .1));
         testController1.povDown()
-                .whileTrue(new MoveElevator(mRobotContainer.mElevator, mRobotContainer.mRobotState, -.1));
+                .whileTrue(new MoveElevator(mRobotContainer.mElevator, -.1));
 
         testController1.povLeft().whileTrue(new MoveArm(mRobotContainer.mArm, .1));
         testController1.povRight().whileTrue(new MoveArm(mRobotContainer.mArm, -.1));
