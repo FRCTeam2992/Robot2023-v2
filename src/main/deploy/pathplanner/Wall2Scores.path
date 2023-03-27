@@ -175,7 +175,8 @@
       "position": 0.1,
       "names": [
         "SetIntakeModeCube",
-        "TowerMoveGroundIntake"
+        "TowerMoveGroundIntake",
+        "StopLimelight"
       ]
     },
     {
