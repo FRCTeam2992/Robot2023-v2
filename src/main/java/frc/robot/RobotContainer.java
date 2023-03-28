@@ -17,6 +17,7 @@ import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveClaw;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.MoveElevator;
@@ -212,6 +213,10 @@ public class RobotContainer {
 
         // -----------------------controller1-----------------------
         // ABXY
+        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cube)
+                .unless(() -> mRobotState.intakeMode == RobotState.IntakeModeState.Cone));
+        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cone)
+                .unless(() -> mRobotState.intakeMode != RobotState.IntakeModeState.Cone));
 
         // Bumpers/Triggers
         controller1.leftBumper().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
