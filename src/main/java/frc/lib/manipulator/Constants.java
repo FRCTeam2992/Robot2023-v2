@@ -9,6 +9,7 @@ public final class Constants {
         public static final double MIN_HEIGHT_INCHES = ElevatorConstants.Limits.hardStopBottom;
         public static final double MIN_ANGLE_DEGREES = ArmConstants.Limits.hardStopBottom;
         public static final double MAX_ANGLE_DEGREES = ArmConstants.Limits.hardStopTop;
+        public static final double NEUTRAL_DEGREES = 11.0;
         public static final double INSIDE_ZONE_INCHES = 7.0;
         public static final double INSIDE_ENTRY_DEGREES = 9.25;
         public static final double INSIDE_EXIT_DEGREES = -54.0;
@@ -40,7 +41,7 @@ public final class Constants {
                     Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
             public static final Waypoint GROUND_EXIT = new Waypoint(GROUND_HIT_INCHES, GROUND_HIT_ANGLE,
                     Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-            public static final Waypoint NEUTRAL = new Waypoint(0.0, INSIDE_ENTRY_DEGREES,
+            public static final Waypoint NEUTRAL = new Waypoint(0.0, NEUTRAL_DEGREES,
                     Waypoint.OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         }
 }
