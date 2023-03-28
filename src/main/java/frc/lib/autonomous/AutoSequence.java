@@ -28,9 +28,7 @@ public enum AutoSequence {
             AutoStartPosition.CenterLoadStationSide,
             AutoStartPosition.CenterWallSide),
     Side2ScoreBalance("Side 2 Scores + Balance",
-            AutoStartPosition.LoadStationEnd,
-            AutoStartPosition.WallEnd);
-
+            AutoStartPosition.LoadStationEnd);
     public String description;
     public List<AutoStartPosition> allowedStartPositions;
 
