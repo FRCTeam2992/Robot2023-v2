@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,19 +26,15 @@ public class Claw extends SubsystemBase {
         clawMotor.setInverted(false);
         clawMotor.setNeutralMode(NeutralMode.Brake);
         clawMotor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
-        clawMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
         clawMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(
                 true, 10,
                 25.0, 1.0));
-
-        setPIDConstants(clawMotor);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         if (dashboardCounter++ >= 5) {
-            SmartDashboard.putNumber("Claw Position", getClawMotorPosition());
             SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
             dashboardCounter = 0;
         }
@@ -53,30 +48,12 @@ public class Claw extends SubsystemBase {
         clawMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
-    public double getClawMotorPosition() {
-        return clawMotor.getSensorCollection().getIntegratedSensorPosition();
-    }
-
-    public void setClawMotorPosition(double position) {
-        clawMotor.set(TalonFXControlMode.MotionMagic, position);
-    }
-
     public double getClawCurrent() {
         return clawMotor.getSupplyCurrent();
     }
 
     public void holdClaw() {
         setClawSpeed(Constants.ClawConstants.holdPositionPower);
-    }
-
-
-    private void setPIDConstants(TalonFX motor) {
-        motor.config_kP(0, Constants.ClawConstants.PIDConstants.P);
-        motor.config_kI(0, Constants.ClawConstants.PIDConstants.I);
-        motor.config_kD(0, Constants.ClawConstants.PIDConstants.D);
-        motor.config_kF(0, Constants.ClawConstants.PIDConstants.FF);
-        motor.configClosedLoopPeakOutput(0, 0.2);
-        motor.configAllowableClosedloopError(0, 0, 0);
     }
 
     public void onDisable() {

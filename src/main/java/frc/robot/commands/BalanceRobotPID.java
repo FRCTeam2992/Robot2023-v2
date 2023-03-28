@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -19,9 +19,9 @@ import frc.robot.subsystems.Drivetrain;
 public class BalanceRobotPID extends CommandBase {
     private Drivetrain mDrivetrain;
     private LinearFilter lowPass;
-    private double priorPitch;
+    // private double priorPitch;
     private double currentPitch;
-    private double currentPitchDelta;
+    // private double currentPitchDelta;
     private PIDController pitchPID;
     private boolean reached = false;
     private Timer doneTimer;
@@ -41,7 +41,8 @@ public class BalanceRobotPID extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        priorPitch = currentPitch = mDrivetrain.getRobotPitch();
+        currentPitch = mDrivetrain.getRobotPitch();
+        // priorPitch = currentPitch;
         lowPass.reset();
         mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         reached = false;
@@ -54,13 +55,14 @@ public class BalanceRobotPID extends CommandBase {
     public void execute() {
         double speed;
 
-        priorPitch = currentPitch;
+        // priorPitch = currentPitch;
         currentPitch = lowPass.calculate(mDrivetrain.getRobotPitch());
-        currentPitchDelta = currentPitch - priorPitch;
+        // currentPitchDelta = currentPitch - priorPitch;
 
-        SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
-        SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
-        SmartDashboard.putBoolean("Robot Balance Reached", reached);
+        // Troubleshooting only dashboard entries
+        // SmartDashboard.putNumber("Robot pitch lowpassed", currentPitch);
+        // SmartDashboard.putNumber("Robot pitchDelta", currentPitchDelta);
+        // SmartDashboard.putBoolean("Robot Balance Reached", reached);
 
         speed = pitchPID.calculate(currentPitch);
         if ((Math.abs(currentPitch) < Constants.DrivetrainConstants.pitchTolerance) || reached) {
@@ -83,7 +85,8 @@ public class BalanceRobotPID extends CommandBase {
         } else {
             mDrivetrain.moveRobotFrontBack(false, 0.85 * speed);
         }
-        SmartDashboard.putNumber("Balance speed", speed);
+        // Troubleshooting only dashboard
+        // SmartDashboard.putNumber("Balance speed", speed);
     }
 
     // Called once the command ends or is interrupted.

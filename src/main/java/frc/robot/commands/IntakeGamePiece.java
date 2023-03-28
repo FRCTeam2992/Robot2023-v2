@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClawConstants;
 import frc.robot.RobotState;
@@ -50,7 +49,8 @@ public class IntakeGamePiece extends CommandBase {
     } else {
       cyclesAfterBeamBreak = 0;
     }
-    SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
+    // Troubleshooting only dashboard
+    // SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
   }
 
   // Called once the command ends or is interrupted.

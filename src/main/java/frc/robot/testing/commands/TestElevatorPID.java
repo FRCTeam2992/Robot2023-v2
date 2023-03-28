@@ -7,19 +7,16 @@ package frc.robot.testing.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.RobotState;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.subsystems.Elevator;
 
 public class TestElevatorPID extends CommandBase {
     private Elevator mElevator;
-    private RobotState mRobotState;
 
     /** Creates a new TestTowerSafeMove. */
-    public TestElevatorPID(Elevator elevator, RobotState robotState) {
+    public TestElevatorPID(Elevator elevator) {
         // Use addRequirements() here to declare subsystem dependencies.
         mElevator = elevator;
-        mRobotState = robotState;
         addRequirements(elevator);
     }
 
@@ -29,7 +26,7 @@ public class TestElevatorPID extends CommandBase {
         double height;
 
         height = SmartDashboard.getNumber("ElevTestMoveHeight", 20);
-        System.out.println("ElevatorTestMove running to " + height);
+        // System.out.println("ElevatorTestMove running to " + height);
 
         CommandScheduler.getInstance().schedule(new SetElevatorPosition(mElevator, height));
     }

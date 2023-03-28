@@ -7,23 +7,16 @@ package frc.robot.testing.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.lib.manipulator.Waypoint;
-import frc.robot.RobotState;
 import frc.robot.commands.SetArmPosition;
-import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
 
 public class TestArmPID extends CommandBase {
-    private Elevator mElevator;
     private Arm mArm;
-    private RobotState mRobotState;
 
     /** Creates a new TestTowerSafeMove. */
-    public TestArmPID(Arm arm, RobotState robotState) {
+    public TestArmPID(Arm arm) {
         // Use addRequirements() here to declare subsystem dependencies.
         mArm = arm;
-        mRobotState = robotState;
         addRequirements(arm);
     }
 

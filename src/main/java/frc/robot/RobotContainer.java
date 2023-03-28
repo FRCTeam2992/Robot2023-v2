@@ -7,7 +7,6 @@ package frc.robot;
 import frc.lib.autonomous.AutoBuilder;
 import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
-import frc.robot.RobotState.GridTargetingPosition;
 import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployButterflyWheels;
@@ -16,12 +15,10 @@ import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
-import frc.robot.commands.IntakeGamePiece;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
-import frc.robot.commands.StopClaw;
 import frc.robot.commands.MoveElevator;
 
 import frc.robot.commands.SetLEDsColor;
@@ -50,7 +47,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -237,14 +233,14 @@ public class RobotContainer {
 
         // Joysticks and Buttons
         controller1.axisLessThan(XboxController.Axis.kLeftY.value, -0.6).whileTrue(
-                new MoveArm(mArm, mRobotState, 0.40));
+                new MoveArm(mArm, 0.40));
         controller1.axisGreaterThan(XboxController.Axis.kLeftY.value, 0.6).whileTrue(
-                new MoveArm(mArm, mRobotState, -0.40));
+                new MoveArm(mArm, -0.40));
 
         controller1.axisLessThan(XboxController.Axis.kRightY.value, -0.6).whileTrue(
-                new MoveElevator(mElevator, mRobotState, 0.4));
+                new MoveElevator(mElevator, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
-                new MoveElevator(mElevator, mRobotState, -0.4));
+                new MoveElevator(mElevator, -0.4));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
@@ -253,9 +249,9 @@ public class RobotContainer {
         SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
         SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
 
-        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, mRobotState, -0.1));
-        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, mRobotState, 0.0));
-        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, mRobotState, 0.1));
+        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
+        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
+        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
         SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
         SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
@@ -292,8 +288,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
         SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
                 mArm, mRobotState));
-        SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm, mRobotState));
-        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator, mRobotState));
+        SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm));
+        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator));
 
         // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
     }

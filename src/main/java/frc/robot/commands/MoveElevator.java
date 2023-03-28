@@ -5,21 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.manipulator.Waypoint.OuttakeType;
-import frc.robot.RobotState;
 import frc.robot.subsystems.Elevator;
 
 public class MoveElevator extends CommandBase {
     /** Creates a new MoveElevator. */
     private Elevator mElevator;
-    private RobotState mRobotState;
 
     private double mElevatorSpeed;
 
-    public MoveElevator(Elevator subsystem, RobotState robotState, double elevatorspeed) {
+    public MoveElevator(Elevator subsystem, double elevatorspeed) {
         // Use addRequirements() here to declare subsystem dependencies.
         mElevator = subsystem;
-        mRobotState = robotState;
         mElevatorSpeed = elevatorspeed;
         addRequirements(mElevator);
     }
@@ -33,7 +29,6 @@ public class MoveElevator extends CommandBase {
     @Override
     public void execute() {
         mElevator.setElevatorSpeed(mElevatorSpeed);
-        // mRobotState.currentOuttakeType = OuttakeType.Unknown;
     }
 
     // Called once the command ends or is interrupted.
