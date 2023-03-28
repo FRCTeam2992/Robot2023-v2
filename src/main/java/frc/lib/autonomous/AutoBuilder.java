@@ -66,6 +66,9 @@ public class AutoBuilder {
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 GridTargetingPosition.HighCenter.towerWaypoint).withTimeout(1.5));
+        eventMap.put("TowerMoveMidCenter", new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
+                GridTargetingPosition.MidCenter.towerWaypoint).withTimeout(1.5));
         eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 Constants.TowerConstants.cubeGroundIntake).withTimeout(1.5));
@@ -115,6 +118,7 @@ public class AutoBuilder {
         autoSequenceChooser.addOption(AutoSequence.Side2Scores.description, AutoSequence.Side2Scores);
         autoSequenceChooser.addOption(AutoSequence.CenterBalance.description, AutoSequence.CenterBalance);
         autoSequenceChooser.addOption(AutoSequence.CenterIntakeBalance.description, AutoSequence.CenterIntakeBalance);
+        autoSequenceChooser.addOption(AutoSequence.Side2ScoreBalance.description, AutoSequence.Side2ScoreBalance);
 
         SmartDashboard.putData("Auto Sequence", autoSequenceChooser);
 
@@ -216,7 +220,6 @@ public class AutoBuilder {
                 }
                 followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
-
             case Side2Scores:
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation2Scores.trajectoryGroup) {
@@ -240,6 +243,27 @@ public class AutoBuilder {
                                 .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
                                 .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
                                         Constants.TowerConstants.normal)));
+                break;
+            case Side2ScoreBalance:
+                if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation2ScoreBalance.trajectoryGroup) {
+                        followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
+                            .andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                } else if (getAutoStartPosition() == AutoStartPosition.WallEnd) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.Wall2ScoreBalance.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                }
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             case SideMobilityBalance:
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
