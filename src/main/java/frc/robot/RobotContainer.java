@@ -213,10 +213,7 @@ public class RobotContainer {
 
         // -----------------------controller1-----------------------
         // ABXY
-        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cube)
-                .unless(() -> mRobotState.intakeMode == RobotState.IntakeModeState.Cone));
-        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cone)
-                .unless(() -> mRobotState.intakeMode != RobotState.IntakeModeState.Cone));
+        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cone));
 
         // Bumpers/Triggers
         controller1.leftBumper().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
