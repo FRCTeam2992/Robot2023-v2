@@ -7,7 +7,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.889999999999996,
+        "x": 3.434242536089419,
         "y": 2.19
       },
       "holonomicAngle": 0,
@@ -28,11 +28,11 @@
         "y": 2.19
       },
       "prevControl": {
-        "x": 2.6112359404205985,
+        "x": 2.9720105226279223,
         "y": 2.19
       },
       "nextControl": {
-        "x": 4.611235940420596,
+        "x": 4.61123594042059,
         "y": 2.19
       },
       "holonomicAngle": 0,
@@ -78,41 +78,16 @@
         "y": 2.19
       },
       "prevControl": {
-        "x": 5.779480868357616,
-        "y": 1.98
-      },
-      "nextControl": {
-        "x": 6.389113635368083,
-        "y": 2.34
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 7.172619381130367,
-        "y": 2.19
-      },
-      "prevControl": {
-        "x": 6.1711851356122525,
+        "x": 5.722196287813285,
         "y": 2.19
       },
       "nextControl": {
-        "x": 6.1711851356122525,
+        "x": 5.722196287813285,
         "y": 2.19
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": true,
-      "velOverride": 2.0,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -128,14 +103,14 @@
         "y": 2.19
       },
       "prevControl": {
-        "x": 7.0131601989808665,
+        "x": 6.096530784807353,
         "y": 2.19
       },
       "nextControl": {
-        "x": 3.686839801019133,
+        "x": 4.647778292114955,
         "y": 2.19
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": 2.8,
       "isLocked": false,
@@ -153,11 +128,11 @@
         "y": 2.19
       },
       "prevControl": {
-        "x": 5.037932987389789,
+        "x": 4.751896313426142,
         "y": 2.19
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -178,26 +153,6 @@
         "TowerMoveStowed",
         "StopClaw",
         "StopLimelight"
-      ]
-    },
-    {
-      "position": 1.2654545454545605,
-      "names": [
-        "TowerMoveGroundIntake",
-        "SetIntakeModeCube"
-      ]
-    },
-    {
-      "position": 2.181818181818022,
-      "names": [
-        "StartCubeIntake"
-      ]
-    },
-    {
-      "position": 4.712727272727134,
-      "names": [
-        "EndIntake",
-        "TowerMoveStowed"
       ]
     }
   ]

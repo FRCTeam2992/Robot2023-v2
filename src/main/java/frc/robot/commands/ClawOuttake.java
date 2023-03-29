@@ -15,8 +15,10 @@ public class ClawOuttake extends CommandBase {
     private RobotState mRobotState;
 
     private Timer timer;
+    private boolean timerStarted;
+    private int cyclesBeforeOut;
 
-    public static final int IN_CYCLES_BEFORE_OUT = 5;
+    public static final int IN_CYCLES_BEFORE_OUT = 13;
     public static final int OUT_CYCLES = 50;
 
     /** Creates a new TestClawOuttake. */
@@ -34,7 +36,8 @@ public class ClawOuttake extends CommandBase {
     @Override
     public void initialize() {
         timer.reset();
-        timer.start();
+        timerStarted = false;
+        cyclesBeforeOut = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -52,8 +55,23 @@ public class ClawOuttake extends CommandBase {
                     mRobotState.currentOuttakeType = OuttakeType.Assumed_Cube;
             }
         }
-        mClaw.setClawSpeed(mRobotState.currentOuttakeType.speed);
-
+        if (timerStarted) {
+            mClaw.setClawSpeed(mRobotState.currentOuttakeType.speed);
+        } else {
+            switch(mRobotState.currentOuttakeType) {
+                case Mid_Cube:
+                    mClaw.setClawSpeed(RobotState.IntakeModeState.Cube.clawSpeed);
+                    cyclesBeforeOut++;
+                    if (cyclesBeforeOut >= IN_CYCLES_BEFORE_OUT) {
+                        timerStarted = true;
+                        timer.start();
+                    }
+                    break;
+                default:
+                    timerStarted = true;
+                    timer.start();
+            }
+        }
     }
 
     // Called once the command ends or is interrupted.

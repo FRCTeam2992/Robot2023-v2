@@ -124,15 +124,65 @@
     },
     {
       "anchorPoint": {
-        "x": 1.89,
-        "y": 4.188654094562303
+        "x": 1.9275847652694196,
+        "y": 4.127454692201282
       },
       "prevControl": {
-        "x": 2.6435448209409182,
-        "y": 4.145812642346705
+        "x": 1.9000478400512848,
+        "y": 4.815877822654646
+      },
+      "nextControl": {
+        "x": 1.9522331123746337,
+        "y": 3.5112460145709323
+      },
+      "holonomicAngle": 0.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.0836273415055158,
+        "y": 3.2921679605845333
+      },
+      "prevControl": {
+        "x": 1.9115991751476291,
+        "y": 3.544830414836419
+      },
+      "nextControl": {
+        "x": 2.3026913089940018,
+        "y": 2.9704227438817763
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": 4.0,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.25,
+        "y": 3.1453043594211496
+      },
+      "prevControl": {
+        "x": 3.5600487364111535,
+        "y": 3.1453043594211496
       },
       "nextControl": null,
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -150,7 +200,7 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.1,
+      "position": 0.8654545454544662,
       "names": [
         "SetIntakeModeCube",
         "TowerMoveGroundIntake",
@@ -158,7 +208,7 @@
       ]
     },
     {
-      "position": 0.8,
+      "position": 1.7818181818181817,
       "names": [
         "StartCubeIntake"
       ]
@@ -173,13 +223,20 @@
     {
       "position": 4.3,
       "names": [
-        "DeployElevator"
+        "TowerMoveThrowCube"
       ]
     },
     {
-      "position": 4.6,
+      "position": 4.836363636363637,
       "names": [
-        "TowerMoveHighCenter"
+        "StartCubeOuttake"
+      ]
+    },
+    {
+      "position": 6.1,
+      "names": [
+        "StopClaw",
+        "TowerMoveStowed"
       ]
     }
   ]

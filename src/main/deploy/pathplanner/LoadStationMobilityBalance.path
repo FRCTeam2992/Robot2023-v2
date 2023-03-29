@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.893889312108174,
-        "y": 4.983
+        "x": 2.9648089484858215,
+        "y": 4.898488598309051
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
@@ -24,18 +24,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.89,
-        "y": 4.5905055912675925
+        "x": 5.5257429937723375,
+        "y": 4.669014221491262
       },
       "prevControl": {
-        "x": 5.892435949740175,
-        "y": 4.660262065011718
+        "x": 4.51605573577407,
+        "y": 4.9810993739634535
       },
       "nextControl": {
-        "x": 7.847855129828984,
-        "y": 4.523525835734914
+        "x": 6.2709024664285185,
+        "y": 4.4386922026702615
       },
-      "holonomicAngle": -4.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -49,16 +49,16 @@
     },
     {
       "anchorPoint": {
-        "x": 6.35,
-        "y": 3.8
+        "x": 5.819470196099106,
+        "y": 3.4298525866752065
       },
       "prevControl": {
-        "x": 7.152115562183948,
-        "y": 4.226492409695655
+        "x": 6.6022361068317945,
+        "y": 3.7932796166582383
       },
       "nextControl": {
-        "x": 5.582801064409575,
-        "y": 3.3920730899859235
+        "x": 5.562458894063182,
+        "y": 3.310525910729957
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -78,12 +78,12 @@
         "y": 3.2
       },
       "prevControl": {
-        "x": 5.566177500220262,
-        "y": 3.177451740301985
+        "x": 5.360521680454267,
+        "y": 3.2
       },
       "nextControl": {
-        "x": 4.553822499779737,
-        "y": 3.2225482596980153
+        "x": 4.553320529580445,
+        "y": 3.2
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -124,22 +124,7 @@
     {
       "position": 0.05,
       "names": [
-        "UndeployElevator",
-        "TowerMoveBackstop",
-        "IntakeSpeedCube",
-        "IntakeDeployGround"
-      ]
-    },
-    {
-      "position": 1.5709090909091006,
-      "names": [
-        "IntakeDeployHome"
-      ]
-    },
-    {
-      "position": 2.210909090909049,
-      "names": [
-        "IntakeStop"
+        "StopLimelight"
       ]
     }
   ]

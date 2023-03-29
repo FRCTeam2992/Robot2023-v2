@@ -4,32 +4,36 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum AutoSequence {
-        Do_Nothing("Do Nothing",
-                        AutoStartPosition.LoadStationEnd,
-                        AutoStartPosition.CenterLoadStationSide,
-                        AutoStartPosition.CenterWallSide,
-                        AutoStartPosition.WallEnd),
-        SideMobilityOnly("Side Mobility Only",
-                        AutoStartPosition.LoadStationEnd,
-                        AutoStartPosition.WallEnd),
-        SideMobilityBalance("Side Mobility + Balance",
-                        AutoStartPosition.LoadStationEnd,
-                        AutoStartPosition.WallEnd),
-        SideMobilityIntake("Side Mobility + Grab Cube",
-                        AutoStartPosition.LoadStationEnd,
-                        AutoStartPosition.WallEnd),
-        Side2Scores("Side 2 Scores",
-                        AutoStartPosition.LoadStationEnd,
-                        AutoStartPosition.WallEnd),
-        CenterBalance("Center Balance",
-                        AutoStartPosition.CenterLoadStationSide,
-                        AutoStartPosition.CenterWallSide);
+    Do_Nothing("Do Nothing",
+            AutoStartPosition.LoadStationEnd,
+            AutoStartPosition.CenterLoadStationSide,
+            AutoStartPosition.CenterWallSide,
+            AutoStartPosition.WallEnd),
+    SideMobilityOnly("Side Mobility Only",
+            AutoStartPosition.LoadStationEnd,
+            AutoStartPosition.WallEnd),
+    SideMobilityBalance("Side Mobility + Balance",
+            AutoStartPosition.LoadStationEnd,
+            AutoStartPosition.WallEnd),
+    SideIntakeBalance("Side Intake + Balance",
+            AutoStartPosition.LoadStationEnd,
+            AutoStartPosition.WallEnd),
+    Side2Scores("Side 2 Scores",
+            AutoStartPosition.LoadStationEnd,
+            AutoStartPosition.WallEnd),
+    CenterBalance("Center Cross + Balance",
+            AutoStartPosition.CenterLoadStationSide,
+            AutoStartPosition.CenterWallSide),
+    CenterIntakeBalance("Center Intake Balance",
+            AutoStartPosition.CenterLoadStationSide,
+            AutoStartPosition.CenterWallSide),
+    Side2ScoreBalance("Side 2 Scores + Balance",
+            AutoStartPosition.LoadStationEnd);
+    public String description;
+    public List<AutoStartPosition> allowedStartPositions;
 
-        public String description;
-        public List<AutoStartPosition> allowedStartPositions;
-
-        private AutoSequence(String description, AutoStartPosition... allowedStartPositions) {
-                this.description = description;
-                this.allowedStartPositions = Arrays.asList(allowedStartPositions);
-        }
+    private AutoSequence(String description, AutoStartPosition... allowedStartPositions) {
+        this.description = description;
+        this.allowedStartPositions = Arrays.asList(allowedStartPositions);
+    }
 }

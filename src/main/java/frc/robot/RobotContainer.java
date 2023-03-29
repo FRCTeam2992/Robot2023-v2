@@ -17,6 +17,7 @@ import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveClaw;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
 import frc.robot.commands.MoveElevator;
@@ -212,6 +213,7 @@ public class RobotContainer {
 
         // -----------------------controller1-----------------------
         // ABXY
+        controller1.y().whileTrue(new MoveClaw(mClaw, Constants.ClawConstants.Intake.Speed.cone));
 
         // Bumpers/Triggers
         controller1.leftBumper().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
@@ -241,6 +243,7 @@ public class RobotContainer {
                 new MoveElevator(mElevator, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
                 new MoveElevator(mElevator, -0.4));
+        controller1.leftStick().onTrue(new SetScoringTarget(mRobotState, controller1));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
