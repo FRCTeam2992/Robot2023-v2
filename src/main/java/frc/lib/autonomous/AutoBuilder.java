@@ -154,9 +154,6 @@ public class AutoBuilder {
         }
         initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
         switch (getAutoPreloadScore()) {
-            case No_Preload:
-                initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
-                break;
             case Hi_Cone:
                 initialScoreCommand = initialScoreCommand
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
@@ -170,8 +167,8 @@ public class AutoBuilder {
                                         "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
+            case No_Preload:
             default:
-                initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
         }
         return initialScoreCommand;
     }
@@ -248,10 +245,10 @@ public class AutoBuilder {
                                         Constants.TowerConstants.normal)));
                 break;
             case Side2ScoreBalance:
+                followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed);
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation2ScoreBalance.trajectoryGroup) {
-                        followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
-                            .andThen(new FollowPathWithEvents(
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
                                 new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
                                 path.getMarkers(),
                                 eventMap));
