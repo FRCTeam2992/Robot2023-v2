@@ -195,7 +195,7 @@ public final class Constants {
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint throwCube = new Waypoint(20.0, 12.0,
+        public static Waypoint throwCube = new Waypoint(31.75, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
     }
 
