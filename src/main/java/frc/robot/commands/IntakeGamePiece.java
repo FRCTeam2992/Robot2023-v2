@@ -68,6 +68,7 @@ public class IntakeGamePiece extends CommandBase {
                     CommandScheduler.getInstance().schedule(
                             new CycleLEDs(mLEDs, Constants.LEDColors.purple, Constants.LEDColors.off).withTimeout(1.5)
                                     .andThen(new SetLEDsColor(mLEDs, Constants.LEDColors.purple)));
+                    break;
                 case Cone:
                 case Unknown:
                 default:
