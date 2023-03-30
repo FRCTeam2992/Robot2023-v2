@@ -14,6 +14,7 @@ import frc.robot.commands.IntakeGamePiece;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -21,7 +22,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoLoadStationIntake extends ParallelCommandGroup {
     /** Creates a new AutoLoadStationIntake. */
-    public AutoLoadStationIntake(Elevator elevator, Arm arm, Claw claw, RobotState robotState) {
+    public AutoLoadStationIntake(Elevator elevator, Arm arm, Claw claw, LEDs leds, RobotState robotState) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
@@ -33,6 +34,6 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
                     if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
                         robotState.intakeMode = RobotState.IntakeModeState.Cone;
                     }
-                }).andThen(new IntakeGamePiece(claw, robotState)));
+                }).andThen(new IntakeGamePiece(claw, leds, robotState)));
     }
 }

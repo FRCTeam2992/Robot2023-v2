@@ -103,7 +103,7 @@ public class RobotContainer {
         mLEDs = new LEDs();
 
         mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
-                mClaw);
+                mClaw, mLEDs);
 
         // Setup the Auto Selectors
         mAutoBuilder.setupAutoSelector();
@@ -147,7 +147,7 @@ public class RobotContainer {
 
         // B = intake from load station
         controller0.b().onTrue(
-                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
+                new AutoLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
         controller0.b().onTrue(new InstantCommand(() -> {
             mDrivetrain.setLoadingMode(true);
         }));
@@ -157,7 +157,7 @@ public class RobotContainer {
 
         // X = ground intake cube
         controller0.x().onTrue(
-                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
+                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mLEDs, mRobotState));// cubes
         controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
 
         // D-Pad
@@ -262,7 +262,7 @@ public class RobotContainer {
         // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() ->
         // mArm.initArmMotorEncoder()));
 
-        // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw,
+        // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw, mLEDs,
         // mRobotState));
 
         SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);

@@ -14,13 +14,14 @@ import frc.robot.commands.IntakeGamePiece;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoGroundIntakeCube extends ParallelCommandGroup {
-    public AutoGroundIntakeCube(Elevator elevator, Arm arm, Claw claw, RobotState robotState) {
+    public AutoGroundIntakeCube(Elevator elevator, Arm arm, Claw claw, LEDs leds, RobotState robotState) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
@@ -30,6 +31,6 @@ public class AutoGroundIntakeCube extends ParallelCommandGroup {
                 new InstantCommand(() -> {
                     robotState.intakeMode = RobotState.IntakeModeState.Cube;
                     robotState.currentOuttakeType = OuttakeType.Unknown;
-                }).andThen(new IntakeGamePiece(claw, robotState)));
+                }).andThen(new IntakeGamePiece(claw, leds, robotState)));
     }
 }
