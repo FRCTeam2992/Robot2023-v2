@@ -355,6 +355,13 @@ public class Drivetrain extends SubsystemBase {
         }
 
         if (dashboardCounter++ >= 5) {
+            if (Constants.debugDashboard) {
+                SmartDashboard.putNumber("Odometry Rotation (deg)", latestSwervePose.getRotation().getDegrees());
+                SmartDashboard.putNumber("Odometry X (in)", (latestSwervePose.getX() * (100 / 2.54)));
+                SmartDashboard.putNumber("Odometry Y (in)", (latestSwervePose.getY() * (100 / 2.54)));
+                SmartDashboard.putNumber("Odometry X (m)", latestSwervePose.getX());
+                SmartDashboard.putNumber("Odometry Y (m)", latestSwervePose.getY());
+            }
             SmartDashboard.putNumber("front left encoder", frontLeftModule.getEncoderAngle());
             SmartDashboard.putNumber("front right encoder", frontRightModule.getEncoderAngle());
             SmartDashboard.putNumber("back left encoder", rearLeftModule.getEncoderAngle());
@@ -364,24 +371,22 @@ public class Drivetrain extends SubsystemBase {
             SmartDashboard.putNumber("Gyro Yaw (adj deg)", getGyroYaw());
             SmartDashboard.putNumber("Robot Gyro Pitch (raw deg)", getRobotPitch()); // Navx Roll
 
-            SmartDashboard.putNumber("Odometry Rotation (deg)", latestSwervePose.getRotation().getDegrees());
-            SmartDashboard.putNumber("Odometry X (in)", (latestSwervePose.getX() * (100 / 2.54)));
-            SmartDashboard.putNumber("Odometry Y (in)", (latestSwervePose.getY() * (100 / 2.54)));
-            SmartDashboard.putNumber("Odometry X (m)", latestSwervePose.getX());
-            SmartDashboard.putNumber("Odometry Y (m)", latestSwervePose.getY());
 
             limelight11BotPose = limeLightCamera11.getBotPose(getAllianceCoordinateSpace());
             // limelight11BotPose =
             // limeLightCamera11.getBotPose(getAllianceCoordinateSpace());
             if (limeLightCamera11.getTargetID() > 0) {
-                SmartDashboard.putNumber("Limelight Pose X (m)", limelight11BotPose[0]);
-                SmartDashboard.putNumber("Limelight Pose Y (m)", limelight11BotPose[1]);
-                SmartDashboard.putNumber("Limelight Pose Yaw (deg)", limelight11BotPose[5]);
-                // SmartDashboard.putNumber("Limelight Pose Latency (ms)",
-                // limelight11BotPose[6]);
-
+                if (Constants.debugDashboard) {
+                    SmartDashboard.putNumber("Limelight Pose X (m)", limelight11BotPose[0]);
+                    SmartDashboard.putNumber("Limelight Pose Y (m)", limelight11BotPose[1]);
+                    SmartDashboard.putNumber("Limelight Pose Yaw (deg)", limelight11BotPose[5]);
+                    // SmartDashboard.putNumber("Limelight Pose Latency (ms)",
+                    // limelight11BotPose[6]);
+                }
             }
-            SmartDashboard.putNumber("Limelight Tid", limeLightCamera11.getTargetID());
+            if (Constants.debugDashboard) {
+                SmartDashboard.putNumber("Limelight Tid", limeLightCamera11.getTargetID());
+            }
             dashboardCounter = 0;
         }
 

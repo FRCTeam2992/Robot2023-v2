@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClawConstants;
 import frc.robot.RobotState;
@@ -49,9 +50,36 @@ public class IntakeGamePiece extends CommandBase {
     } else {
       cyclesAfterBeamBreak = 0;
     }
+<<<<<<< Updated upstream
     // Troubleshooting only dashboard
     // SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
   }
+=======
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        switch (mRobotState.intakeMode) {
+            case Cube:
+                speed = ClawConstants.Intake.Speed.cube;
+                break;
+            case Cone:
+            case Unknown:
+            default:
+                speed = ClawConstants.Intake.Speed.cone;
+        }
+        mClaw.setClawSpeed(speed);
+        if (mClaw.getBeamBreakTriggered()) {
+            cyclesAfterBeamBreak++;
+        } else {
+            cyclesAfterBeamBreak = 0;
+        }
+        if (Constants.debugDashboard) {
+            // Troubleshooting only dashboard
+            SmartDashboard.putNumber("Beam Break Cycles", cyclesAfterBeamBreak);
+        }
+    }
+>>>>>>> Stashed changes
 
   // Called once the command ends or is interrupted.
   @Override

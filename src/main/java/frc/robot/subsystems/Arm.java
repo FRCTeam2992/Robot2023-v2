@@ -65,10 +65,12 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         if (dashboardCounter++ >= 5) {
             SmartDashboard.putNumber("Arm CANcoder", getArmCANCoderPositionCorrected());
-            SmartDashboard.putBoolean("Arm PID Enabled", pidMode);
-            SmartDashboard.putNumber("Arm PID Target", targetAngleDeg);
-            SmartDashboard.putBoolean("Arm Hold Position Recoreded", holdPositionRecorded);
-
+            if (Constants.debugDashboard) {
+                SmartDashboard.putBoolean("Arm PID Enabled", pidMode);
+                SmartDashboard.putNumber("Arm PID Target", targetAngleDeg);
+                SmartDashboard.putBoolean("Arm Hold Position Recorded", holdPositionRecorded);
+            }
+    
             dashboardCounter = 0;
         }
 
@@ -98,7 +100,9 @@ public class Arm extends SubsystemBase {
         double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
         speed = Math.min(1.0, speed);
         speed = Math.max(-1.0, speed);
-        // SmartDashboard.putNumber("Arm PID speed", speed);
+        if (Constants.debugDashboard) {
+            SmartDashboard.putNumber("Arm PID speed", speed);
+        }
         armMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
