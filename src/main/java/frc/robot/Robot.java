@@ -98,7 +98,6 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
-        mRobotContainer.mLEDs.setLEDStripColor(Constants.LEDColors.blue);
         mRobotContainer.mElevator.onDisable();
         mRobotContainer.mArm.onDisable();
         mRobotContainer.mClaw.onDisable();

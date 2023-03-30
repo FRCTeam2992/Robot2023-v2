@@ -15,6 +15,7 @@ import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
+import frc.robot.commands.LEDsToDefaultColor;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveClaw;
@@ -101,6 +102,7 @@ public class RobotContainer {
         mButterflyWheels = new ButterflyWheels();
 
         mLEDs = new LEDs();
+        mLEDs.setDefaultCommand(new LEDsToDefaultColor(mLEDs, mRobotState));
 
         mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
                 mClaw, mLEDs);
