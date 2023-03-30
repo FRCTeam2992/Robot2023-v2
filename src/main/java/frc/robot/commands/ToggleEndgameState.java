@@ -42,7 +42,7 @@ public class ToggleEndgameState extends CommandBase {
             case NotInEndgame:
                 mRobotState.endgameMode = RobotState.EndgameModeState.InEndgame;
                 CommandScheduler.getInstance().schedule(
-                    new CycleLEDs(mLEDs, Constants.LEDColors.white, Constants.LEDColors.blue).withTimeout(1.0)
+                    new CycleLEDs(mLEDs, Constants.LEDColors.white, Constants.LEDColors.blue).withTimeout(1.5)
                         .andThen(new SetLEDsColor(mLEDs, Constants.LEDColors.white)));
                 break;
         }

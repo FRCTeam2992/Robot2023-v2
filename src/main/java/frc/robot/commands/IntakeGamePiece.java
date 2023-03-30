@@ -66,13 +66,13 @@ public class IntakeGamePiece extends CommandBase {
             switch (mRobotState.intakeMode) {
                 case Cube:
                     CommandScheduler.getInstance().schedule(
-                            new CycleLEDs(mLEDs, Constants.LEDColors.purple, Constants.LEDColors.off).withTimeout(1.0)
+                            new CycleLEDs(mLEDs, Constants.LEDColors.purple, Constants.LEDColors.off).withTimeout(1.5)
                                     .andThen(new SetLEDsColor(mLEDs, Constants.LEDColors.purple)));
                 case Cone:
                 case Unknown:
                 default:
                     CommandScheduler.getInstance().schedule(
-                            new CycleLEDs(mLEDs, Constants.LEDColors.yellow, Constants.LEDColors.off).withTimeout(1.0)
+                            new CycleLEDs(mLEDs, Constants.LEDColors.yellow, Constants.LEDColors.off).withTimeout(1.5)
                                     .andThen(new SetLEDsColor(mLEDs, Constants.LEDColors.yellow)));
             }
         }
