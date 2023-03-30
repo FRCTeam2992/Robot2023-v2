@@ -229,7 +229,7 @@ public class RobotContainer {
         controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
 
         // Back and Start
-        controller1.start().onTrue(new ToggleEndgameState(mRobotState));
+        controller1.start().onTrue(new ToggleEndgameState(mRobotState, mLEDs));
         controller1.back().onTrue(new DeployButterflyWheels(mButterflyWheels)
                 .unless(() -> !mRobotState.isInEndgameMode()));
 
