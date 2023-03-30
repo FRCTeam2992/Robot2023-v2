@@ -183,7 +183,7 @@ public final class Constants {
     public static class TowerConstants {
         public static Waypoint scoreFloor = new Waypoint(0.0, 80.00,
                 OuttakeType.Hybrid, ElevatorState.Undeployed, 0.0);
-        public static Waypoint scoreConeMid = new Waypoint(10.015, 10.0,
+        public static Waypoint scoreConeMid = new Waypoint(10.515, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
