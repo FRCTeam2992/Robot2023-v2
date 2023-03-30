@@ -72,11 +72,13 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (dashboardCounter++ >= 5) {
-      SmartDashboard.putNumber("Lead Elevator Encoder", getLeadElevatorPostion());
-      SmartDashboard.putNumber("Follow Elevator Encoder", getFollowElevatorPostion());
-
-      SmartDashboard.putNumber("Elevator Inches", getElevatorInches());
-      SmartDashboard.putBoolean("Elevator Deployed State", getElevatorState() == ElevatorState.Deployed);
+      if (Constants.debugDashboard) {
+        SmartDashboard.putNumber("Lead Elevator Encoder", getLeadElevatorPostion());
+        SmartDashboard.putNumber("Follow Elevator Encoder", getFollowElevatorPostion());
+  
+        SmartDashboard.putNumber("Elevator Inches", getElevatorInches());
+        SmartDashboard.putBoolean("Elevator Deployed State", getElevatorState() == ElevatorState.Deployed);
+      }
 
       dashboardCounter = 0;
     }

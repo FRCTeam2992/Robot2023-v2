@@ -53,6 +53,7 @@ public class DriveSticks extends CommandBase {
         gyroTargetRecorded = false;
 
         // Get the Joystick Settings
+        // TODO: What's this and do we need it for match mode?
         isLeftStrafe = SmartDashboard.getBoolean("isLeftStrafe", true);
     }
 
@@ -277,11 +278,14 @@ public class DriveSticks extends CommandBase {
             // Check for Field Centric Enabled
             if (Constants.DrivetrainConstants.isFieldCentric && mDriveTrain.getDoFieldOreint()) {
                 swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2, gyroValue);
-                // SmartDashboard.putBoolean("Is Field Oriented", true);
+                if (Constants.debugDashboard) {
+                    SmartDashboard.putBoolean("Is Field Oriented", true);
+                }
             } else {
                 swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2);
-                // SmartDashboard.putBoolean("Is Field Oriented", false);
-
+                if (Constants.debugDashboard) {
+                    SmartDashboard.putBoolean("Is Field Oriented", false);
+                }
             }
 
             // Get the Swerve Modules
