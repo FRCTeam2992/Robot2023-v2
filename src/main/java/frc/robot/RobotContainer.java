@@ -15,6 +15,7 @@ import frc.robot.commands.DriveSticks;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.HoldElevator;
+import frc.robot.commands.LEDsToDefaultColor;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveClaw;
@@ -101,9 +102,10 @@ public class RobotContainer {
         mButterflyWheels = new ButterflyWheels();
 
         mLEDs = new LEDs();
+        mLEDs.setDefaultCommand(new LEDsToDefaultColor(mLEDs, mRobotState));
 
         mAutoBuilder = new AutoBuilder(mRobotState, mDrivetrain, mElevator, mArm,
-                mClaw);
+                mClaw, mLEDs);
 
         // Setup the Auto Selectors
         mAutoBuilder.setupAutoSelector();
@@ -147,7 +149,7 @@ public class RobotContainer {
 
         // B = intake from load station
         controller0.b().onTrue(
-                new AutoLoadStationIntake(mElevator, mArm, mClaw, mRobotState));
+                new AutoLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
         controller0.b().onTrue(new InstantCommand(() -> {
             mDrivetrain.setLoadingMode(true);
         }));
@@ -157,7 +159,7 @@ public class RobotContainer {
 
         // X = ground intake cube
         controller0.x().onTrue(
-                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mRobotState));// cubes
+                new AutoGroundIntakeCube(mElevator, mArm, mClaw, mLEDs, mRobotState));// cubes
         controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
 
         // D-Pad
@@ -229,7 +231,7 @@ public class RobotContainer {
         controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
 
         // Back and Start
-        controller1.start().onTrue(new ToggleEndgameState(mRobotState));
+        controller1.start().onTrue(new ToggleEndgameState(mRobotState, mLEDs));
         controller1.back().onTrue(new DeployButterflyWheels(mButterflyWheels)
                 .unless(() -> !mRobotState.isInEndgameMode()));
 
@@ -305,6 +307,7 @@ public class RobotContainer {
         SmartDashboard.putData("Claw", mClaw);
         SmartDashboard.putData("Elevator", mElevator);
         SmartDashboard.putData("Butterfly Wheels", mButterflyWheels);
+        SmartDashboard.putData("LEDs", mLEDs);
     }
 
     public void addRobotStateToDashboard() {

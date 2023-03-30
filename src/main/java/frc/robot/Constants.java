@@ -31,6 +31,7 @@ public final class Constants {
         public static final Color yellow = new Color(255, 160, 0);
         public static final Color blue = new Color(0, 0, 255);
         public static final Color white = new Color(210, 200, 180);
+        public static final Color off = new Color(0, 0, 0);
     }
 
     public static class DrivetrainConstants {

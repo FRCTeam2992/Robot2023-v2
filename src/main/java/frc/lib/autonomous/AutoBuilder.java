@@ -34,6 +34,7 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
 
 /** Add your docs here. */
 public class AutoBuilder {
@@ -42,6 +43,7 @@ public class AutoBuilder {
     private Elevator mElevator;
     private Arm mArm;
     private Claw mClaw;
+    private LEDs mLEDs;
 
     private SendableChooser<AutoStartPosition> autoStartChooser;
     private SendableChooser<AutoSequence> autoSequenceChooser;
@@ -50,12 +52,13 @@ public class AutoBuilder {
     private HashMap<String, Command> eventMap = new HashMap<>();
 
     public AutoBuilder(RobotState robotState, Drivetrain drivetrain, Elevator elevator,
-            Arm arm, Claw claw) {
+            Arm arm, Claw claw, LEDs leds) {
         mRobotState = robotState;
         mDrivetrain = drivetrain;
         mElevator = elevator;
         mArm = arm;
         mClaw = claw;
+        mLEDs = leds;
 
         eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
         eventMap.put("DeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
@@ -81,7 +84,7 @@ public class AutoBuilder {
         eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 Constants.TowerConstants.loadStation).withTimeout(1.5));
-        eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mRobotState));
+        eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mLEDs, mRobotState));
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
         eventMap.put("EndIntake", new HoldClaw(mClaw));

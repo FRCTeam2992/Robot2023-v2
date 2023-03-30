@@ -6,21 +6,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.ClawConstants;
 import frc.robot.Constants;
 import frc.robot.RobotState;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.LEDs;
 
 public class IntakeGamePiece extends CommandBase {
     private Claw mClaw;
+    private LEDs mLEDs;
     private RobotState mRobotState;
 
     private int cyclesAfterBeamBreak;
     private double speed;
 
     /** Creates a new IntakeGamePiece. */
-    public IntakeGamePiece(Claw claw, RobotState robotState) {
+    public IntakeGamePiece(Claw claw, LEDs leds, RobotState robotState) {
         mClaw = claw;
+        mLEDs = leds;
         mRobotState = robotState;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(mClaw);
@@ -61,6 +65,19 @@ public class IntakeGamePiece extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         mClaw.setClawSpeed(0.0);
+        if (mClaw.getBeamBreakTriggered()) {
+            switch (mRobotState.intakeMode) {
+                case Cube:
+                    CommandScheduler.getInstance().schedule(
+                            new CycleLEDs(mLEDs, Constants.LEDColors.purple, Constants.LEDColors.off).withTimeout(1.5));
+                    break;
+                case Cone:
+                case Unknown:
+                default:
+                    CommandScheduler.getInstance().schedule(
+                            new CycleLEDs(mLEDs, Constants.LEDColors.yellow, Constants.LEDColors.off).withTimeout(1.5));
+            }
+        }
     }
 
     // Returns true when the command should end.

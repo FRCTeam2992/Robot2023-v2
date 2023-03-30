@@ -17,6 +17,7 @@ public class SetLEDsColor extends CommandBase {
     mLEDs = subsystem;
     mColor = color;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(mLEDs);
   }
 
   // Called when the command is initially scheduled.
