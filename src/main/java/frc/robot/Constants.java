@@ -253,7 +253,7 @@ public final class Constants {
         public static class Limits {
             public static double hardStopTop = 130.0;
             public static double hardStopBottom = -75.0;
-            public static double softStopTop = 100.0;
+            public static double softStopTop = 120.0;
             public static double softStopBottom = -55.0;
         }
 
