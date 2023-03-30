@@ -249,52 +249,54 @@ public class RobotContainer {
     }
 
     private void configureShuffleboardBindings() {
-        SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
-        SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
+        if (Constants.debugDashboard) {
+            SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
+            SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
 
-        SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
-        SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
-        SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
+            SmartDashboard.putData("Move Elevator Down", new MoveElevator(mElevator, -0.1));
+            SmartDashboard.putData("Stop Elevator", new MoveElevator(mElevator, 0.0));
+            SmartDashboard.putData("Move Elevator Up", new MoveElevator(mElevator, 0.1));
+            
+            // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() ->
+            // mArm.initArmMotorEncoder()));
+
+            // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw,
+            // mRobotState));
+
+            SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
+            SmartDashboard.putNumber("Test Claw Cone In Spd %", 0.7);
+            SmartDashboard.putData("Test Claw Intake", new TestClawIntake(mClaw, mRobotState));
+    
+            SmartDashboard.putNumber("Test Claw Cube Out Spd %", 0.7);
+            SmartDashboard.putNumber("Test Claw Cone Out Spd %", 0.5);
+            SmartDashboard.putData("Test Claw Outtake", new TestClawOuttake(mClaw, mRobotState));
+    
+            // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
+            // new InstantCommand(() -> mDrivetrain
+            // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
+            // Rotation2d.fromDegrees(0.0)))));
+            SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+
+            // SmartDashboard.putData("Test Path Planner Path",
+            // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
+
+            // SmartDashboard.putData("Deploy Butterfly Wheels", new
+            // DeployButterflyWheels(mButterflyWheels));
+            // SmartDashboard.putData("Test Path Planner Path",
+            // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
+
+            SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
+            SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
+            SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
+                    mArm, mRobotState));
+            SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm));
+            SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator));
+
+            // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
+        }
         SmartDashboard.putData("Zero Elevator Encoder", new ZeroElevatorEncoders(mElevator));
 
         SmartDashboard.putData("Reset Odometry", mDrivetrain.ResetOdometry());
-
-        // SmartDashboard.putData("Re-init Arm Encoder", new InstantCommand(() ->
-        // mArm.initArmMotorEncoder()));
-
-        // SmartDashboard.putData("Intake Game Piece", new IntakeGamePiece(mClaw,
-        // mRobotState));
-
-        SmartDashboard.putNumber("Test Claw Cube In Spd %", 0.5);
-        SmartDashboard.putNumber("Test Claw Cone In Spd %", 0.7);
-        SmartDashboard.putData("Test Claw Intake", new TestClawIntake(mClaw, mRobotState));
-
-        SmartDashboard.putNumber("Test Claw Cube Out Spd %", 0.7);
-        SmartDashboard.putNumber("Test Claw Cone Out Spd %", 0.5);
-        SmartDashboard.putData("Test Claw Outtake", new TestClawOuttake(mClaw, mRobotState));
-
-        // SmartDashboard.putData("Reset Odometry to Red Inner Cone",
-        // new InstantCommand(() -> mDrivetrain
-        // .resetOdometryToPose(new Pose2d(1.89, 3.0307,
-        // Rotation2d.fromDegrees(0.0)))));
-        SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
-
-        // SmartDashboard.putData("Test Path Planner Path",
-        // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
-
-        // SmartDashboard.putData("Deploy Butterfly Wheels", new
-        // DeployButterflyWheels(mButterflyWheels));
-        // SmartDashboard.putData("Test Path Planner Path",
-        // new FollowTrajectoryCommand(mDrivetrain, mDrivetrain.testPath, true));
-
-        SmartDashboard.putNumber("ElevTestMoveHeight", 20.0);
-        SmartDashboard.putNumber("ArmTestMoveAngle", 0.0);
-        SmartDashboard.putData("TestSafeDumbPath", new TestTowerSafeMove(mElevator,
-                mArm, mRobotState));
-        SmartDashboard.putData("Test PID Move Arm", new TestArmPID(mArm));
-        SmartDashboard.putData("Test PID Move Elevator", new TestElevatorPID(mElevator));
-
-        // SmartDashboard.putData("TestAutoBalance", new BalanceRobot(mDrivetrain));
     }
 
     public void addSubsystemsToDashboard() {
@@ -390,13 +392,15 @@ public class RobotContainer {
                 mRobotState.currentTargetedGrid == RobotState.TargetingGrid.GridDriverRight &&
                         mRobotState.currentTargetPosition == RobotState.GridTargetingPosition.LowRight);
 
-        SmartDashboard.putBoolean("Blue Alliance",
-                DriverStation.getAlliance() == DriverStation.Alliance.Blue);
-        SmartDashboard.putBoolean("Red Alliance",
-                DriverStation.getAlliance() == DriverStation.Alliance.Red);
+        if (Constants.debugDashboard) {
+            SmartDashboard.putBoolean("Blue Alliance",
+                    DriverStation.getAlliance() == DriverStation.Alliance.Blue);
+            SmartDashboard.putBoolean("Red Alliance",
+                    DriverStation.getAlliance() == DriverStation.Alliance.Red);
 
-        SmartDashboard.putBoolean("Endgame Mode",
-                mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
+            SmartDashboard.putBoolean("Endgame Mode",
+                    mRobotState.endgameMode == RobotState.EndgameModeState.InEndgame);
+        }
     }
 
     public void updateMatchStartChecksToDashboard() {

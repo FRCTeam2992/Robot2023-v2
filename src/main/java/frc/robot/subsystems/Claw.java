@@ -34,9 +34,11 @@ public class Claw extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (dashboardCounter++ >= 5) {
-            SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
-            dashboardCounter = 0;
+        if (Constants.debugDashboard) {
+            if (dashboardCounter++ >= 5) {
+                SmartDashboard.putBoolean("Claw Beam Break Triggered", getBeamBreakTriggered());
+                dashboardCounter = 0;
+            }
         }
     }
 
