@@ -23,8 +23,8 @@ public class UnsafeMoveTowerToPosition extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
             new SetElevatorPosition(mElevator, point.height()),
-            new SetArmPosition(mArm, point.angle()),
-            new PrintCommand("************************************** UnsafeTowerMove to (" + point.height() + ","
-                    + point.angle() + ")"));
+            new SetArmPosition(mArm, point.angle()));
+            // new PrintCommand("************************************** UnsafeTowerMove to (" + point.height() + ","
+            //         + point.angle() + ")")
   }
 }
