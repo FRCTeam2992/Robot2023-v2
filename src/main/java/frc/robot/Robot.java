@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.CycleLEDs;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -103,22 +104,26 @@ public class Robot extends TimedRobot {
         mRobotContainer.mClaw.onDisable();
         mRobotContainer.mButterflyWheels.onDisable();
         mRobotContainer.mDrivetrain.onDisable();
+
+        CommandScheduler.getInstance().schedule(
+                new CycleLEDs(mRobotContainer.mLEDs,
+                        Constants.LEDColors.blue, Constants.LEDColors.white));
     }
 
     @Override
     public void disabledPeriodic() {
-        if (ledsLoopCounter == 5) {
-            mRobotContainer.mLEDs.showNextCycleColor(
-                    Constants.LEDColors.blue,
-                    Constants.LEDColors.white,
-                    ledsFrameCounter);
-            if (ledsFrameCounter == 6) {
-                ledsFrameCounter = 0;
-            }
-            ledsLoopCounter = 0;
-            ledsFrameCounter++;
-        }
-        ledsLoopCounter++;
+        // if (ledsLoopCounter == 5) {
+        // mRobotContainer.mLEDs.showNextCycleColor(
+        // Constants.LEDColors.blue,
+        // Constants.LEDColors.white,
+        // ledsFrameCounter);
+        // if (ledsFrameCounter == 6) {
+        // ledsFrameCounter = 0;
+        // }
+        // ledsLoopCounter = 0;
+        // ledsFrameCounter++;
+        // }
+        // ledsLoopCounter++;
 
         // Update prematch auto selector and robot setup checks
         mRobotContainer.updateMatchStartChecksToDashboard();
