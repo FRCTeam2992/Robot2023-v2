@@ -307,6 +307,7 @@ public class RobotContainer {
         SmartDashboard.putData("Claw", mClaw);
         SmartDashboard.putData("Elevator", mElevator);
         SmartDashboard.putData("Butterfly Wheels", mButterflyWheels);
+        SmartDashboard.putData("LEDs", mLEDs);
     }
 
     public void addRobotStateToDashboard() {
