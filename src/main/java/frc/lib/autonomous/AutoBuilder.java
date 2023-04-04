@@ -165,9 +165,9 @@ public class AutoBuilder {
                                 .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.2))
-                                .andThen(new WaitCommand(0.3))
-                                .andThen(new PrintCommand(
-                                        "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
+                                .andThen(new WaitCommand(0.5))
+                                // .andThen(new PrintCommand(
+                                //         "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
             case No_Preload:
@@ -241,7 +241,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new WaitCommand(0.5))
+                followCommand = followCommand.andThen(new WaitCommand(1.0))
                         .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5)
                                 .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
                                 .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
