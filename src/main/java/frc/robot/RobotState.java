@@ -109,7 +109,7 @@ public class RobotState {
         LowLeft(Constants.TowerConstants.scoreFloor, -Constants.ScoringGridConstants.conePoleOffsetYMeters),
         LowRight(Constants.TowerConstants.scoreFloor, Constants.ScoringGridConstants.conePoleOffsetYMeters),
         LowCenter(Constants.TowerConstants.scoreFloor, 0.0),
-        ThrowCube(Constants.TowerConstants.throwCube, 0.0);
+        ThrowCube(Constants.TowerConstants.midThrowCube, 0.0);
 
         public Waypoint towerWaypoint;
         public double lateralScoringOffsetMeters;
