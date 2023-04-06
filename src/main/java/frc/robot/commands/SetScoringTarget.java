@@ -5,16 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotState;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
 
 public class SetScoringTarget extends CommandBase {
     private RobotState mRobotState;
-    private Elevator mElevator;
-    private Arm mArm;
     private CommandXboxController mController;
 
     enum JoystickPOVToAngle {
@@ -60,14 +55,9 @@ public class SetScoringTarget extends CommandBase {
     }
 
     /** Creates a new SetScoringTarget. */
-    public SetScoringTarget(RobotState robotState, CommandXboxController controller, Elevator elevator, Arm arm) {
+    public SetScoringTarget(RobotState robotState, CommandXboxController controller) {
         mRobotState = robotState;
         mController = controller;
-        mElevator = elevator;
-        mArm = arm;
-        // Note: We do not need to addRequirements for elevator and arm since they are
-        // just
-        // used in scheduling a command, not actually controlled here.
 
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -120,10 +110,6 @@ public class SetScoringTarget extends CommandBase {
                     mRobotState.currentTargetPosition = RobotState.GridTargetingPosition.LowLeft;
                     break;
             }
-        }
-
-        if (mRobotState.towerIsMoving) {
-            CommandScheduler.getInstance().schedule(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
         }
     }
 
