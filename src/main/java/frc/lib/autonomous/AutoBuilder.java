@@ -166,7 +166,8 @@ public class AutoBuilder {
                                 .andThen(new WaitCommand(0.2))
                                 .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
-                                        .withTimeout(1.2).alongWith(new WaitCommand(1.2)))
+                                        .withTimeout(1.2)
+                                        .alongWith(new WaitCommand(1.0)))
                                 .andThen(new WaitCommand(0.3))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
