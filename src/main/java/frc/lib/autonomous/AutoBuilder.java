@@ -168,7 +168,6 @@ public class AutoBuilder {
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.2).alongWith(new WaitCommand(1.2)))
                                 .andThen(new WaitCommand(0.3))
-                                .andThen(new PrintCommand(
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
             case No_Preload:
