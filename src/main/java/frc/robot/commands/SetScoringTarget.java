@@ -15,7 +15,8 @@ public class SetScoringTarget extends CommandBase {
     private RobotState mRobotState;
     private Elevator mElevator;
     private Arm mArm;
-    private CommandXboxController mController;
+    private CommandXboxController mController0;
+    private CommandXboxController mController1;
 
     enum JoystickPOVToAngle {
         Center(-1),
@@ -60,9 +61,11 @@ public class SetScoringTarget extends CommandBase {
     }
 
     /** Creates a new SetScoringTarget. */
-    public SetScoringTarget(RobotState robotState, CommandXboxController controller, Elevator elevator, Arm arm) {
+    public SetScoringTarget(RobotState robotState, CommandXboxController controller0, CommandXboxController controller1,
+            Elevator elevator, Arm arm) {
         mRobotState = robotState;
-        mController = controller;
+        mController0 = controller0;
+        mController1 = controller1;
         mElevator = elevator;
         mArm = arm;
         // Note: We do not need to addRequirements for elevator and arm since they are
@@ -75,22 +78,22 @@ public class SetScoringTarget extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (mController.x().getAsBoolean()) {
+        if (mController1.x().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverLeft;
-        } else if (mController.a().getAsBoolean()) {
+        } else if (mController1.a().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridCenter;
-        } else if (mController.b().getAsBoolean()) {
+        } else if (mController1.b().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverRight;
         } else {
             // Default to Driver left grid if no button is registered
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverLeft;
         }
 
-        if (mController.leftStick().getAsBoolean()) {
+        if (mController1.leftStick().getAsBoolean()) {
             // Left Stick = target throwing cube
             mRobotState.currentTargetPosition = RobotState.GridTargetingPosition.ThrowCube;
         } else {
-            JoystickPOVToAngle direction = JoystickPOVToAngle.fromValue(mController.getHID().getPOV());
+            JoystickPOVToAngle direction = JoystickPOVToAngle.fromValue(mController1.getHID().getPOV());
             switch (direction) {
                 case UpLeft:
                     mRobotState.currentTargetPosition = RobotState.GridTargetingPosition.HighRight;
@@ -122,7 +125,7 @@ public class SetScoringTarget extends CommandBase {
             }
         }
 
-        if (mRobotState.towerIsMoving) {
+        if (mController0.rightTrigger(0.6).getAsBoolean()) {
             CommandScheduler.getInstance().schedule(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
         }
     }
