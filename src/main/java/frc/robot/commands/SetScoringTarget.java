@@ -5,11 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotState;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
 
 public class SetScoringTarget extends CommandBase {
     private RobotState mRobotState;
@@ -128,6 +125,7 @@ public class SetScoringTarget extends CommandBase {
         if (mController0.rightTrigger(0.6).getAsBoolean()) {
             CommandScheduler.getInstance().schedule(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
         }
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.

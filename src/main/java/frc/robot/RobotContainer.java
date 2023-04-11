@@ -246,6 +246,7 @@ public class RobotContainer {
                 new MoveElevator(mElevator, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
                 new MoveElevator(mElevator, -0.4));
+                
         controller1.leftStick().onTrue(new SetScoringTarget(mRobotState, controller0, controller1, mElevator, mArm));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
