@@ -187,13 +187,13 @@ public final class Constants {
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreCubeMid = new Waypoint(5.0, 48.0,
+        public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 122.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 129.00, //122.00 original
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
