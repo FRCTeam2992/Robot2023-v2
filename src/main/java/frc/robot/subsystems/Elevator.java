@@ -140,13 +140,6 @@ public class Elevator extends SubsystemBase {
   }
 
   public void holdElevator() {
-      // if (getElevatorInches() < 1.0) {
-      // // We are at bottom or go encoder reset. Stop the holdPosition
-      // holdPositionRecorded = false;
-      // holdPosition = 0.0;
-      // elevatorMotorLead.set(TalonFXControlMode.PercentOutput, 0.0);
-      // return;
-      // }
     if (!holdPositionRecorded) {
       // We haven't recorded where we are yet, so get it
       holdPosition = getLeadElevatorPostion();
