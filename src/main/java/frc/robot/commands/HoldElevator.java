@@ -10,49 +10,44 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 
 public class HoldElevator extends CommandBase {
-  /** Creates a new StopElevator. */
-  private Elevator mElevator;
+    /** Creates a new StopElevator. */
+    private Elevator mElevator;
 
-  private Timer timer;
+    private Timer timer;
 
-  public HoldElevator(Elevator subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mElevator = subsystem;
-    timer = new Timer();
-    addRequirements(mElevator);
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    timer.reset();
-    timer.start();
-    mElevator.setElevatorSpeed(0.0);
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if (mElevator.getElevatorInches() < 1.0) {
-      // We are at bottom so turn off
-      mElevator.setElevatorSpeed(0.0);
-    } else if (timer.get() > Constants.ElevatorConstants.holdPositionMaxTime) {
-      mElevator.setElevatorSpeed(0.0);
-    } else {
-      if (timer.get() > 0.150) {
-        mElevator.holdElevator();
-      }
+    public HoldElevator(Elevator subsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        mElevator = subsystem;
+        timer = new Timer();
+        addRequirements(mElevator);
     }
-  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        timer.reset();
+        timer.start();
+        mElevator.setElevatorSpeed(0.0);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        if (timer.get() > Constants.ElevatorConstants.holdPositionMaxTime) {
+            mElevator.setElevatorSpeed(0.0);
+        } else if (timer.get() > 0.150) {
+            mElevator.holdElevator();
+        }
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

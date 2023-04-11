@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -139,20 +140,20 @@ public class Elevator extends SubsystemBase {
   }
 
   public void holdElevator() {
-    if (getElevatorInches() < 1.0) {
-      // We are at bottom or go encoder reset. Stop the holdPosition
-      holdPositionRecorded = false;
-      holdPosition = 0.0;
-      elevatorMotorLead.set(TalonFXControlMode.PercentOutput, 0.0);
-      return;
-    }
+      // if (getElevatorInches() < 1.0) {
+      // // We are at bottom or go encoder reset. Stop the holdPosition
+      // holdPositionRecorded = false;
+      // holdPosition = 0.0;
+      // elevatorMotorLead.set(TalonFXControlMode.PercentOutput, 0.0);
+      // return;
+      // }
     if (!holdPositionRecorded) {
       // We haven't recorded where we are yet, so get it
       holdPosition = getLeadElevatorPostion();
       holdPositionRecorded = true;
       elevatorMotorLead.set(TalonFXControlMode.PercentOutput, 0.0);
     } else {
-      elevatorMotorLead.set(TalonFXControlMode.MotionMagic, holdPosition);
+        elevatorMotorLead.set(TalonFXControlMode.MotionMagic, holdPosition, DemandType.ArbitraryFeedForward, 0.05);
     }
 
   }

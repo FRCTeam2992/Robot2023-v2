@@ -115,10 +115,13 @@ public class Arm extends SubsystemBase {
             targetAngleDeg = holdPosition;
             armController.setSetpoint(targetAngleDeg);
         } else {
-            double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
-            speed = Math.min(0.2, speed);
-            speed = Math.max(-0.2, speed);
-            armMotor.set(TalonFXControlMode.PercentOutput, speed);
+            // Work for this is done in periodic due to pidMode = true;
+
+            // double speed =
+            // armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
+            // speed = Math.min(0.2, speed);
+            // speed = Math.max(-0.2, speed);
+            // armMotor.set(TalonFXControlMode.PercentOutput, speed);
         }
     }
 
