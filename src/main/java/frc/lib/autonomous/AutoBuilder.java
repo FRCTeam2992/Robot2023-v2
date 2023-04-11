@@ -23,6 +23,7 @@ import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployElevator;
+import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.IntakeGamePiece;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
@@ -90,6 +91,7 @@ public class AutoBuilder {
         eventMap.put("EndIntake", new HoldClaw(mClaw));
         eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, false));
         eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, true));
+        eventMap.put("HoldArm", new HoldArm(arm));
     }
 
     public void setupAutoSelector() {
@@ -164,10 +166,9 @@ public class AutoBuilder {
                                 .andThen(new WaitCommand(0.2))
                                 .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
-                                        .withTimeout(1.2))
-                                .andThen(new WaitCommand(0.5))
-                                // .andThen(new PrintCommand(
-                                //         "*******************************REACHED END OF AUTO ELEVATOR MOVE"))
+                                        .withTimeout(1.2)
+                                        .alongWith(new WaitCommand(1.0)))
+                                .andThen(new WaitCommand(0.3))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
             case No_Preload:

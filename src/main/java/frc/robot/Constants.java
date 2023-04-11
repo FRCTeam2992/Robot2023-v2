@@ -187,17 +187,17 @@ public final class Constants {
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreCubeMid = new Waypoint(5.0, 48.0,
+        public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint cubeGroundIntake = new Waypoint(0, 122.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0, 129.00, //122.00 original
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint throwCube = new Waypoint(31.75, 35.0,
+        public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
     }
 
@@ -261,7 +261,7 @@ public final class Constants {
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
         public static double armAngleToleranceDeg = 1.5; // Moves within 1 degree are "close enough"
-        public static double CANCoderOffset = -128.6;
+        public static double CANCoderOffset = 115.048828125;// -126.78;
 
         public static class ArmSlopConstants {
             public static double topZoneLowEdge = 12.0; // Above this may be n the slop zone
@@ -289,7 +289,7 @@ public final class Constants {
 
         public static class Intake {
             public static class Speed {
-                public static double cube = 0.5;
+                public static double cube = 0.8;
                 public static double cone = 0.8;
             }
 
