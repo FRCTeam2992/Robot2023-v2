@@ -28,7 +28,7 @@ public class AutoLoadStationIntake extends ParallelCommandGroup {
         addCommands(
                 new DeployElevator(elevator, arm, robotState, ElevatorState.Undeployed),
                 new SafeDumbTowerToPosition(
-                        elevator, arm, robotState, Constants.TowerConstants.loadStation).withTimeout(2.5),
+                        elevator, arm, robotState, Constants.TowerConstants.singleLoadStation).withTimeout(2.5),
                 new InstantCommand(() -> {
                     robotState.currentOuttakeType = OuttakeType.Unknown;
                     if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {

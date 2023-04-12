@@ -183,22 +183,32 @@ public final class Constants {
     public static class TowerConstants {
         public static Waypoint scoreFloor = new Waypoint(0.0, 80.00,
                 OuttakeType.Hybrid, ElevatorState.Undeployed, 0.0);
+
         public static Waypoint scoreConeMid = new Waypoint(10.515, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
         public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
+
         public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
+
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
+
         public static Waypoint cubeGroundIntake = new Waypoint(0, 129.00, //122.00 original
-                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint loadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
+
+        public static Waypoint singleLoadStation = new Waypoint(0, -72.00,
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
+        public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
+        public static Waypoint doubleLoadStationCone = new Waypoint(24.42, 10.46,
+                OuttakeType.Unknown, ElevatorState.Deployed, 0.0);
+
     }
 
     public static class ElevatorConstants {
