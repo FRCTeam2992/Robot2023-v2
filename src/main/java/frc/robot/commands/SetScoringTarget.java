@@ -4,13 +4,25 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.RobotState;
+import frc.robot.commands.groups.SafeDumbTowerToPosition;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 public class SetScoringTarget extends CommandBase {
     private RobotState mRobotState;
-    private CommandXboxController mController;
+    private Elevator mElevator;
+    private Arm mArm;
+    private CommandXboxController mController0;
+    private CommandXboxController mController1;
 
     enum JoystickPOVToAngle {
         Center(-1),
@@ -55,9 +67,16 @@ public class SetScoringTarget extends CommandBase {
     }
 
     /** Creates a new SetScoringTarget. */
-    public SetScoringTarget(RobotState robotState, CommandXboxController controller) {
+    public SetScoringTarget(RobotState robotState, CommandXboxController controller0, CommandXboxController controller1,
+            Elevator elevator, Arm arm) {
         mRobotState = robotState;
-        mController = controller;
+        mController0 = controller0;
+        mController1 = controller1;
+        mElevator = elevator;
+        mArm = arm;
+        // Note: We do not need to addRequirements for elevator and arm since they are
+        // just
+        // used in scheduling a command, not actually controlled here.
 
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -65,22 +84,22 @@ public class SetScoringTarget extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (mController.x().getAsBoolean()) {
+        if (mController1.x().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverLeft;
-        } else if (mController.a().getAsBoolean()) {
+        } else if (mController1.a().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridCenter;
-        } else if (mController.b().getAsBoolean()) {
+        } else if (mController1.b().getAsBoolean()) {
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverRight;
         } else {
             // Default to Driver left grid if no button is registered
             mRobotState.currentTargetedGrid = RobotState.TargetingGrid.GridDriverLeft;
         }
 
-        if (mController.leftStick().getAsBoolean()) {
+        if (mController1.leftStick().getAsBoolean()) {
             // Left Stick = target throwing cube
             mRobotState.currentTargetPosition = RobotState.GridTargetingPosition.ThrowCube;
         } else {
-            JoystickPOVToAngle direction = JoystickPOVToAngle.fromValue(mController.getHID().getPOV());
+            JoystickPOVToAngle direction = JoystickPOVToAngle.fromValue(mController1.getHID().getPOV());
             switch (direction) {
                 case UpLeft:
                     mRobotState.currentTargetPosition = RobotState.GridTargetingPosition.HighRight;
@@ -111,6 +130,19 @@ public class SetScoringTarget extends CommandBase {
                     break;
             }
         }
+
+        if (mController0.leftTrigger(0.6).getAsBoolean()) {
+            Command moveCommand = new InstantCommand();
+            if (mElevator.getElevatorState() != mRobotState.currentTargetPosition.towerWaypoint.elevatorState()) {
+                moveCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
+                        .andThen(new WaitCommand(0.3))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+                                Constants.TowerConstants.normal));
+            }
+            moveCommand = moveCommand.andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
+            CommandScheduler.getInstance().schedule(moveCommand);
+        }
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.

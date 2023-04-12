@@ -228,7 +228,8 @@ public class RobotContainer {
                         () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
 
         controller1.leftTrigger(0.6).onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
-        controller1.rightTrigger(0.6).onTrue(new SetScoringTarget(mRobotState, controller1));
+        controller1.rightTrigger(0.6)
+                .onTrue(new SetScoringTarget(mRobotState, controller0, controller1, mElevator, mArm));
 
         // Back and Start
         controller1.start().onTrue(new ToggleEndgameState(mRobotState, mLEDs));
@@ -245,7 +246,8 @@ public class RobotContainer {
                 new MoveElevator(mElevator, 0.4));
         controller1.axisGreaterThan(XboxController.Axis.kRightY.value, 0.6).whileTrue(
                 new MoveElevator(mElevator, -0.4));
-        controller1.leftStick().onTrue(new SetScoringTarget(mRobotState, controller1));
+                
+        controller1.leftStick().onTrue(new SetScoringTarget(mRobotState, controller0, controller1, mElevator, mArm));
         controller1.rightStick().onTrue(new ToggleDeployElevator(mElevator));
 
     }
