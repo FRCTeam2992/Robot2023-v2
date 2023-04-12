@@ -29,7 +29,7 @@ import frc.robot.commands.ToggleDeployElevator;
 import frc.robot.commands.ToggleEndgameState;
 import frc.robot.commands.ZeroElevatorEncoders;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
-import frc.robot.commands.groups.AutoLoadStationIntake;
+import frc.robot.commands.groups.AutoSingleLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.commands.groups.StopIntake;
 import frc.robot.subsystems.Arm;
@@ -149,7 +149,7 @@ public class RobotContainer {
 
         // B = intake from load station
         controller0.b().onTrue(
-                new AutoLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
+                new AutoSingleLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
         controller0.b().onTrue(new InstantCommand(() -> {
             mDrivetrain.setLoadingMode(true);
         }));
