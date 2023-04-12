@@ -4,9 +4,18 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.RobotState;
+import frc.robot.commands.groups.SafeDumbTowerToPosition;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorState;
 
 public class SetScoringTarget extends CommandBase {
     private RobotState mRobotState;
@@ -122,8 +131,16 @@ public class SetScoringTarget extends CommandBase {
             }
         }
 
-        if (mController0.rightTrigger(0.6).getAsBoolean()) {
-            CommandScheduler.getInstance().schedule(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
+        if (mController0.leftTrigger(0.6).getAsBoolean()) {
+            Command moveCommand = new InstantCommand();
+            if (mElevator.getElevatorState() != mRobotState.currentTargetPosition.towerWaypoint.elevatorState()) {
+                moveCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)
+                        .andThen(new WaitCommand(0.3))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+                                Constants.TowerConstants.normal));
+            }
+            moveCommand = moveCommand.andThen(new MoveTowerToScoringPosition(mElevator, mArm, mRobotState));
+            CommandScheduler.getInstance().schedule(moveCommand);
         }
 
     }
