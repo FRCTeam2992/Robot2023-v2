@@ -305,7 +305,7 @@ public final class Constants {
 
             public static class DelayCyclesAfterBeamBreak {
                 public static int cube = 3;
-                public static int cone = 12;
+                public static int cone = 24;
             }
         }
 
