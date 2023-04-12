@@ -31,9 +31,8 @@ public class AutoDoubleLoadStationIntakeCube extends ParallelCommandGroup {
                         elevator, arm, robotState, Constants.TowerConstants.doubleLoadStationCube).withTimeout(2.5),
                 new InstantCommand(() -> {
                     robotState.currentOuttakeType = OuttakeType.Assumed_Cube;
-                    if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
-                        robotState.intakeMode = RobotState.IntakeModeState.Cube;
-                    }
-                }).andThen(new IntakeGamePiece(claw, leds, robotState)));
+                    robotState.intakeMode = RobotState.IntakeModeState.Cube;
+                })
+                        .andThen(new IntakeGamePiece(claw, leds, robotState)));
     }
 }

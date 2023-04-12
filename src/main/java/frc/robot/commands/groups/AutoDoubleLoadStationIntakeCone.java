@@ -28,11 +28,12 @@ public class AutoDoubleLoadStationIntakeCone extends ParallelCommandGroup {
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new DeployElevator(elevator, arm, robotState, ElevatorState.Deployed),
-                new WaitCommand(Constants.TowerConstants.doubleLoadStationCone.delay()),
-                new SafeDumbTowerToPosition(
-                        elevator, arm, robotState, Constants.TowerConstants.doubleLoadStationCone).withTimeout(2.5),
+                new WaitCommand(Constants.TowerConstants.doubleLoadStationCone.delay())
+                        .andThen(new SafeDumbTowerToPosition(
+                                elevator, arm, robotState, Constants.TowerConstants.doubleLoadStationCone)
+                                .withTimeout(2.5)),
                 new InstantCommand(() -> {
-                    robotState.currentOuttakeType = OuttakeType.Assumed_Cube;
+                    robotState.currentOuttakeType = OuttakeType.Assumed_Cone;
                     if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
                         robotState.intakeMode = RobotState.IntakeModeState.Cone;
                     }
