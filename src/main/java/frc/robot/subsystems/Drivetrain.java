@@ -91,6 +91,7 @@ public class Drivetrain extends SubsystemBase {
     public final LimeLight limeLightCameraBack;
     public final LimeLight limeLightCameraRight;
     public final LimeLight limeLightCameraLeft;
+    private double limeLightBlendedLatency = 0.0;
 
     private DataLog mDataLog;
     private RobotState mRobotState;
@@ -332,7 +333,7 @@ public class Drivetrain extends SubsystemBase {
                 // State measurement standard deviations. X, Y, theta.
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
                 // Global measurement standard deviations. X, Y, and theta.
-                new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.05));
+                new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, .9999));
     }
 
     private void initTalonFX(TalonFX motorContollerName, boolean isInverted) {
@@ -356,6 +357,10 @@ public class Drivetrain extends SubsystemBase {
                 Timer.getFPGATimestamp(),
                 Rotation2d.fromDegrees(-getGyroYaw()),
                 swerveDriveModulePositions);
+
+        limelightBackBotPose = limeLightCameraBack.getBotPose(getAllianceCoordinateSpace());
+        limelightRightBotPose = limeLightCameraRight.getBotPose(getAllianceCoordinateSpace());
+        limelightLeftBotPose = limeLightCameraLeft.getBotPose(getAllianceCoordinateSpace());
 
         if (Constants.dataLogging) {
             // limelight11JsonLog.append(limeLightCamera11.getLimelightJson());
@@ -396,9 +401,6 @@ public class Drivetrain extends SubsystemBase {
             SmartDashboard.putNumber("Gyro Yaw (adj deg)", getGyroYaw());
             SmartDashboard.putNumber("Robot Gyro Pitch (raw deg)", getRobotPitch()); // Navx Roll
 
-            limelightBackBotPose = limeLightCameraBack.getBotPose(getAllianceCoordinateSpace());
-            limelightRightBotPose = limeLightCameraRight.getBotPose(getAllianceCoordinateSpace());
-            limelightLeftBotPose = limeLightCameraLeft.getBotPose(getAllianceCoordinateSpace());
             if (limeLightCameraBack.getTargetID() > 0) {
                 if (Constants.debugDashboard) {
                     SmartDashboard.putNumber("Limelight Pose X (m)", limelightBackBotPose[0]);
@@ -410,48 +412,55 @@ public class Drivetrain extends SubsystemBase {
             }
 
             if (Constants.debugDashboard) {
-                limelightBackBotPose = limeLightCameraBack.getBotPose(getAllianceCoordinateSpace());
-                limelightRightBotPose = limeLightCameraRight.getBotPose(getAllianceCoordinateSpace());
-                limelightLeftBotPose = limeLightCameraLeft.getBotPose(getAllianceCoordinateSpace());
                 if (limeLightCameraBack.getTargetID() > 0) {
                     if (Constants.debugDashboard) {
-                        SmartDashboard.putNumber("Limelight 11 Pose X (m)", limelightBackBotPose[0]);
-                        SmartDashboard.putNumber("Limelight 11 Pose Y (m)", limelightBackBotPose[1]);
-                        SmartDashboard.putNumber("Limelight 11 Pose Yaw (deg)", limelightBackBotPose[5]);
-                        SmartDashboard.putNumber("Limelight 11 Pose Latency (ms)", limelightBackBotPose[6]);
+                        SmartDashboard.putNumber("Limelight Back Pose X (m)", limelightBackBotPose[0]);
+                        SmartDashboard.putNumber("Limelight Back Pose Y (m)", limelightBackBotPose[1]);
+                        SmartDashboard.putNumber("Limelight Back Pose Yaw (deg)", limelightBackBotPose[5]);
+                        SmartDashboard.putNumber("Limelight Back Pose Latency (ms)", limelightBackBotPose[6]);
                     }
                 }
                 if (limeLightCameraRight.getTargetID() > 0) {
                     if (Constants.debugDashboard) {
-                        SmartDashboard.putNumber("Limelight 12 Pose X (m)", limelightRightBotPose[0]);
-                        SmartDashboard.putNumber("Limelight 12 Pose Y (m)", limelightRightBotPose[1]);
-                        SmartDashboard.putNumber("Limelight 12 Pose Yaw (deg)", limelightRightBotPose[5]);
-                        SmartDashboard.putNumber("Limelight 12 Pose Latency (ms)", limelightRightBotPose[6]);
+                        SmartDashboard.putNumber("Limelight Right Pose X (m)", limelightRightBotPose[0]);
+                        SmartDashboard.putNumber("Limelight Right Pose Y (m)", limelightRightBotPose[1]);
+                        SmartDashboard.putNumber("Limelight Right Pose Yaw (deg)", limelightRightBotPose[5]);
+                        SmartDashboard.putNumber("Limelight Right Pose Latency (ms)", limelightRightBotPose[6]);
                     }
                 }
                 if (limeLightCameraLeft.getTargetID() > 0) {
                     if (Constants.debugDashboard) {
-                        SmartDashboard.putNumber("Limelight 13 Pose X (m)", limelightLeftBotPose[0]);
-                        SmartDashboard.putNumber("Limelight 13 Pose Y (m)", limelightLeftBotPose[1]);
-                        SmartDashboard.putNumber("Limelight 13 Pose Yaw (deg)", limelightLeftBotPose[5]);
-                        SmartDashboard.putNumber("Limelight 13 Pose Latency (ms)", limelightLeftBotPose[6]);
+                        SmartDashboard.putNumber("Limelight Left Pose X (m)", limelightLeftBotPose[0]);
+                        SmartDashboard.putNumber("Limelight Left Pose Y (m)", limelightLeftBotPose[1]);
+                        SmartDashboard.putNumber("Limelight Left Pose Yaw (deg)", limelightLeftBotPose[5]);
+                        SmartDashboard.putNumber("Limelight Left Pose Latency (ms)", limelightLeftBotPose[6]);
                     }
                 }
 
-                SmartDashboard.putNumber("Limelight 11 Tid", limeLightCameraBack.getTargetID());
-                SmartDashboard.putNumber("Limelight 12 Tid", limeLightCameraRight.getTargetID());
-                SmartDashboard.putNumber("Limelight 13 Tid", limeLightCameraLeft.getTargetID());
+                SmartDashboard.putNumber("Limelight Back Tid", limeLightCameraBack.getTargetID());
+                SmartDashboard.putNumber("Limelight Back Ta", limeLightCameraBack.getTargetArea());
+                SmartDashboard.putNumber("Limelight Right Tid", limeLightCameraRight.getTargetID());
+                SmartDashboard.putNumber("Limelight Right Ta", limeLightCameraRight.getTargetArea());
+                SmartDashboard.putNumber("Limelight Left Tid", limeLightCameraLeft.getTargetID());
+                SmartDashboard.putNumber("Limelight Left Ta", limeLightCameraLeft.getTargetArea());
 
+                if (latestVisionPose != null) {
+                    SmartDashboard.putNumber("Limelight Blended X (m)", latestVisionPose.getX());
+                    SmartDashboard.putNumber("Limelight Blended Y (m)", latestVisionPose.getY());
+                    SmartDashboard.putNumber("Limelight Blended Theta", latestVisionPose.getRotation().getDegrees());
+                    SmartDashboard.putNumber("Limelight Blended FPGATime", Timer.getFPGATimestamp());
+                    SmartDashboard.putNumber("Limelight Blended Latency", limeLightBlendedLatency);
+                }
             }
             dashboardCounter = 0;
         }
 
-        if (this.mRobotState.useLimelightOdometryUpdates && limeLightCameraBack.getTargetID() > 0) {
-            limelightBackBotPose = limeLightCameraBack.getBotPose(getAllianceCoordinateSpace());
-            latestVisionPose = new Pose2d(limelightBackBotPose[0], limelightBackBotPose[1],
-                    Rotation2d.fromDegrees(limelightBackBotPose[5]));
-            swerveDrivePoseEstimator.addVisionMeasurement(latestVisionPose,
-                    Timer.getFPGATimestamp());
+        if (this.mRobotState.useLimelightOdometryUpdates) {
+            latestVisionPose = getBlendedVisionPose();
+            if (latestVisionPose != null) {
+                swerveDrivePoseEstimator.addVisionMeasurement(latestVisionPose,
+                        Timer.getFPGATimestamp() - limeLightBlendedLatency / 1000);
+            }
         }
     }
 
@@ -610,6 +619,47 @@ public class Drivetrain extends SubsystemBase {
         return runOnce(() -> {
             resetOdometry();
         });
+    }
+
+    private Pose2d getBlendedVisionPose() {
+        double sumX = 0.0;
+        double sumY = 0.0;
+        double sumTheta = 0.0;
+        double sumLatency = 0.0;
+        double totalArea = 0.0;
+
+        if (limeLightCameraBack.getTargetID() != -1) {
+            double Ta = limeLightCameraBack.getTargetArea();
+            totalArea += Ta;
+            sumX += Ta * limelightBackBotPose[0];
+            sumY += Ta * limelightBackBotPose[1];
+            sumTheta += Ta * limelightBackBotPose[5];
+            sumLatency += Ta * limelightBackBotPose[6];
+        }
+        if (limeLightCameraRight.getTargetID() != -1) {
+            double Ta = limeLightCameraRight.getTargetArea();
+            totalArea += Ta;
+            sumX += Ta * limelightRightBotPose[0];
+            sumY += Ta * limelightRightBotPose[1];
+            sumTheta += Ta * limelightRightBotPose[5];
+            sumLatency += Ta * limelightRightBotPose[6];
+        }
+        if (limeLightCameraLeft.getTargetID() != -1) {
+            double Ta = limeLightCameraLeft.getTargetArea();
+            totalArea += Ta;
+            sumX += Ta * limelightLeftBotPose[0];
+            sumY += Ta * limelightLeftBotPose[1];
+            sumTheta += Ta * limelightLeftBotPose[5];
+            sumLatency += Ta * limelightLeftBotPose[6];
+        }
+
+        SmartDashboard.putNumber("Limelight TotalArea", totalArea);
+        if (totalArea == 0.0) {
+            limeLightBlendedLatency = 0.0;
+            return null;
+        }
+        limeLightBlendedLatency = sumLatency / totalArea;
+        return new Pose2d(sumX / totalArea, sumY / totalArea, Rotation2d.fromDegrees(sumTheta / totalArea));
     }
 
     // Move robot straight at a heading and speed
