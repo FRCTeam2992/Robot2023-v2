@@ -122,6 +122,7 @@ public class Drivetrain extends SubsystemBase {
 
     public Pose2d latestSwervePose = new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0));
     public Pose2d latestVisionPose = new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0));
+    public boolean latestVisionPoseValid = false; // Do we have a current vision sighting?
 
     // Swerve Drive Kinematics
     public final SwerveDriveKinematics swerveDriveKinematics;
@@ -456,8 +457,8 @@ public class Drivetrain extends SubsystemBase {
         }
 
         if (this.mRobotState.useLimelightOdometryUpdates) {
-            latestVisionPose = getBlendedVisionPose();
-            if (latestVisionPose != null) {
+            calculateBlendedVisionPose();
+            if (latestVisionPoseValid) {
                 swerveDrivePoseEstimator.addVisionMeasurement(latestVisionPose,
                         Timer.getFPGATimestamp() - limeLightBlendedLatency / 1000);
             }
@@ -621,7 +622,7 @@ public class Drivetrain extends SubsystemBase {
         });
     }
 
-    private Pose2d getBlendedVisionPose() {
+    private void calculateBlendedVisionPose() {
         double sumX = 0.0;
         double sumY = 0.0;
         double sumTheta = 0.0;
@@ -656,10 +657,12 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Limelight TotalArea", totalArea);
         if (totalArea == 0.0) {
             limeLightBlendedLatency = 0.0;
-            return null;
+            latestVisionPoseValid = false;
+            return;
         }
         limeLightBlendedLatency = sumLatency / totalArea;
-        return new Pose2d(sumX / totalArea, sumY / totalArea, Rotation2d.fromDegrees(sumTheta / totalArea));
+        latestVisionPoseValid = true;
+        latestVisionPose = new Pose2d(sumX / totalArea, sumY / totalArea, Rotation2d.fromDegrees(sumTheta / totalArea));
     }
 
     // Move robot straight at a heading and speed
