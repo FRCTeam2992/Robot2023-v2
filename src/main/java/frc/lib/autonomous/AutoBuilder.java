@@ -84,7 +84,7 @@ public class AutoBuilder {
                 Constants.TowerConstants.normal).withTimeout(1.5));
         eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.loadStation).withTimeout(1.5));
+                Constants.TowerConstants.singleLoadStation).withTimeout(1.5));
         eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mLEDs, mRobotState));
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));

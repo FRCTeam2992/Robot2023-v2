@@ -7,6 +7,7 @@ package frc.robot;
 import frc.lib.autonomous.AutoBuilder;
 import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants.TowerConstants;
+import frc.robot.RobotState.IntakeModeState;
 import frc.robot.commands.BalanceRobotPID;
 import frc.robot.commands.ClawOuttake;
 import frc.robot.commands.DeployButterflyWheels;
@@ -28,8 +29,10 @@ import frc.robot.commands.SetScoringTarget;
 import frc.robot.commands.ToggleDeployElevator;
 import frc.robot.commands.ToggleEndgameState;
 import frc.robot.commands.ZeroElevatorEncoders;
+import frc.robot.commands.groups.AutoDoubleLoadStationIntakeCone;
+import frc.robot.commands.groups.AutoDoubleLoadStationIntakeCube;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
-import frc.robot.commands.groups.AutoLoadStationIntake;
+import frc.robot.commands.groups.AutoSingleLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
 import frc.robot.commands.groups.StopIntake;
 import frc.robot.subsystems.Arm;
@@ -48,6 +51,7 @@ import frc.robot.testing.commands.TestTowerSafeMove;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -149,7 +153,7 @@ public class RobotContainer {
 
         // B = intake from load station
         controller0.b().onTrue(
-                new AutoLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
+                new AutoSingleLoadStationIntake(mElevator, mArm, mClaw, mLEDs, mRobotState));
         controller0.b().onTrue(new InstantCommand(() -> {
             mDrivetrain.setLoadingMode(true);
         }));
@@ -161,6 +165,13 @@ public class RobotContainer {
         controller0.x().onTrue(
                 new AutoGroundIntakeCube(mElevator, mArm, mClaw, mLEDs, mRobotState));// cubes
         controller0.x().onTrue(new SetLEDsColor(mLEDs, Constants.LEDColors.purple));
+
+        // Y = double load station shelf intake --> Use cube/cone mode to select
+        // waypoint
+        controller0.y().onTrue(
+                new ConditionalCommand(new AutoDoubleLoadStationIntakeCone(mElevator, mArm, mClaw, mLEDs, mRobotState),
+                        new AutoDoubleLoadStationIntakeCube(mElevator, mArm, mClaw, mLEDs, mRobotState),
+                        () -> mRobotState.intakeMode == IntakeModeState.Cone));
 
         // D-Pad
         controller0.povLeft().whileTrue(mDrivetrain.XWheels());// X the wheels

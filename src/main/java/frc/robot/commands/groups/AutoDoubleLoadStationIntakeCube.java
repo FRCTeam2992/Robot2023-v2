@@ -20,20 +20,19 @@ import frc.robot.subsystems.Elevator.ElevatorState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoLoadStationIntake extends ParallelCommandGroup {
+public class AutoDoubleLoadStationIntakeCube extends ParallelCommandGroup {
     /** Creates a new AutoLoadStationIntake. */
-    public AutoLoadStationIntake(Elevator elevator, Arm arm, Claw claw, LEDs leds, RobotState robotState) {
+    public AutoDoubleLoadStationIntakeCube(Elevator elevator, Arm arm, Claw claw, LEDs leds, RobotState robotState) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new DeployElevator(elevator, arm, robotState, ElevatorState.Undeployed),
                 new SafeDumbTowerToPosition(
-                        elevator, arm, robotState, Constants.TowerConstants.loadStation).withTimeout(2.5),
+                        elevator, arm, robotState, Constants.TowerConstants.doubleLoadStationCube).withTimeout(2.5),
                 new InstantCommand(() -> {
-                    robotState.currentOuttakeType = OuttakeType.Unknown;
-                    if (robotState.intakeMode == RobotState.IntakeModeState.Unknown) {
-                        robotState.intakeMode = RobotState.IntakeModeState.Cone;
-                    }
-                }).andThen(new IntakeGamePiece(claw, leds, robotState)));
+                    robotState.currentOuttakeType = OuttakeType.Assumed_Cube;
+                    robotState.intakeMode = RobotState.IntakeModeState.Cube;
+                })
+                        .andThen(new IntakeGamePiece(claw, leds, robotState)));
     }
 }
