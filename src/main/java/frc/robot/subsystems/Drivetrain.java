@@ -390,13 +390,15 @@ public class Drivetrain extends SubsystemBase {
             dashboardCounter = 0;
         }
 
-        if (this.mRobotState.useLimelightOdometryUpdates && limeLightCamera11.getTargetID() > 0) {
-            limelight11BotPose = limeLightCamera11.getBotPose(getAllianceCoordinateSpace());
-            latestVisionPose = new Pose2d(limelight11BotPose[0], limelight11BotPose[1],
-                    Rotation2d.fromDegrees(limelight11BotPose[5]));
-            swerveDrivePoseEstimator.addVisionMeasurement(latestVisionPose,
-                    Timer.getFPGATimestamp());
-        }
+        // if (this.mRobotState.useLimelightOdometryUpdates &&
+        // limeLightCamera11.getTargetID() > 0) {
+        // limelight11BotPose =
+        // limeLightCamera11.getBotPose(getAllianceCoordinateSpace());
+        // latestVisionPose = new Pose2d(limelight11BotPose[0], limelight11BotPose[1],
+        // Rotation2d.fromDegrees(limelight11BotPose[5]));
+        // swerveDrivePoseEstimator.addVisionMeasurement(latestVisionPose,
+        // Timer.getFPGATimestamp());
+        // }
     }
 
     public CoordinateSpace getAllianceCoordinateSpace() {
