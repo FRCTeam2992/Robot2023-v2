@@ -19,6 +19,7 @@ import frc.robot.commands.HoldElevator;
 import frc.robot.commands.LEDsToDefaultColor;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmToPoint;
 import frc.robot.commands.MoveClaw;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
@@ -34,6 +35,7 @@ import frc.robot.commands.groups.AutoDoubleLoadStationIntakeCube;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.AutoSingleLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
+import frc.robot.commands.groups.ShootPieceAfterPoint;
 import frc.robot.commands.groups.StopIntake;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ButterflyWheels;
@@ -264,6 +266,8 @@ public class RobotContainer {
     }
 
     private void configureShuffleboardBindings() {
+            SmartDashboard.putData("Arm To Point 100%, 15°", new MoveArmToPoint(mArm, 1, 15));
+            SmartDashboard.putData("shoot piece", new ShootPieceAfterPoint(mArm, mClaw));
         if (Constants.debugDashboard) {
             SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
             SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
