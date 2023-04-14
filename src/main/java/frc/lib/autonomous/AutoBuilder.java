@@ -26,6 +26,7 @@ import frc.robot.commands.DeployElevator;
 import frc.robot.commands.HoldArm;
 import frc.robot.commands.HoldClaw;
 import frc.robot.commands.IntakeGamePiece;
+import frc.robot.commands.MoveArmToPoint;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
 import frc.robot.commands.StopClaw;
 import frc.robot.commands.groups.FollowTrajectoryCommand;
@@ -92,6 +93,8 @@ public class AutoBuilder {
         eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, false));
         eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, true));
         eventMap.put("HoldArm", new HoldArm(arm));
+        eventMap.put("StartCubeLaunch", new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
+
     }
 
     public void setupAutoSelector() {

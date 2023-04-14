@@ -151,9 +151,14 @@ public class Arm extends SubsystemBase {
                 .abs(targetAngleDeg - getArmCANCoderPositionCorrected()) < Constants.ArmConstants.armAngleToleranceDeg);
     }
 
+    public void setArmMotorNeutralMode(NeutralMode mode) {
+        armMotor.setNeutralMode(mode);
+    }
+
     public void onDisable() {
         pidMode = false;
         holdPositionRecorded = false;
         setArmSpeed(0.0);
+        setArmMotorNeutralMode(NeutralMode.Brake);
     }
 }

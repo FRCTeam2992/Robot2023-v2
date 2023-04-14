@@ -19,6 +19,7 @@ import frc.robot.commands.HoldElevator;
 import frc.robot.commands.LEDsToDefaultColor;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmToPoint;
 import frc.robot.commands.MoveClaw;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
@@ -264,6 +265,8 @@ public class RobotContainer {
     }
 
     private void configureShuffleboardBindings() {
+            SmartDashboard.putData("Arm To Point 100%, 10°",
+                            new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
         if (Constants.debugDashboard) {
             SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
             SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));

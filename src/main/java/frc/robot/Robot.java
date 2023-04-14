@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int slowLoopCounter = 0;
+    private int garbageLoopCounter = 0;
     private int ledsLoopCounter = 0;
     private int ledsFrameCounter = 1;
     private int slowAutoBuildCounter = 0;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         mRobotContainer.mElevator.zeroElevatorEncoders();
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
 
         mRobotContainer.mLEDs.setLEDStripColor(Constants.LEDColors.blue);
 
@@ -93,6 +95,11 @@ public class Robot extends TimedRobot {
             slowLoopCounter = 0;
             mRobotContainer.addRobotStateToDashboard();
         }
+
+        // if (garbageLoopCounter++ < 50) {
+        // garbageLoopCounter = 0;
+        // System.gc();
+        // }
 
         CommandScheduler.getInstance().run();
 
@@ -148,6 +155,8 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
 
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
+
         // Set the Drive Motors Current Limit
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
@@ -188,6 +197,8 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
 
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
