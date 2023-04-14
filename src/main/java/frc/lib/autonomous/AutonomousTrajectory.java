@@ -35,7 +35,7 @@ public enum AutonomousTrajectory {
     CenterIntakeBalanceLoadStationSide(PathPlanner.loadPathGroup("CenterIntakeBalanceLoadStationSide",
             new PathConstraints(3.0, 2.5),
             new PathConstraints(1.5, 2.5),
-            new PathConstraints(1.3, 1.0),
+            new PathConstraints(1.2, 1.2),
             new PathConstraints(3.0, 2.5))),
     CenterIntakeBalanceWallSide(PathPlanner.loadPathGroup("CenterIntakeBalanceWallSide",
             new PathConstraints(3.0, 2.5),
