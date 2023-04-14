@@ -35,7 +35,6 @@ import frc.robot.commands.groups.AutoDoubleLoadStationIntakeCube;
 import frc.robot.commands.groups.AutoGroundIntakeCube;
 import frc.robot.commands.groups.AutoSingleLoadStationIntake;
 import frc.robot.commands.groups.SafeDumbTowerToPosition;
-import frc.robot.commands.groups.ShootPieceAfterPoint;
 import frc.robot.commands.groups.StopIntake;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ButterflyWheels;
@@ -266,8 +265,8 @@ public class RobotContainer {
     }
 
     private void configureShuffleboardBindings() {
-            SmartDashboard.putData("Arm To Point 100%, 15°", new MoveArmToPoint(mArm, 1, 15));
-            SmartDashboard.putData("shoot piece", new ShootPieceAfterPoint(mArm, mClaw));
+            SmartDashboard.putData("Arm To Point 100%, 10°",
+                            new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
         if (Constants.debugDashboard) {
             SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
             SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));

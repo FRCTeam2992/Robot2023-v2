@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         mRobotContainer.mElevator.zeroElevatorEncoders();
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
 
         mRobotContainer.mLEDs.setLEDStripColor(Constants.LEDColors.blue);
 
@@ -145,6 +146,8 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
 
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
+
         // Set the Drive Motors Current Limit
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
@@ -185,6 +188,8 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+
+        mRobotContainer.mArm.setArmMotorNeutralMode(NeutralMode.Brake);
 
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
