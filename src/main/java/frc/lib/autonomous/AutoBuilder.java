@@ -207,6 +207,7 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
+                followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()));
                 break;
             case SideIntakeBalance:
                 if (getAutoStartPosition() == AutoStartPosition.LoadStationEnd) {
