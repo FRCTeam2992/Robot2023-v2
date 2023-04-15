@@ -113,20 +113,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        // if (ledsLoopCounter == 5) {
-        // mRobotContainer.mLEDs.showNextCycleColor(
-        // Constants.LEDColors.blue,
-        // Constants.LEDColors.white,
-        // ledsFrameCounter);
-        // if (ledsFrameCounter == 6) {
-        // ledsFrameCounter = 0;
-        // }
-        // ledsLoopCounter = 0;
-        // ledsFrameCounter++;
-        // }
-        // ledsLoopCounter++;
 
-        // Update prematch auto selector and robot setup checks
         mRobotContainer.updateMatchStartChecksToDashboard();
 
         // Constantly calculate autonomous routine in disabled

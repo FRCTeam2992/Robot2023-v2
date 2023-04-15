@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants;
@@ -90,8 +89,8 @@ public class AutoBuilder {
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
         eventMap.put("EndIntake", new HoldClaw(mClaw));
-        eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, false));
-        eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, true));
+        eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
+        eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, true));
         eventMap.put("HoldArm", new HoldArm(arm));
         eventMap.put("StartCubeLaunch", new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
 
@@ -294,7 +293,7 @@ public class AutoBuilder {
                 followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             case CenterBalance:
-                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, false));
+                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
                 if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.CenterBalanceLoadStationSide.trajectoryGroup) {
                         followCommand = followCommand.andThen(new FollowPathWithEvents(
@@ -315,7 +314,7 @@ public class AutoBuilder {
                 followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
             case CenterIntakeBalance:
-                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, false));
+                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
                 if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
                     for (PathPlannerTrajectory path : AutonomousTrajectory.CenterIntakeBalanceLoadStationSide.trajectoryGroup) {
                         followCommand = followCommand.andThen(new FollowPathWithEvents(
