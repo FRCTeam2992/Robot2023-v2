@@ -67,25 +67,25 @@ public class AutoBuilder {
         eventMap.put("UndeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
         eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighRight.towerWaypoint).withTimeout(1.5));
+                GridTargetingPosition.HighRight.towerWaypoint));
         eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighCenter.towerWaypoint).withTimeout(1.5));
+                GridTargetingPosition.HighCenter.towerWaypoint));
         eventMap.put("TowerMoveMidCenter", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.MidCenter.towerWaypoint).withTimeout(1.5));
+                GridTargetingPosition.MidCenter.towerWaypoint));
         eventMap.put("TowerMoveThrowCube", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.ThrowCube.towerWaypoint).withTimeout(1.5));
+                GridTargetingPosition.ThrowCube.towerWaypoint));
         eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.cubeGroundIntake).withTimeout(1.5));
+                Constants.TowerConstants.cubeGroundIntake));
         eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.normal).withTimeout(1.5));
+                Constants.TowerConstants.normal));
         eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.singleLoadStation).withTimeout(1.5));
+                Constants.TowerConstants.singleLoadStation));
         eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mLEDs, mRobotState));
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
