@@ -317,6 +317,9 @@ public final class Constants {
     public static class ButterflyWheelsConstants {
         public static class DeviceIDs {
             public static int butterflyWheelsSolenoid = 2;
+
+            public static int butterflyBeamBreakFront = 0;
+            public static int butterflyBeamBreakBack = 1;
         }
     }
 }
