@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.commands.CycleLEDs;
+import frc.robot.commands.SetLimeLightOdometryUpdates;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -109,6 +111,10 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(
                 new CycleLEDs(mRobotContainer.mLEDs,
                         Constants.LEDColors.blue, Constants.LEDColors.white));
+
+        CommandScheduler.getInstance().schedule(
+                new SetLimeLightOdometryUpdates(mRobotContainer.mRobotState, mRobotContainer.mDrivetrain, false));
+
     }
 
     @Override
@@ -152,6 +158,9 @@ public class Robot extends TimedRobot {
         balanceTimer.reset();
         balanceTimer.start();
 
+        CommandScheduler.getInstance().schedule(
+                new SetLimeLightOdometryUpdates(mRobotContainer.mRobotState, mRobotContainer.mDrivetrain, true));
+
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
@@ -182,7 +191,8 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
-        mRobotContainer.mRobotState.useLimelightOdometryUpdates = true;
+        CommandScheduler.getInstance().schedule(
+                new SetLimeLightOdometryUpdates(mRobotContainer.mRobotState, mRobotContainer.mDrivetrain, true));
 
         // Arm make sure encoders are current
         // mRobotContainer.mArm.initArmMotorEncoder(); // Attempt reset at each teleop

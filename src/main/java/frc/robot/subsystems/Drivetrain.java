@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -92,6 +94,7 @@ public class Drivetrain extends SubsystemBase {
     public final LimeLight limeLightCameraRight;
     public final LimeLight limeLightCameraLeft;
     private double limeLightBlendedLatency = 0.0;
+    public ArrayList<LimeLight> limelightList;
 
     private DataLog mDataLog;
     private RobotState mRobotState;
@@ -277,8 +280,11 @@ public class Drivetrain extends SubsystemBase {
 
         // Limelight
         // limeLightCameraBack = new LimeLight("limelight-back");
+        // limelightList.add(limeLightCameraBack);
         limeLightCameraRight = new LimeLight("limelight-right");
+        limelightList.add(limeLightCameraRight);
         limeLightCameraLeft = new LimeLight("limelight-left");
+        limelightList.add(limeLightCameraLeft);
         // limelightBackBotPose = new double[7];
         limelightRightBotPose = new double[7];
         limelightLeftBotPose = new double[7];

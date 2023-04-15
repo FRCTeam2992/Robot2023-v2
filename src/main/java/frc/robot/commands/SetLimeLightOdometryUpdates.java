@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.lib.vision.LimeLight;
+import frc.lib.vision.LimeLight.CameraMode;
 import frc.robot.RobotState;
 import frc.robot.subsystems.Drivetrain;
 
@@ -28,5 +30,12 @@ public class SetLimeLightOdometryUpdates extends InstantCommand {
     @Override
     public void initialize() {
         mRobotState.useLimelightOdometryUpdates = mUseLimelight;
+        for (LimeLight camera : mDrivetrain.limelightList) {
+            if (mUseLimelight) {
+                camera.setCameraMode(CameraMode.Vision);
+            } else {
+                camera.setCameraMode(CameraMode.Driver);
+            }
+        }
     }
 }
