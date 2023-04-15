@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.manipulator.Waypoint.OuttakeType;
 import frc.robot.Constants;
@@ -64,35 +65,36 @@ public class AutoBuilder {
         eventMap.put("SetIntakeModeCube", new InstantCommand(() -> mRobotState.intakeMode = IntakeModeState.Cube));
         eventMap.put("DeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
         eventMap.put("UndeployElevator", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
-        eventMap.put("TowerMoveHighRight", new SafeDumbTowerToPosition(
+        eventMap.put("TowerMoveHighRight", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighRight.towerWaypoint));
-        eventMap.put("TowerMoveHighCenter", new SafeDumbTowerToPosition(
+                GridTargetingPosition.HighRight.towerWaypoint)));
+        eventMap.put("TowerMoveHighCenter", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.HighCenter.towerWaypoint));
-        eventMap.put("TowerMoveMidCenter", new SafeDumbTowerToPosition(
+                GridTargetingPosition.HighCenter.towerWaypoint)));
+        eventMap.put("TowerMoveMidCenter", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.MidCenter.towerWaypoint));
-        eventMap.put("TowerMoveThrowCube", new SafeDumbTowerToPosition(
+                GridTargetingPosition.MidCenter.towerWaypoint)));
+        eventMap.put("TowerMoveThrowCube", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                GridTargetingPosition.ThrowCube.towerWaypoint));
-        eventMap.put("TowerMoveGroundIntake", new SafeDumbTowerToPosition(
+                GridTargetingPosition.ThrowCube.towerWaypoint)));
+        eventMap.put("TowerMoveGroundIntake", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.cubeGroundIntake));
-        eventMap.put("TowerMoveStowed", new SafeDumbTowerToPosition(
+                Constants.TowerConstants.cubeGroundIntake)));
+        eventMap.put("TowerMoveStowed", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.normal));
-        eventMap.put("TowerMoveLoadStation", new SafeDumbTowerToPosition(
+                Constants.TowerConstants.normal)));
+        eventMap.put("TowerMoveLoadStation", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
-                Constants.TowerConstants.singleLoadStation));
-        eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mLEDs, mRobotState));
-        eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
-        eventMap.put("StopClaw", new StopClaw(mClaw));
-        eventMap.put("EndIntake", new HoldClaw(mClaw));
+                Constants.TowerConstants.singleLoadStation)));
+        eventMap.put("StartCubeIntake", new ScheduleCommand(new IntakeGamePiece(mClaw, mLEDs, mRobotState)));
+        eventMap.put("StartCubeOuttake", new ScheduleCommand(new ClawOuttake(mClaw, mRobotState)));
+        eventMap.put("StopClaw", new ScheduleCommand(new StopClaw(mClaw)));
+        eventMap.put("EndIntake", new ScheduleCommand(new HoldClaw(mClaw)));
         eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
         eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, true));
-        eventMap.put("HoldArm", new HoldArm(arm));
-        eventMap.put("StartCubeLaunch", new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
+        // eventMap.put("HoldArm", new ScheduleCommand(new HoldArm(arm)));
+        eventMap.put("StartCubeLaunch",
+                new ScheduleCommand(new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0)));
 
     }
 
