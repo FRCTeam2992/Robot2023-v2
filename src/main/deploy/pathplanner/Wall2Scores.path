@@ -175,14 +175,14 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.1,
+      "position": 0.3,
       "names": [
         "SetIntakeModeCube",
         "TowerMoveGroundIntake"
       ]
     },
     {
-      "position": 0.8,
+      "position": 1.4,
       "names": [
         "StartCubeIntake"
       ]
@@ -204,18 +204,6 @@
       "position": 5.06181818181812,
       "names": [
         "TowerMoveHighCenter"
-      ]
-    },
-    {
-      "position": 0.0,
-      "names": [
-        "event"
-      ]
-    },
-    {
-      "position": 0.9,
-      "names": [
-        "HoldArm"
       ]
     }
   ]

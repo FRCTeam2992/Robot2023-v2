@@ -243,6 +243,18 @@
       "names": [
         "StopLimelight"
       ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "event"
+      ]
+    },
+    {
+      "position": 0.2,
+      "names": [
+        "TowerMoveStowed"
+      ]
     }
   ]
 }
