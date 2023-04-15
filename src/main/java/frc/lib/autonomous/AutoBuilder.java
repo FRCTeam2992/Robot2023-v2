@@ -103,6 +103,7 @@ public class AutoBuilder {
         autoStartChooser = new SendableChooser<>();
         autoStartChooser.addOption(AutoStartPosition.LoadStationEnd.description,
                 AutoStartPosition.LoadStationEnd);
+        autoStartChooser.addOption(AutoStartPosition.LoadStationCube.description, AutoStartPosition.LoadStationCube);
         autoStartChooser.addOption(AutoStartPosition.CenterLoadStationSide.description,
                 AutoStartPosition.CenterLoadStationSide);
         autoStartChooser.addOption(AutoStartPosition.CenterWallSide.description, AutoStartPosition.CenterWallSide);
@@ -114,6 +115,7 @@ public class AutoBuilder {
         // Setup chooser for preload scoring
         autoPreloadScoreChooser = new SendableChooser<>();
         autoPreloadScoreChooser.addOption(AutoPreloadScore.No_Preload.description, AutoPreloadScore.No_Preload);
+        autoPreloadScoreChooser.addOption(AutoPreloadScore.Mid_Cube.description, AutoPreloadScore.Mid_Cube);
         autoPreloadScoreChooser.setDefaultOption(AutoPreloadScore.Hi_Cone.description, AutoPreloadScore.Hi_Cone);
 
         SmartDashboard.putData("Preload Score?", autoPreloadScoreChooser);
@@ -128,6 +130,7 @@ public class AutoBuilder {
         autoSequenceChooser.addOption(AutoSequence.SideIntakeBalance.description,
                 AutoSequence.SideIntakeBalance);
         autoSequenceChooser.addOption(AutoSequence.Side2Scores.description, AutoSequence.Side2Scores);
+        autoSequenceChooser.addOption(AutoSequence.Side3Scores.description, AutoSequence.Side3Scores);
         autoSequenceChooser.addOption(AutoSequence.CenterBalance.description, AutoSequence.CenterBalance);
         autoSequenceChooser.addOption(AutoSequence.CenterIntakeBalance.description, AutoSequence.CenterIntakeBalance);
         autoSequenceChooser.addOption(AutoSequence.Side2ScoreBalance.description, AutoSequence.Side2ScoreBalance);
@@ -174,6 +177,13 @@ public class AutoBuilder {
                                         .alongWith(new WaitCommand(1.0)))
                                 .andThen(new WaitCommand(0.5))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
+                break;
+            case Mid_Cube:
+                initialScoreCommand = initialScoreCommand
+                        .andThen(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Mid_Cube))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState, GridTargetingPosition.MidCenter.towerWaypoint)
+                                .withTimeout(0.5))
+                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5));
                 break;
             case No_Preload:
             default:
@@ -250,6 +260,31 @@ public class AutoBuilder {
                         .andThen(new WaitCommand(1.0))
                         .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(1.0))
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))
+                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
+                                Constants.TowerConstants.normal));
+                break;
+            case Side3Scores:
+                if (getAutoStartPosition() == AutoStartPosition.LoadStationCube) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation3ScoresPart1.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                    followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()))
+                        .andThen(new WaitCommand(0.2))
+                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5));
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.LoadStation3ScoresPart2.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                    }
+                }
+                followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()))
+                        .andThen(new WaitCommand(0.2))
+                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5))
                         .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
                                 Constants.TowerConstants.normal));
                 break;

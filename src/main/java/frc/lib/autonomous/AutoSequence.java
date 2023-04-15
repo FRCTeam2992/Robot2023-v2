@@ -21,6 +21,8 @@ public enum AutoSequence {
     Side2Scores("Side 2 Scores",
             AutoStartPosition.LoadStationEnd,
             AutoStartPosition.WallEnd),
+    Side3Scores("Side 3 Scores",
+            AutoStartPosition.LoadStationCube),
     CenterBalance("Center Cross + Balance",
             AutoStartPosition.CenterLoadStationSide,
             AutoStartPosition.CenterWallSide),
