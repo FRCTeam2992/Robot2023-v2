@@ -279,6 +279,7 @@ public class Drivetrain extends SubsystemBase {
         loadMotionPaths();
 
         // Limelight
+        limelightList = new ArrayList<>();
         // limeLightCameraBack = new LimeLight("limelight-back");
         // limelightList.add(limeLightCameraBack);
         limeLightCameraRight = new LimeLight("limelight-right");
