@@ -17,6 +17,13 @@ public enum AutoStartPosition {
                     ScoringGridConstants.Blue.grid6CenterYMeters
                             + ScoringGridConstants.conePoleOffsetYMeters,
                     Rotation2d.fromDegrees(0.0))),
+    LoadStationCube("Load Station Cube",
+            new Pose2d(ScoringGridConstants.autoStartXCoordMeters,
+                    ScoringGridConstants.Red.grid3CenterYMeters,
+                    Rotation2d.fromDegrees(0.0)),
+            new Pose2d(ScoringGridConstants.autoStartXCoordMeters,
+                    ScoringGridConstants.Blue.grid6CenterYMeters,
+                    Rotation2d.fromDegrees(0.0))),
     CenterLoadStationSide("Center Load Station Side",
             new Pose2d(ScoringGridConstants.autoStartXCoordMeters,
                     ScoringGridConstants.Red.grid2CenterYMeters
