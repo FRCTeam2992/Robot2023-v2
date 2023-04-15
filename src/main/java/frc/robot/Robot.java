@@ -29,9 +29,6 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int slowLoopCounter = 0;
-    private int garbageLoopCounter = 0;
-    private int ledsLoopCounter = 0;
-    private int ledsFrameCounter = 1;
     private int slowAutoBuildCounter = 0;
 
     public static Timer balanceTimer = new Timer();
@@ -95,11 +92,6 @@ public class Robot extends TimedRobot {
             slowLoopCounter = 0;
             mRobotContainer.addRobotStateToDashboard();
         }
-
-        // if (garbageLoopCounter++ < 50) {
-        // garbageLoopCounter = 0;
-        // System.gc();
-        // }
 
         CommandScheduler.getInstance().run();
 
