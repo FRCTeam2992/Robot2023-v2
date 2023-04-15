@@ -133,7 +133,7 @@ public class LimeLight {
 
     private void getTableEntries() {
         // LimeLight Network Table Entries (Get Values)
-        // tv = limelightTable.getEntry("tv");
+        tv = limelightTable.getEntry("tv");
         // tx = limelightTable.getEntry("tx");
         // ty = limelightTable.getEntry("ty");
         ta = limelightTable.getEntry("ta");
