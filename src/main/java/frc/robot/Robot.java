@@ -69,6 +69,8 @@ public class Robot extends TimedRobot {
         // PWM port 0
         // Must be a PWM header, not MXP or DIO
 
+        mRobotContainer.pdh.setSwitchableChannel(false); // Turn limelights off at boot
+
     }
 
     /**
@@ -102,6 +104,14 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
+
+        if (mRobotContainer.mRobotState.wasAutoLastMode) {
+            mRobotContainer.pdh.setSwitchableChannel(true);
+        } else {
+            // Don't run limelights while disabled unless transit from auto to teleop
+            mRobotContainer.pdh.setSwitchableChannel(false);
+        }
+
         mRobotContainer.mElevator.onDisable();
         mRobotContainer.mArm.onDisable();
         mRobotContainer.mClaw.onDisable();
@@ -136,6 +146,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
+        mRobotContainer.mRobotState.wasAutoLastMode = true;
+        mRobotContainer.pdh.setSwitchableChannel(false); // Limelights off in auto
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
@@ -178,6 +190,9 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
+
+        mRobotContainer.mRobotState.wasAutoLastMode = false;
+        mRobotContainer.pdh.setSwitchableChannel(true); // Turn limelights on if not already
 
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();

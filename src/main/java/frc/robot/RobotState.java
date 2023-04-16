@@ -134,4 +134,5 @@ public class RobotState {
 
     public OuttakeType currentOuttakeType = OuttakeType.Unknown;
 
+    public boolean wasAutoLastMode = false;
 }
