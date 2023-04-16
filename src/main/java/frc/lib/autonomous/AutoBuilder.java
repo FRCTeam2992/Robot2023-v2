@@ -174,7 +174,7 @@ public class AutoBuilder {
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.2)
                                         .alongWith(new WaitCommand(1.0)))
-                                .andThen(new WaitCommand(0.5))
+                                .andThen(new WaitCommand(0.7))
                                 .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.6)));
                 break;
             case Mid_Cube:
@@ -260,7 +260,11 @@ public class AutoBuilder {
                         isFirstPath = false; // Make sure it's false for subsequent paths
                     }
                 }
-                followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()))
+                followCommand = followCommand
+                        .andThen(new InstantCommand(() -> {
+                            mDrivetrain.stopDrive();
+                            mRobotState.currentOuttakeType = OuttakeType.Hi_Cube;
+                        }))
                         .andThen(new WaitCommand(1.0))
                         .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(1.0))
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed))

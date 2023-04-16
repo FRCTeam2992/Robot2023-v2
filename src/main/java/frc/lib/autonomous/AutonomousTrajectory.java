@@ -22,7 +22,7 @@ public enum AutonomousTrajectory {
             new PathConstraints(4.5, 3.0))),
     LoadStation3ScoresPart2(PathPlanner.loadPathGroup("LoadStation3Scores-Part2",
             new PathConstraints(4.5, 3.0))),
-    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 4.0, 2.5)),
+    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 3.5, 2.0)),
     Wall2ScoreBalance(PathPlanner.loadPathGroup("Wall2ScoreBalance",
             new PathConstraints(4.0, 1.8),
             new PathConstraints(3.0, 2.5))),
