@@ -62,9 +62,9 @@ public class Robot extends TimedRobot {
 
         if (Constants.dataLogging) {
             DataLogManager.start();
-            DataLogManager.logNetworkTables(false);
             DriverStation.startDataLog(DataLogManager.getLog());
         }
+        DataLogManager.logNetworkTables(false); // This has to be run even if NOT intentionally starting DataLog
 
         // PWM port 0
         // Must be a PWM header, not MXP or DIO
