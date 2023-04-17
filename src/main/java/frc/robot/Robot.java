@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.commands.CycleLEDs;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +35,9 @@ public class Robot extends TimedRobot {
     private int slowAutoBuildCounter = 0;
 
     public static Timer balanceTimer = new Timer();
+
+    private DigitalInput networkToggleSwitch = new DigitalInput(
+        Constants.RobotConstants.DeviceIDs.networkToggleSwitch);
 
     // public static AddressableLED m_led;
     // public static AddressableLEDBuffer m_ledBuffer;
@@ -105,7 +109,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
 
-        if (mRobotContainer.mRobotState.wasAutoLastMode) {
+        if (mRobotContainer.mRobotState.wasAutoLastMode || networkToggleSwitch.get()) {
             mRobotContainer.pdh.setSwitchableChannel(true);
         } else {
             // Don't run limelights while disabled unless transit from auto to teleop
