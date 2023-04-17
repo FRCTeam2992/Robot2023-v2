@@ -50,7 +50,9 @@ import frc.robot.testing.commands.TestClawOuttake;
 import frc.robot.testing.commands.TestElevatorPID;
 import frc.robot.testing.commands.TestTowerSafeMove;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -82,6 +84,8 @@ public class RobotContainer {
     public final ButterflyWheels mButterflyWheels;
 
     public final LEDs mLEDs;
+
+    public final PowerDistribution pdh;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -124,6 +128,8 @@ public class RobotContainer {
         configureShuffleboardBindings();
         configRealButtonBindings();
         // (new TestControllers()).configTestButtonBindings(this);
+
+        pdh = new PowerDistribution(1, ModuleType.kRev);
     }
 
     /**

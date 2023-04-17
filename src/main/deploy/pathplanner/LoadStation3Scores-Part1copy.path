@@ -2,63 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.89,
-        "y": 0.5109385135529426
+        "x": 1.893889312108176,
+        "y": 4.424
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.65272379601363,
-        "y": 0.5201174886256545
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 4.8,
-        "y": 0.9
-      },
-      "prevControl": {
-        "x": 4.396729059832194,
-        "y": 0.8707543364032367
-      },
-      "nextControl": {
-        "x": 5.402033197756101,
-        "y": 0.9436601267830809
-      },
-      "holonomicAngle": 35.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.0,
-        "y": 0.87
-      },
-      "prevControl": {
-        "x": 5.542342178263771,
-        "y": 0.8519268002554589
-      },
-      "nextControl": {
-        "x": 6.633308793006241,
-        "y": 0.8950097688105786
+        "x": 2.921846689839891,
+        "y": 4.552949938474782
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -74,43 +24,18 @@
     },
     {
       "anchorPoint": {
-        "x": 7.0,
-        "y": 1.1
+        "x": 4.057106982138493,
+        "y": 4.788340897436512
       },
       "prevControl": {
-        "x": 6.581891526016351,
-        "y": 1.1070489459707387
+        "x": 3.250722712521957,
+        "y": 4.668375105450208
       },
       "nextControl": {
-        "x": 6.581891526016351,
-        "y": 1.1070489459707387
+        "x": 4.832939142866744,
+        "y": 4.903761452024549
       },
       "holonomicAngle": 180.0,
-      "isReversal": true,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.1,
-        "y": 1.15
-      },
-      "prevControl": {
-        "x": 6.5743281307808585,
-        "y": 1.1619603567532155
-      },
-      "nextControl": {
-        "x": 5.779433838526058,
-        "y": 1.1419168073630264
-      },
-      "holonomicAngle": -155.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -124,40 +49,90 @@
     },
     {
       "anchorPoint": {
-        "x": 4.0,
-        "y": 0.95
+        "x": 5.870253356997706,
+        "y": 5.0716285215457155
       },
       "prevControl": {
-        "x": 4.361951049185078,
-        "y": 0.8467255001533542
+        "x": 5.2409232641773205,
+        "y": 5.018160412133049
       },
       "nextControl": {
-        "x": 3.667267127888587,
-        "y": 1.0449377575426593
+        "x": 6.425282550898066,
+        "y": 5.118784000054127
       },
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 170.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 2.2,
-        "y": 1.25
+        "x": 6.9,
+        "y": 4.85
       },
       "prevControl": {
-        "x": 2.9996705594419124,
-        "y": 1.25
+        "x": 6.497745625679933,
+        "y": 5.218784000054127
+      },
+      "nextControl": {
+        "x": 7.885060522290756,
+        "y": 3.946903395221401
+      },
+      "holonomicAngle": 160.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.2,
+        "y": 4.9
+      },
+      "prevControl": {
+        "x": 6.221997290809742,
+        "y": 4.909648601020505
+      },
+      "nextControl": {
+        "x": 3.9641740321888617,
+        "y": 4.888332658216011
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.0,
+        "y": 4.983
+      },
+      "prevControl": {
+        "x": 2.7535448209409186,
+        "y": 4.940158547784401
       },
       "nextControl": null,
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -170,42 +145,35 @@
       }
     }
   ],
-  "maxVelocity": 4.5,
-  "maxAcceleration": 3.0,
+  "maxVelocity": null,
+  "maxAcceleration": 2.5,
   "isReversed": null,
   "markers": [
     {
-      "position": 0.3,
+      "position": 0.1,
       "names": [
         "SetIntakeModeCube",
-        "TowerMoveStowed",
-        "StopLimelight"
+        "TowerMoveUnsafeRearSafePoint"
       ]
     },
     {
-      "position": 1.2,
+      "position": 0.5,
       "names": [
         "StartCubeIntake",
         "TowerMoveGroundIntake"
       ]
     },
     {
-      "position": 4.0,
+      "position": 3.45,
       "names": [
         "EndIntake",
         "TowerMoveStowed"
       ]
     },
     {
-      "position": 4.55,
+      "position": 4.3,
       "names": [
-        "DeployElevator"
-      ]
-    },
-    {
-      "position": 5.06181818181812,
-      "names": [
-        "TowerMoveHighCenter"
+        "TowerMoveLoadStation"
       ]
     }
   ]

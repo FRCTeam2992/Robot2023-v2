@@ -99,6 +99,6 @@ public class BalanceRobotPID extends CommandBase {
     @Override
     public boolean isFinished() {
         return ((doneTimer.get() > Constants.DrivetrainConstants.balanceWaitTimer) ||
-                (Robot.balanceTimer.get() > 14.0));
+                (Robot.balanceTimer.get() > 14.5));
     }
 }
