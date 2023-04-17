@@ -186,7 +186,7 @@ public final class Constants {
 
         public static Waypoint scoreConeMid = new Waypoint(10.515, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreConeHigh = new Waypoint(31.5, 21.3,
+        public static Waypoint scoreConeHigh = new Waypoint(31.0, 21.3,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
 
         public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
@@ -194,7 +194,7 @@ public final class Constants {
         public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
 
-        public static Waypoint normal = new Waypoint(0, 15,
+        public static Waypoint normal = new Waypoint(0, 20,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
         public static Waypoint cubeGroundIntake = new Waypoint(0.7, 127.00,
@@ -215,7 +215,7 @@ public final class Constants {
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint doubleLoadStationCone = new Waypoint(24.42, 10.46,
+        public static Waypoint doubleLoadStationCone = new Waypoint(24.42, 14.46,
                 OuttakeType.Unknown, ElevatorState.Deployed, 0.75);
 
     }
@@ -265,7 +265,7 @@ public final class Constants {
 
         public static class PIDConstants {
             public static double P = 0.025;
-            public static double I = 0.03;
+            public static double I = 0.06;
             public static double D = 0.00;
             public static double FF = 0;
         }

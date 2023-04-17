@@ -19,7 +19,7 @@ public final class Constants {
         public static final class NoFlyZones {
             // Corner x, corner y, width, height, zonetype
             public static final NoFlyZone HI_INSIDE = new NoFlyZone(INSIDE_ZONE_INCHES,
-                    INSIDE_EXIT_DEGREES, MAX_HEIGHT_INCHES, INSIDE_ENTRY_DEGREES, NoFlyZone.ZoneType.Always);
+                    INSIDE_EXIT_DEGREES + 5, MAX_HEIGHT_INCHES, INSIDE_ENTRY_DEGREES - 5, NoFlyZone.ZoneType.Always);
             public static final NoFlyZone GROUND_HIT = new NoFlyZone(MIN_HEIGHT_INCHES,
                     GROUND_HIT_ANGLE, GROUND_HIT_INCHES, MAX_ANGLE_DEGREES,
                     NoFlyZone.ZoneType.ElevatorDeployed);

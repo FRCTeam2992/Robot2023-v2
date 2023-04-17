@@ -98,8 +98,14 @@ public class Arm extends SubsystemBase {
             armController.setSetpoint(targetAngleDeg);
         }
         double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
-        speed = Math.min(1.0, speed);
-        speed = Math.max(-1.0, speed);
+        if (getArmCANCoderPositionCorrected() > 9.0 && getArmCANCoderPositionCorrected() < 30.0 &&
+                armController.getSetpoint() > 19.0 && armController.getSetpoint() < 21) {
+            speed = Math.min(0.1, speed);
+            speed = Math.max(-0.1, speed);
+        } else {
+            speed = Math.min(1.0, speed);
+            speed = Math.max(-1.0, speed);
+        }
         if (Constants.debugDashboard) {
             SmartDashboard.putNumber("Arm PID speed", speed);
         }
