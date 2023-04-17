@@ -109,6 +109,7 @@ public class AutoBuilder {
         autoStartChooser.addOption(AutoStartPosition.LoadStationEnd.description,
                 AutoStartPosition.LoadStationEnd);
         autoStartChooser.addOption(AutoStartPosition.LoadStationCube.description, AutoStartPosition.LoadStationCube);
+        autoStartChooser.addOption(AutoStartPosition.WallCube.description, AutoStartPosition.WallCube);
         autoStartChooser.addOption(AutoStartPosition.CenterLoadStationSide.description,
                 AutoStartPosition.CenterLoadStationSide);
         autoStartChooser.addOption(AutoStartPosition.CenterWallSide.description, AutoStartPosition.CenterWallSide);
@@ -315,7 +316,27 @@ public class AutoBuilder {
                                 path.getMarkers(),
                                 eventMap));
                     }
+                } else if (getAutoStartPosition() == AutoStartPosition.WallCube) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.Wall3ScoresPart1.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                    followCommand = followCommand.andThen(new InstantCommand(() -> {
+                        mDrivetrain.stopDrive();
+                        mRobotState.currentOuttakeType = OuttakeType.Rear_Low_Cube;
+                    }))
+                            .andThen(new MoveClaw(mClaw, Waypoint.OuttakeType.Rear_Low_Cube.speed).withTimeout(0.4));
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.Wall3ScoresPart2.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                    }
                 }
+
                 followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()))
                         .andThen(new MoveClaw(mClaw, Waypoint.OuttakeType.Rear_Low_Cube.speed).withTimeout(0.5))
                         .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
