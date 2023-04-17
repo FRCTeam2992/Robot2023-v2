@@ -560,6 +560,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void resetOdometryToPose(Pose2d initialPose) {
+        setGyroOffset(navx.getYaw() - initialPose.getRotation().getDegrees());
         swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(-getGyroYaw()), swerveDriveModulePositions,
                 initialPose);
         latestSwervePose = initialPose;
@@ -574,6 +575,10 @@ public class Drivetrain extends SubsystemBase {
             angle += 360;
         }
         return angle;
+    }
+
+    public void setGyroOffset(double offset) {
+        gyroOffset = offset;
     }
 
     public double getRobotPitch() {
