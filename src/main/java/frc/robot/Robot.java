@@ -36,8 +36,7 @@ public class Robot extends TimedRobot {
 
     public static Timer balanceTimer = new Timer();
 
-    private DigitalInput networkToggleSwitch = new DigitalInput(
-        Constants.RobotConstants.DeviceIDs.networkToggleSwitch);
+    private int networkToggleSwitchCounter = 0;
 
     // public static AddressableLED m_led;
     // public static AddressableLEDBuffer m_ledBuffer;
@@ -109,7 +108,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
 
-        if (mRobotContainer.mRobotState.wasAutoLastMode || networkToggleSwitch.get()) {
+        if (mRobotContainer.mRobotState.wasAutoLastMode || mRobotContainer.networkToggleSwitch.get()) {
             mRobotContainer.pdh.setSwitchableChannel(true);
             mRobotContainer.mRobotState.useLimelightOdometryUpdates = false; // Limelights on but no pose estimation
         } else {
@@ -144,13 +143,18 @@ public class Robot extends TimedRobot {
             slowAutoBuildCounter = 0;
         }
 
-        if (networkToggleSwitch.get()) {
-            mRobotContainer.pdh.setSwitchableChannel(true);
-            mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
-        } else if (!mRobotContainer.mRobotState.wasAutoLastMode) {
-            // Don't run limelights while disabled unless transit from auto to teleop
-            mRobotContainer.pdh.setSwitchableChannel(false);
-            mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
+        if (networkToggleSwitchCounter++ > 25) {
+            if (mRobotContainer.networkToggleSwitch.get() && !mRobotContainer.pdh.getSwitchableChannel()) {
+                mRobotContainer.pdh.setSwitchableChannel(true);
+                mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
+            }
+            if (!mRobotContainer.networkToggleSwitch.get() && !mRobotContainer.mRobotState.wasAutoLastMode
+                    && mRobotContainer.pdh.getSwitchableChannel()) {
+                // Don't run limelights while disabled unless transit from auto to teleop
+                mRobotContainer.pdh.setSwitchableChannel(false);
+                mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
+            }
+            networkToggleSwitchCounter = 0;
         }
 
     }
