@@ -197,10 +197,19 @@ public final class Constants {
         public static Waypoint normal = new Waypoint(0, 15,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint cubeGroundIntake = new Waypoint(0.4, 125.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 127.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
+
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
+        public static Waypoint rearHighThrowCube = new Waypoint(30.0, -79.0,
+                OuttakeType.Max_Throw_Cube, ElevatorState.Undeployed, 0.0);
+        public static Waypoint rearMidThrowCube = new Waypoint(18.0, -79.0,
+                OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
+        public static Waypoint rearLowThrowCube = new Waypoint(0.2, -79.0,
+                OuttakeType.Rear_Low_Cube, ElevatorState.Undeployed, 0.0);
+        public static Waypoint rearSafePoint = new Waypoint(6.0, -72,
+                OuttakeType.Assumed_Cube, ElevatorState.Undeployed, 0.0);
 
         public static Waypoint singleLoadStation = new Waypoint(0, -72.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);

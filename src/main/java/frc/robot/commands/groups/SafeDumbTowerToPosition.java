@@ -42,7 +42,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                                         WaypointSafety.WaypointSafetyClassification.Inside_TooHigh,
                                         new UnsafeMoveTowerToPosition(mElevator,
                                                 mArm,
-                                                frc.lib.manipulator.Constants.Waypoints.HI_OUTSIDE_EDGE).asProxy()),
+                                                frc.lib.manipulator.Constants.Waypoints.HI_INSIDE_EDGE).asProxy()),
                                 Map.entry(
                                         WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed,
                                         new UnsafeMoveTowerToPosition(elevator,
