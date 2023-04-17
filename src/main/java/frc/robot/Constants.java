@@ -24,7 +24,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
  */
 public final class Constants {
     public static final boolean dataLogging = false;
-    public static final boolean debugDashboard = false;
+    public static final boolean debugDashboard = true;
 
     public static class LEDColors {
         public static final Color purple = new Color(210, 75, 230);
@@ -265,8 +265,8 @@ public final class Constants {
 
         public static class PIDConstants {
             public static double P = 0.025;
-            public static double I = 0.01;
-            public static double D = 0.0;
+            public static double I = 0.03;
+            public static double D = 0.00;
             public static double FF = 0;
         }
 
@@ -279,7 +279,7 @@ public final class Constants {
 
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
-        public static double armAngleToleranceDeg = 1.5; // Moves within 1 degree are "close enough"
+        public static double armAngleToleranceDeg = 0.5; // Moves within 1 degree are "close enough"
         public static double CANCoderOffset = 176.0;
 
         public static class ArmSlopConstants {
