@@ -98,8 +98,8 @@ public final class Constants {
         public static final double balanceD = 0.006;
 
         // Drive Rotation P
-        public static final double driveRotationP = .007;
-        public static final double autoAngleThreshold = 0.5;
+        public static final double driveRotationP = .01;
+        public static final double autoAngleThreshold = 0.3;
 
         // Swerve Module Translations x=.591/2 y=.654/2
         public static final Translation2d frontLeftLocation = new Translation2d(0.289, 0.3335);
