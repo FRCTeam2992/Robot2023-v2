@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.commands.CycleLEDs;
 import frc.robot.commands.SetLimeLightOdometryUpdates;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
     private int slowAutoBuildCounter = 0;
 
     public static Timer balanceTimer = new Timer();
+
+    private int networkToggleSwitchCounter = 0;
 
     // public static AddressableLED m_led;
     // public static AddressableLEDBuffer m_ledBuffer;
@@ -70,7 +73,7 @@ public class Robot extends TimedRobot {
         // Must be a PWM header, not MXP or DIO
 
         mRobotContainer.pdh.setSwitchableChannel(false); // Turn limelights off at boot
-
+        mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
     }
 
     /**
@@ -105,11 +108,13 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
 
-        if (mRobotContainer.mRobotState.wasAutoLastMode) {
+        if (mRobotContainer.mRobotState.wasAutoLastMode || mRobotContainer.networkToggleSwitch.get()) {
             mRobotContainer.pdh.setSwitchableChannel(true);
+            mRobotContainer.mRobotState.useLimelightOdometryUpdates = false; // Limelights on but no pose estimation
         } else {
             // Don't run limelights while disabled unless transit from auto to teleop
             mRobotContainer.pdh.setSwitchableChannel(false);
+            mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
         }
 
         mRobotContainer.mElevator.onDisable();
@@ -137,6 +142,21 @@ public class Robot extends TimedRobot {
             m_autonomousCommand = mRobotContainer.mAutoBuilder.buildAutoCommand();
             slowAutoBuildCounter = 0;
         }
+
+        if (networkToggleSwitchCounter++ > 25) {
+            if (mRobotContainer.networkToggleSwitch.get() && !mRobotContainer.pdh.getSwitchableChannel()) {
+                mRobotContainer.pdh.setSwitchableChannel(true);
+                mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
+            }
+            if (!mRobotContainer.networkToggleSwitch.get() && !mRobotContainer.mRobotState.wasAutoLastMode
+                    && mRobotContainer.pdh.getSwitchableChannel()) {
+                // Don't run limelights while disabled unless transit from auto to teleop
+                mRobotContainer.pdh.setSwitchableChannel(false);
+                mRobotContainer.mRobotState.useLimelightOdometryUpdates = false;
+            }
+            networkToggleSwitchCounter = 0;
+        }
+
     }
 
     /**
@@ -147,7 +167,8 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
         mRobotContainer.mRobotState.wasAutoLastMode = true;
-        mRobotContainer.pdh.setSwitchableChannel(false); // Limelights off in auto
+        mRobotContainer.pdh.setSwitchableChannel(true); // Start limelights power in auto
+        mRobotContainer.mRobotState.useLimelightOdometryUpdates = false; // Powered but not being used
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
@@ -193,6 +214,7 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mRobotState.wasAutoLastMode = false;
         mRobotContainer.pdh.setSwitchableChannel(true); // Turn limelights on if not already
+        mRobotContainer.mRobotState.useLimelightOdometryUpdates = true; // Pose estimation on!
 
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();

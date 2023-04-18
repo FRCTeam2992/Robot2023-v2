@@ -331,4 +331,10 @@ public final class Constants {
             public static int butterflyBeamBreakBack = 1;
         }
     }
+
+    public static class RobotConstants {
+        public static class DeviceIDs {
+            public static int networkToggleSwitch = 3;
+        }
+    }
 }
