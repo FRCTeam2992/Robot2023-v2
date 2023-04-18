@@ -65,7 +65,7 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         if (dashboardCounter++ >= 5) {
             SmartDashboard.putNumber("Arm CANcoder", getArmCANCoderPositionCorrected());
-            if (Constants.debugDashboard) {
+            if (true) {
                 SmartDashboard.putBoolean("Arm PID Enabled", pidMode);
                 SmartDashboard.putNumber("Arm PID Target", targetAngleDeg);
                 SmartDashboard.putBoolean("Arm Hold Position Recorded", holdPositionRecorded);
@@ -98,7 +98,8 @@ public class Arm extends SubsystemBase {
             armController.setSetpoint(targetAngleDeg);
         }
         double speed = armController.calculate(lowPass.calculate(getArmCANCoderPositionCorrected()));
-        if (getArmCANCoderPositionCorrected() > 9.0 && getArmCANCoderPositionCorrected() < 30.0 &&
+        if (getArmCANCoderPositionCorrected() > 9.0 &&
+                getArmCANCoderPositionCorrected() < 30.0 &&
                 armController.getSetpoint() > 19.0 && armController.getSetpoint() < 21) {
             speed = Math.min(0.1, speed);
             speed = Math.max(-0.1, speed);
