@@ -84,6 +84,10 @@ public class AutoBuilder {
         eventMap.put("TowerMoveGroundIntake", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 Constants.TowerConstants.cubeGroundIntake)).asProxy());
+        eventMap.put("TowerMoveHiGroundIntake", new ScheduleCommand(new SafeDumbTowerToPosition(
+                mElevator, mArm, mRobotState,
+                Constants.TowerConstants.cubeWall3GroundIntake)).asProxy());
+
         eventMap.put("TowerMoveStowed", new ScheduleCommand(new SafeDumbTowerToPosition(
                 mElevator, mArm, mRobotState,
                 Constants.TowerConstants.normal)).asProxy());
@@ -97,7 +101,7 @@ public class AutoBuilder {
         eventMap.put("StartCubeIntake", new IntakeGamePiece(mClaw, mLEDs, mRobotState));
         eventMap.put("StartCubeOuttake", new ClawOuttake(mClaw, mRobotState));
         eventMap.put("StopClaw", new StopClaw(mClaw));
-        eventMap.put("EndIntake", new HoldClaw(mClaw));
+        eventMap.put("EndIntake", new MoveClaw(mClaw, 0.2));
         eventMap.put("StopLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
         eventMap.put("StartLimelight", new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, true));
         eventMap.put("StartCubeLaunch", new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
@@ -213,8 +217,8 @@ public class AutoBuilder {
                                 Constants.TowerConstants.rearMidThrowCube).asProxy()
                                 .withTimeout(0.5)
                                 .raceWith(new MoveClaw(mClaw, 0.5)))
-                        .andThen(new WaitCommand(0.2))
-                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.5));
+                        .andThen(new WaitCommand(0.1))
+                        .andThen(new ClawOuttake(mClaw, mRobotState).withTimeout(0.4));
                 break;
             case No_Preload:
             default:
@@ -338,9 +342,7 @@ public class AutoBuilder {
                 }
 
                 followCommand = followCommand.andThen(new InstantCommand(() -> mDrivetrain.stopDrive()))
-                        .andThen(new MoveClaw(mClaw, Waypoint.OuttakeType.Rear_Low_Cube.speed).withTimeout(0.5))
-                        .andThen(new SafeDumbTowerToPosition(mElevator, mArm, mRobotState,
-                                Constants.TowerConstants.normal));
+                        .andThen(new MoveClaw(mClaw, Waypoint.OuttakeType.Rear_Low_Cube.speed));
                 break;
             case Side2ScoreBalance:
                 followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed);

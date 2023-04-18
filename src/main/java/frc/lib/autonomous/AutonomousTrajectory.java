@@ -24,7 +24,7 @@ public enum AutonomousTrajectory {
             new PathConstraints(4.5, 2.95))),
     Wall3ScoresPart1(PathPlanner.loadPathGroup("Wall3Scores-Part1",
             new PathConstraints(4.5, 2.95),
-            new PathConstraints(3.3, 2.25),
+            new PathConstraints(3.0, 2.25),
             new PathConstraints(4.5, 2.95),
             new PathConstraints(3.3, 2.25),
             new PathConstraints(4.5, 2.95))),
