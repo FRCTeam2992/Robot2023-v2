@@ -23,7 +23,7 @@ public class StopIntake extends ParallelCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new HoldClaw(claw),
+                // new HoldClaw(claw),
                 new DeployElevator(elevator, arm, robotState, ElevatorState.Undeployed),
             new SafeDumbTowerToPosition(elevator, arm, robotState, Constants.TowerConstants.normal)
         );
