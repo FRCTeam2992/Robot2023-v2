@@ -427,6 +427,27 @@ public class AutoBuilder {
                 }
                 followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
                 break;
+            case Center2ScoreBalance:
+                followCommand = followCommand.andThen(new SetLimeLightOdometryUpdates(mRobotState, mDrivetrain, false));
+                if (getAutoStartPosition() == AutoStartPosition.CenterLoadStationSide) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.Center2ScoreBalanceLoadStationSide.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                } else if (getAutoStartPosition() == AutoStartPosition.CenterWallSide) {
+                    for (PathPlannerTrajectory path : AutonomousTrajectory.Center2ScoreBalanceWallSide.trajectoryGroup) {
+                        followCommand = followCommand.andThen(new FollowPathWithEvents(
+                                new FollowTrajectoryCommand(mDrivetrain, path, isFirstPath),
+                                path.getMarkers(),
+                                eventMap));
+                        isFirstPath = false; // Make sure it's false for subsequent paths
+                    }
+                }
+                followCommand = followCommand.andThen(new BalanceRobotPID(mDrivetrain));
+                break;
         }
         return followCommand;
     }
