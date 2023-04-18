@@ -24,7 +24,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
  */
 public final class Constants {
     public static final boolean dataLogging = false;
-    public static final boolean debugDashboard = false;
+    public static final boolean debugDashboard = true;
 
     public static class LEDColors {
         public static final Color purple = new Color(210, 75, 230);

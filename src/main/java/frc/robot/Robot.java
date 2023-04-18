@@ -167,7 +167,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
         mRobotContainer.mRobotState.wasAutoLastMode = true;
-        mRobotContainer.pdh.setSwitchableChannel(false); // Start limelights power in auto
+        mRobotContainer.pdh.setSwitchableChannel(true); // Start limelights power in auto
         mRobotContainer.mRobotState.useLimelightOdometryUpdates = false; // Powered but not being used
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
