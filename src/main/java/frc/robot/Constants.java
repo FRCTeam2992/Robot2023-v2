@@ -24,7 +24,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
  */
 public final class Constants {
     public static final boolean dataLogging = false;
-    public static final boolean debugDashboard = true;
+    public static final boolean debugDashboard = false;
 
     public static class LEDColors {
         public static final Color purple = new Color(210, 75, 230);
@@ -184,14 +184,14 @@ public final class Constants {
         public static Waypoint scoreFloor = new Waypoint(0.0, 80.00,
                 OuttakeType.Hybrid, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint scoreConeMid = new Waypoint(10.515, 10.0,
+        public static Waypoint scoreConeMid = new Waypoint(8.515, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreConeHigh = new Waypoint(31.0, 21.3,
+        public static Waypoint scoreConeHigh = new Waypoint(31.0, 26,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
 
         public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
-        public static Waypoint scoreCubeHigh = new Waypoint(22.302, 9.54,
+        public static Waypoint scoreCubeHigh = new Waypoint(22.802, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
 
         public static Waypoint normal = new Waypoint(0, 20,
@@ -199,12 +199,14 @@ public final class Constants {
 
         public static Waypoint cubeGroundIntake = new Waypoint(0.7, 127.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
+        public static Waypoint cubeWall3GroundIntake = new Waypoint(0.7, 125.00,
+                OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearHighThrowCube = new Waypoint(30.0, -79.0,
                 OuttakeType.Max_Throw_Cube, ElevatorState.Undeployed, 0.0);
-        public static Waypoint rearMidThrowCube = new Waypoint(18.0, -79.0,
+        public static Waypoint rearMidThrowCube = new Waypoint(16.0, -79.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearLowThrowCube = new Waypoint(0.2, -79.0,
                 OuttakeType.Rear_Low_Cube, ElevatorState.Undeployed, 0.0);
@@ -215,7 +217,7 @@ public final class Constants {
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
-        public static Waypoint doubleLoadStationCone = new Waypoint(24.42, 14.46,
+        public static Waypoint doubleLoadStationCone = new Waypoint(24.42, 15.96,
                 OuttakeType.Unknown, ElevatorState.Deployed, 0.75);
 
     }
