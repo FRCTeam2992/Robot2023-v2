@@ -65,7 +65,7 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         if (dashboardCounter++ >= 5) {
             SmartDashboard.putNumber("Arm CANcoder", getArmCANCoderPositionCorrected());
-            if (true) {
+            if (Constants.debugDashboard) {
                 SmartDashboard.putBoolean("Arm PID Enabled", pidMode);
                 SmartDashboard.putNumber("Arm PID Target", targetAngleDeg);
                 SmartDashboard.putBoolean("Arm Hold Position Recorded", holdPositionRecorded);
