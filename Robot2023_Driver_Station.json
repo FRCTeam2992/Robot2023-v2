@@ -1569,21 +1569,6 @@
               "_showGlyph": false
             }
           },
-          "9,0": {
-            "size": [
-              3,
-              2
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Butterfly Wheels",
-              "_title": "/SmartDashboard/Butterfly Wheels",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
           "0,3": {
             "size": [
               9,
@@ -1599,54 +1584,94 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "10,3": {
+          "11,2": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/back left encoder",
-              "_title": "/SmartDashboard/back left encoder",
+              "_source0": "network_table:///SmartDashboard/Arm CANcoder",
+              "_title": "SmartDashboard/Arm CANcoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 4",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 64.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Odometry X (in)",
+              "_title": "/SmartDashboard/Odometry X (in)",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "12,3": {
+          "6,2": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/back right encoder",
-              "_title": "/SmartDashboard/back right encoder",
+              "_source0": "network_table:///SmartDashboard/Odometry X (m)",
+              "_title": "/SmartDashboard/Odometry X (m)",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "10,2": {
+          "7,1": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/front left encoder",
-              "_title": "/SmartDashboard/front left encoder",
+              "_source0": "network_table:///SmartDashboard/Odometry Y (in)",
+              "_title": "/SmartDashboard/Odometry Y (in)",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "12,2": {
+          "7,2": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/front right encoder",
-              "_title": "/SmartDashboard/front right encoder",
+              "_source0": "network_table:///SmartDashboard/Odometry Y (m)",
+              "_title": "/SmartDashboard/Odometry Y (m)",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Odometry Rotation (deg)",
+              "_title": "/SmartDashboard/Odometry Rotation (deg)",
               "_glyph": 148,
               "_showGlyph": false
             }

@@ -183,7 +183,7 @@ public class AutoBuilder {
                 initialScoreCommand = initialScoreCommand
                         .andThen(new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed)
                                 .andThen(new InstantCommand(() -> mRobotState.currentOuttakeType = OuttakeType.Hi_Cone))
-                                .andThen(new WaitCommand(0.2))
+                                .andThen(new WaitCommand(0.5))
                                 .andThen(new SafeDumbTowerToPosition(
                                         mElevator, mArm, mRobotState, GridTargetingPosition.HighRight.towerWaypoint)
                                         .withTimeout(1.2)
