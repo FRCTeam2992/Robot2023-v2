@@ -250,6 +250,7 @@ public class RobotContainer {
                         () -> mRobotState.intakeMode = RobotState.IntakeModeState.Cone));
 
         controller1.leftTrigger(0.6).onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
+        controller1.leftTrigger(0.6).onTrue(new HoldClaw(mClaw));
         controller1.rightTrigger(0.6)
                 .onTrue(new SetScoringTarget(mRobotState, controller0, controller1, mElevator, mArm));
 
