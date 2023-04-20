@@ -205,7 +205,7 @@ public final class Constants {
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearHighThrowCube = new Waypoint(30.0, -79.0,
-                OuttakeType.Max_Throw_Cube, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Rev_Mid_Throw_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearMidThrowCube = new Waypoint(16.0, -79.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearLowThrowCube = new Waypoint(0.2, -79.0,
