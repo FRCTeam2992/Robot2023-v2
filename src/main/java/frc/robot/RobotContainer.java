@@ -226,6 +226,7 @@ public class RobotContainer {
                 .onTrue(new ClawOuttake(mClaw, mRobotState));
 
         controller0.rightStick().onTrue(new StopIntake(mElevator, mArm, mClaw, mRobotState));
+        controller0.rightStick().onTrue(new HoldClaw(mClaw));
 
         // Back and Start
 
