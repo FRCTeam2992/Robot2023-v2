@@ -47,7 +47,7 @@ public class Waypoint extends Point2D.Double {
         Mid_Cube(-0.8, 1.0),
         Hybrid(-0.35, 1.0),
         Max_Throw_Cube(-1.0, 1.0),
-        Rear_Low_Cube(-0.4, 1.0);
+        Rear_Low_Cube(-0.25, 1.0);
 
         public double speed; // How fast to spin claw
         public double time; // How long to spin claw
