@@ -58,9 +58,9 @@ public final class Constants {
         // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
         // Right
         public static final double frontLeftOffset = -174.3;
-        public static final double frontRightOffset = 90.8;
-        public static final double rearLeftOffset = 170.6;
-        public static final double rearRightOffset = 31.0;
+        public static final double frontRightOffset = 95.0; //90.8
+        public static final double rearLeftOffset = 180.6;//170.6
+        public static final double rearRightOffset = 28.3;//31.0
 
         public static class PIDConstants {
             // Swerve Drive PID (Velocity Control)
@@ -205,7 +205,7 @@ public final class Constants {
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearHighThrowCube = new Waypoint(30.0, -79.0,
-                OuttakeType.Max_Throw_Cube, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Rev_Mid_Throw_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearMidThrowCube = new Waypoint(16.0, -79.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearLowThrowCube = new Waypoint(0.2, -79.0,
