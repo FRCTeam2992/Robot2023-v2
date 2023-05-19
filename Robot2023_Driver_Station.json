@@ -1504,19 +1504,6 @@
               "_showGlyph": false
             }
           },
-          "3,0": {
-            "size": [
-              3,
-              2
-            ],
-            "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/Auto Start Position",
-              "_title": "SmartDashboard/Auto Start Position",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "6,0": {
             "size": [
               3,
@@ -1593,6 +1580,34 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Arm CANcoder",
               "_title": "SmartDashboard/Arm CANcoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "9,0": {
+            "size": [
+              6,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Butterfly Wheels",
+              "_title": "SmartDashboard/Butterfly Wheels",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "3,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Auto Start Position",
+              "_title": "SmartDashboard/Auto Start Position",
               "_glyph": 148,
               "_showGlyph": false
             }
