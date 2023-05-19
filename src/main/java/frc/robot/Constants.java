@@ -197,7 +197,7 @@ public final class Constants {
         public static Waypoint normal = new Waypoint(0, 20,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 133.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 132.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint cubeWall3GroundIntake = new Waypoint(0.7, 125.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -213,7 +213,7 @@ public final class Constants {
         public static Waypoint rearSafePoint = new Waypoint(6.0, -72,
                 OuttakeType.Assumed_Cube, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint singleLoadStation = new Waypoint(0, -67.00,
+        public static Waypoint singleLoadStation = new Waypoint(0, -69.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
