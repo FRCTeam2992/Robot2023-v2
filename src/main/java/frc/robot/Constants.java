@@ -197,7 +197,7 @@ public final class Constants {
         public static Waypoint normal = new Waypoint(0, 20,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 132.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 131.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint cubeWall3GroundIntake = new Waypoint(0.7, 125.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -282,7 +282,7 @@ public final class Constants {
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
         public static double armAngleToleranceDeg = 0.5; // Moves within 1 degree are "close enough"
-        public static double CANCoderOffset = -131.0 + 3.5; // 3.5 degree offset due to misalignment when code was
+        public static double CANCoderOffset = -131.0 + 7.5; // 7.5 degree offset due to misalignment when code was
                                                       // written
 
         public static class ArmSlopConstants {
