@@ -148,7 +148,7 @@ public class DriveSticks extends CommandBase {
             if (mDriveTrain.isInSlowMode()) {
                 x1 *= 0.6;
                 y1 *= 0.6;
-                x2 *= 0.3;
+                x2 *= 0.1;
             }
             // Check for Endgame Mode
             if (mRobotState.isInEndgameMode()) {

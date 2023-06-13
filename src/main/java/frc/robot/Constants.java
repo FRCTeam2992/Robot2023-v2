@@ -58,9 +58,9 @@ public final class Constants {
         // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
         // Right
         public static final double frontLeftOffset = -174.3;
-        public static final double frontRightOffset = 90.8;
-        public static final double rearLeftOffset = 170.6;
-        public static final double rearRightOffset = 31.0;
+        public static final double frontRightOffset = 95.0; //90.8
+        public static final double rearLeftOffset = 180.6;//170.6
+        public static final double rearRightOffset = 28.3;//31.0
 
         public static class PIDConstants {
             // Swerve Drive PID (Velocity Control)
@@ -186,10 +186,10 @@ public final class Constants {
 
         public static Waypoint scoreConeMid = new Waypoint(8.515, 10.0,
                 OuttakeType.Mid_Cone, ElevatorState.Deployed, 1.0);
-        public static Waypoint scoreConeHigh = new Waypoint(31.0, 26,
+        public static Waypoint scoreConeHigh = new Waypoint(31.75, 26.4,
                 OuttakeType.Hi_Cone, ElevatorState.Deployed, 1.0);
 
-        public static Waypoint scoreCubeMid = new Waypoint(8.0, 48.0,
+        public static Waypoint scoreCubeMid = new Waypoint(8.0, 45.1,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint scoreCubeHigh = new Waypoint(22.802, 9.54,
                 OuttakeType.Hi_Cube, ElevatorState.Deployed, 0.75);
@@ -197,7 +197,7 @@ public final class Constants {
         public static Waypoint normal = new Waypoint(0, 20,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 127.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 133.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint cubeWall3GroundIntake = new Waypoint(0.7, 125.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -205,7 +205,7 @@ public final class Constants {
         public static Waypoint midThrowCube = new Waypoint(15.0, 35.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearHighThrowCube = new Waypoint(30.0, -79.0,
-                OuttakeType.Max_Throw_Cube, ElevatorState.Undeployed, 0.0);
+                OuttakeType.Rev_Mid_Throw_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearMidThrowCube = new Waypoint(16.0, -79.0,
                 OuttakeType.Mid_Cube, ElevatorState.Undeployed, 0.0);
         public static Waypoint rearLowThrowCube = new Waypoint(0.2, -79.0,
@@ -213,7 +213,7 @@ public final class Constants {
         public static Waypoint rearSafePoint = new Waypoint(6.0, -72,
                 OuttakeType.Assumed_Cube, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint singleLoadStation = new Waypoint(0, -72.00,
+        public static Waypoint singleLoadStation = new Waypoint(0, -67.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -227,7 +227,7 @@ public final class Constants {
             public static int elevatorMotorLead = 25;
             public static int elevatorMotorFollow = 26;
 
-            public static int elevatorSolenoid = 1;
+            public static int elevatorSolenoid = 0;
         }
 
         public static class PIDConstants {
@@ -273,16 +273,16 @@ public final class Constants {
         }
 
         public static class Limits {
-            public static double hardStopTop = 130.0;
-            public static double hardStopBottom = -75.0;
+            public static double hardStopTop = 135.8;
+            public static double hardStopBottom = -87.0;
             public static double softStopTop = 120.0;
-            public static double softStopBottom = -55.0;
+            public static double softStopBottom = -65.0;
         }
 
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
         public static double armAngleToleranceDeg = 0.5; // Moves within 1 degree are "close enough"
-        public static double CANCoderOffset = 176.0;
+        public static double CANCoderOffset = 148.3;
 
         public static class ArmSlopConstants {
             public static double topZoneLowEdge = 12.0; // Above this may be n the slop zone
