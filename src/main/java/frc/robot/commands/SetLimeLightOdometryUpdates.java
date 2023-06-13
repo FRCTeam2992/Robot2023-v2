@@ -5,18 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.lib.vision.LimeLight;
+import frc.lib.vision.LimeLight.CameraMode;
 import frc.robot.RobotState;
+import frc.robot.subsystems.Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetLimeLightOdometryUpdates extends InstantCommand {
     RobotState mRobotState;
+    Drivetrain mDrivetrain;
     boolean mUseLimelight;
 
-    public SetLimeLightOdometryUpdates(RobotState robotState, boolean useLimelight) {
+    public SetLimeLightOdometryUpdates(RobotState robotState, Drivetrain drivetrain, boolean useLimelight) {
         mRobotState = robotState;
+        mDrivetrain = drivetrain;
         mUseLimelight = useLimelight;
+        runsWhenDisabled();
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -24,5 +30,12 @@ public class SetLimeLightOdometryUpdates extends InstantCommand {
     @Override
     public void initialize() {
         mRobotState.useLimelightOdometryUpdates = mUseLimelight;
+        for (LimeLight camera : mDrivetrain.limelightList) {
+            if (mUseLimelight) {
+                camera.setCameraMode(CameraMode.Vision);
+            } else {
+                camera.setCameraMode(CameraMode.Driver);
+            }
+        }
     }
 }

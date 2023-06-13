@@ -42,12 +42,12 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                                         WaypointSafety.WaypointSafetyClassification.Inside_TooHigh,
                                         new UnsafeMoveTowerToPosition(mElevator,
                                                 mArm,
-                                                frc.lib.manipulator.Constants.Waypoints.HI_OUTSIDE_EDGE)),
+                                                frc.lib.manipulator.Constants.Waypoints.HI_INSIDE_EDGE).asProxy()),
                                 Map.entry(
                                         WaypointSafety.WaypointSafetyClassification.Ground_If_Deployed,
                                         new UnsafeMoveTowerToPosition(elevator,
                                                 mArm,
-                                                frc.lib.manipulator.Constants.Waypoints.GROUND_EXIT))),
+                                                frc.lib.manipulator.Constants.Waypoints.GROUND_EXIT).asProxy())),
                         this::checkStart),
 
                 // Next we check if we're moving across the middle position with the arm,
@@ -56,7 +56,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                         Map.entry(true, new UnsafeMoveTowerToPosition(
                                 mElevator,
                                 mArm,
-                                frc.lib.manipulator.Constants.Waypoints.NEUTRAL)),
+                                frc.lib.manipulator.Constants.Waypoints.NEUTRAL).asProxy()),
                         Map.entry(false, new InstantCommand())),
                         this::checkNeedsMiddleHeightAvoidWaypoint),
 
@@ -66,7 +66,7 @@ public class SafeDumbTowerToPosition extends SequentialCommandGroup {
                                 Map.entry(
                                         WaypointSafety.WaypointSafetyClassification.Safe,
                                         new UnsafeMoveTowerToPosition(mElevator,
-                                                mArm, mEnd)),
+                                                mArm, mEnd).asProxy()),
                                 Map.entry(
                                         WaypointSafety.WaypointSafetyClassification.Inside_TooHigh,
                                         new InstantCommand()),

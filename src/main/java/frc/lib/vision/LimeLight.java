@@ -134,21 +134,21 @@ public class LimeLight {
     private void getTableEntries() {
         // LimeLight Network Table Entries (Get Values)
         tv = limelightTable.getEntry("tv");
-        tx = limelightTable.getEntry("tx");
-        ty = limelightTable.getEntry("ty");
+        // tx = limelightTable.getEntry("tx");
+        // ty = limelightTable.getEntry("ty");
         ta = limelightTable.getEntry("ta");
-        ts = limelightTable.getEntry("ts");
-        tl = limelightTable.getEntry("tl");
-        getpipe = limelightTable.getEntry("getpipe");
-        limelightJson = limelightTable.getEntry("json");
+        // ts = limelightTable.getEntry("ts");
+        // tl = limelightTable.getEntry("tl");
+        // getpipe = limelightTable.getEntry("getpipe");
+        // limelightJson = limelightTable.getEntry("json");
 
-        botpose = limelightTable.getEntry("botpose");
+        // botpose = limelightTable.getEntry("botpose");
         botpose_wpiblue = limelightTable.getEntry("botpose_wpiblue");
         botpose_wpired = limelightTable.getEntry("botpose_wpired");
-        camerapose_targetspace = limelightTable.getEntry("camerapose_targetspace");
-        targetpose_cameraspace = limelightTable.getEntry("targetpose_cameraspace");
-        targetpose_robotspace = limelightTable.getEntry("targetpose_robotspace");
-        botpose_targetspace = limelightTable.getEntry("botpose_targetspace");
+        // camerapose_targetspace = limelightTable.getEntry("camerapose_targetspace");
+        // targetpose_cameraspace = limelightTable.getEntry("targetpose_cameraspace");
+        // targetpose_robotspace = limelightTable.getEntry("targetpose_robotspace");
+        // botpose_targetspace = limelightTable.getEntry("botpose_targetspace");
 
         tID = limelightTable.getEntry("tid");
 
@@ -239,16 +239,18 @@ public class LimeLight {
     public double[] getBotPose(CoordinateSpace space) {
         switch (space) {
             case Field:
-                return botpose.getDoubleArray(new double[6]);
+                // return botpose.getDoubleArray(new double[6]);
+                return null;
             case Blue:
                 return botpose_wpiblue.getDoubleArray(new double[6]);
             case Red:
                 return botpose_wpired.getDoubleArray(new double[6]);
             case Target:
-                return botpose_targetspace.getDoubleArray(new double[6]);
+                // return botpose_targetspace.getDoubleArray(new double[6]);
+                return null;
             case Camera:
                 // TODO: should return robot center offset from camera lens center
-                return new double[6];
+                return null;
             default:
                 return null;
         }

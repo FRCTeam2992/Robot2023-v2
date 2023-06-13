@@ -27,7 +27,6 @@ public class HoldArm extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
-    mArm.setArmSpeed(0.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

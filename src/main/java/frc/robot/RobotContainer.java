@@ -19,6 +19,7 @@ import frc.robot.commands.HoldElevator;
 import frc.robot.commands.LEDsToDefaultColor;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmToPoint;
 import frc.robot.commands.MoveClaw;
 import frc.robot.commands.MoveTowerToScoringPosition;
 import frc.robot.commands.SetSwerveAngle;
@@ -48,8 +49,11 @@ import frc.robot.testing.commands.TestClawIntake;
 import frc.robot.testing.commands.TestClawOuttake;
 import frc.robot.testing.commands.TestElevatorPID;
 import frc.robot.testing.commands.TestTowerSafeMove;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -81,6 +85,11 @@ public class RobotContainer {
     public final ButterflyWheels mButterflyWheels;
 
     public final LEDs mLEDs;
+
+    public final PowerDistribution pdh;
+
+    public DigitalInput networkToggleSwitch = new DigitalInput(
+            Constants.RobotConstants.DeviceIDs.networkToggleSwitch);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -123,6 +132,8 @@ public class RobotContainer {
         configureShuffleboardBindings();
         configRealButtonBindings();
         // (new TestControllers()).configTestButtonBindings(this);
+
+        pdh = new PowerDistribution(1, ModuleType.kRev);
     }
 
     /**
@@ -264,6 +275,8 @@ public class RobotContainer {
     }
 
     private void configureShuffleboardBindings() {
+            SmartDashboard.putData("Arm To Point 100%, 10°",
+                            new MoveArmToPoint(mArm, mClaw, mDrivetrain, 1.0, 10.0, 30.0, -5.0));
         if (Constants.debugDashboard) {
             SmartDashboard.putData("Scoring", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed));
             SmartDashboard.putData("Loading", new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Deployed));
