@@ -32,7 +32,7 @@ public enum AutonomousTrajectory {
             new PathConstraints(4.5, 2.95),
             new PathConstraints(3.3, 2.25),
             new PathConstraints(4.5, 2.95))),
-    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 3.5, 2.0)),
+    Wall2Scores(PathPlanner.loadPathGroup("Wall2Scores", 1.9, 3.0)),
     Wall2ScoreBalance(PathPlanner.loadPathGroup("Wall2ScoreBalance",
             new PathConstraints(4.0, 1.8),
             new PathConstraints(3.0, 2.5))),

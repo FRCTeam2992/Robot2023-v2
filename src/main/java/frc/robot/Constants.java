@@ -24,7 +24,7 @@ import frc.robot.subsystems.Elevator.ElevatorState;
  */
 public final class Constants {
     public static final boolean dataLogging = false;
-    public static final boolean debugDashboard = false;
+    public static final boolean debugDashboard = true;
 
     public static class LEDColors {
         public static final Color purple = new Color(210, 75, 230);
@@ -197,7 +197,7 @@ public final class Constants {
         public static Waypoint normal = new Waypoint(0, 20,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 133.00,
+        public static Waypoint cubeGroundIntake = new Waypoint(0.7, 131.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint cubeWall3GroundIntake = new Waypoint(0.7, 125.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -213,7 +213,7 @@ public final class Constants {
         public static Waypoint rearSafePoint = new Waypoint(6.0, -72,
                 OuttakeType.Assumed_Cube, ElevatorState.Undeployed, 0.0);
 
-        public static Waypoint singleLoadStation = new Waypoint(0, -67.00,
+        public static Waypoint singleLoadStation = new Waypoint(0, -69.00,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
         public static Waypoint doubleLoadStationCube = new Waypoint(20.62, 79.19,
                 OuttakeType.Unknown, ElevatorState.Undeployed, 0.0);
@@ -282,7 +282,8 @@ public final class Constants {
         public static double gearRatio = 64.0 * (32.0 / 12.0);
         public static double motorEncoderClicksPerDegree = (2048.0 * gearRatio) / 360.0;
         public static double armAngleToleranceDeg = 0.5; // Moves within 1 degree are "close enough"
-        public static double CANCoderOffset = 148.3;
+        public static double CANCoderOffset = -131.0 + 7.5; // 7.5 degree offset due to misalignment when code was
+                                                      // written
 
         public static class ArmSlopConstants {
             public static double topZoneLowEdge = 12.0; // Above this may be n the slop zone
