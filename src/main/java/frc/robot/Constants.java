@@ -26,6 +26,11 @@ public final class Constants {
     public static final boolean dataLogging = false;
     public static final boolean debugDashboard = true;
 
+    public static class DemoMode {
+        public static final boolean isDemoMode = false;
+        public static final int speedDivisor = 4;
+    }
+
     public static class LEDColors {
         public static final Color purple = new Color(210, 75, 230);
         public static final Color yellow = new Color(255, 160, 0);
