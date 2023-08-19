@@ -136,10 +136,13 @@ public class DriveSticks extends CommandBase {
         if (Math.abs(x1) > 0.0 || Math.abs(y1) > 0.0 || Math.abs(x2) > 0.0 || mDriveTrain.isScoringMode()
                 || mDriveTrain.isLoadingMode()) {
 
-            // Demo Slow Mode
-            // x1 /= 4;
-            // y1 /= 4;
-            // x2 /= 4;
+            if (Constants.DemoMode.isDemoMode) {
+                // Demo Slow Mode
+                int speedDivisor = Constants.DemoMode.speedDivisor;
+                x1 /= speedDivisor;
+                y1 /= speedDivisor;
+                x2 /= speedDivisor;
+            }
 
             // Slow the Rotation
             x2 *= (2.0 / 3.0);
