@@ -173,10 +173,10 @@ public class AutoBuilder {
 
     private Command setupAutoInitialScoreCommand() {
         Command initialScoreCommand;
-        Pose2d startingPose = getAutoStartPosition().getStartPose();
-        if (startingPose == null) {
+        if (getAutoStartPosition() == null || getAutoStartPosition().getStartPose() == null) {
             return new InstantCommand();
-        }
+        } else {
+            Pose2d startingPose = getAutoStartPosition().getStartPose();
         initialScoreCommand = new InstantCommand(() -> mDrivetrain.resetOdometryToPose(startingPose));
         switch (getAutoPreloadScore()) {
             case Hi_Cone:
@@ -225,6 +225,7 @@ public class AutoBuilder {
         }
         return initialScoreCommand;
     }
+}
 
     private Command setupAutoPathFollowCommand(boolean isFirstPath) {
         Command followCommand = new DeployElevator(mElevator, mArm, mRobotState, ElevatorState.Undeployed)

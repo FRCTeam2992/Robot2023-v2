@@ -435,15 +435,19 @@ public class RobotContainer {
     }
 
     public void updateMatchStartChecksToDashboard() {
+            if (mAutoBuilder.getAutoStartPosition() != null) {
         SmartDashboard.putString("Confirmed Auto Start Position",
                 mAutoBuilder.getAutoStartPosition().description);
-        if (mAutoBuilder.autoStartCompatible()) {
-            SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
+}
+if (mAutoBuilder.getAutoSequence() != null && mAutoBuilder.autoStartCompatible()) {
+        SmartDashboard.putString("Confirmed Auto Sequence", mAutoBuilder.getAutoSequence().description);
         } else {
             SmartDashboard.putString("Confirmed Auto Sequence", "INVALID SEQUENCE FOR THIS START POSN");
         }
+        if (mAutoBuilder.getAutoPreloadScore() != null) {
         SmartDashboard.putString("Confirmed Auto Preload Score",
                 mAutoBuilder.getAutoPreloadScore().description);
+}
         SmartDashboard.putBoolean("Valid Auto Sequence?", mAutoBuilder.autoStartCompatible());
         SmartDashboard.putBoolean("Elevator Encoder Good?", Math.abs(mElevator.getElevatorInches()) <= 0.2);
     }
